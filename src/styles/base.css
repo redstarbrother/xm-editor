@@ -1,0 +1,30 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.tiptap {
+    min-height: 200px;
+    padding: 10px 5px;
+}
+
+.tiptap ul[data-type="taskList"] {
+    /* margin: 0; */
+    list-style: none;
+    padding: 0;
+}
+
+.tiptap ul[data-type="taskList"] div {
+    display: inline-block
+}
+
+.tiptap blockquote {
+    padding-left: 1rem;
+    border-left: .25em solid #eaecef;
+    color: #6a737d;
+}
+
+.tiptap:focus {
+    background-color: #FAFBFC;
+    outline: none;
+}
