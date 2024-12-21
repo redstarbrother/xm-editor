@@ -8,7 +8,10 @@
 <script setup >
 import { defineProps } from 'vue'
 
-const props = defineProps({ editor, extensions })
+const props = defineProps({ 
+  editor: Object, 
+  extensions: Array
+ })
 
 const buttonCompontents = generateButtonCompontents()
 

@@ -5,11 +5,11 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, computed } from 'vue'
 import SvgIcon from '@/svg/SvgIcon.vue'
 
 const props = defineProps({
-  name: string,
+  name: String,
   isActive: Function,
   execute: Function
 })

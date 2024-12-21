@@ -1,7 +1,7 @@
 <template>
   <div v-if="editor" class="xm-editor-root">
     <header>
-      <MenuFixed :editor="editor" :extensions="props.options.extensions" />
+      <MenuFixed v-if="editor" :editor="editor" :extensions="props.options.extensions" />
     </header>
     <editor-content :editor="editor" />
     <footer />
@@ -18,16 +18,15 @@ import { DependencieExtensions } from '@/components/extensions'
 const props = defineProps({
   options: {
     extensions: Array,
-    width: string | number,
-    height: string | number
+    width: [String, Number],
+    height: [String, Number],
   }
 })
 
-const placeholder = '<p>I’m running Tiptap with Vue.js. 🎉</p> '
+const defaultWidth = props.width || '100%';
+const defaultHeight = props.height || '300px';
 
-// const extensions: any[] = [
-// ]
-console.log('run xmEditor')
+const placeholder = '<p>I’m running Tiptap with Vue.js. 🎉</p> '
 
 const editor = useEditor({
   content: placeholder,
@@ -35,10 +34,6 @@ const editor = useEditor({
     props.options.extensions,
   ),
 })
-
-console.log('xmEditor: ' + editor)
-
-// provide('editor', editor)
 
 onUnmounted(() => {
   editor.value?.destroy()
