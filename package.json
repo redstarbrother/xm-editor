@@ -1,8 +1,21 @@
 {
   "name": "xm-editor",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
+  "main": "dist/xm-editor.umd.js",  
+  "module": "dist/xm-editor.es.js",
+  "exports": {
+    ".": {
+      "require": "./dist/xm-editor.umd.js",
+      "import": "./dist/xm-editor.es.js"
+    },
+    "./xm-editor.css": "./dist/xm-editor.css"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
