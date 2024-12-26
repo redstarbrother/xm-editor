@@ -1,7 +1,7 @@
 <template>
   <div class="base-button" :class="{ 'is-active-par': active }" @click="onClick">
     <!-- <SvgIcon :name="props.name" :active="active" /> -->
-    <SvgIconInner :name="props.name" />
+    <SvgIconInner :name="props.name" :active="active"/>
   </div>
 </template>
 
