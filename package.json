@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "main": "dist/xm-editor.umd.js",  
+  "main": "dist/xm-editor.umd.js",
   "module": "dist/xm-editor.es.js",
   "exports": {
     ".": {
@@ -48,7 +48,6 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
     "vite": "^6.0.1",
-    "vite-plugin-svg-icons": "^2.0.1",
     "vite-plugin-vue-devtools": "^7.6.7"
   }
 }
