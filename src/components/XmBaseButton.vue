@@ -1,12 +1,14 @@
 <template>
   <div class="base-button" :class="{ 'is-active-par': active }" @click="onClick">
-    <SvgIcon :name="props.name" :active="active" />
+    <!-- <SvgIcon :name="props.name" :active="active" /> -->
+    <SvgIconInner :name="props.name" />
   </div>
 </template>
 
 <script setup>
 import { defineProps, computed } from 'vue'
 import SvgIcon from '@/components/SvgIcon.vue'
+import SvgIconInner from './SvgIconInner.vue'
 
 const props = defineProps({
   name: String,

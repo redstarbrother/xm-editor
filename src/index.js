@@ -1,4 +1,5 @@
 import XmEditor from './XmEditor.vue'
+import './styles/base.css'
 
 export * as Extensions from '@/components/extensions'
 
