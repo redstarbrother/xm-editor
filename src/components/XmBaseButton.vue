@@ -6,7 +6,7 @@
 
 <script setup>
 import { defineProps, computed } from 'vue'
-import SvgIcon from '@/components/SvgIcon.vue'
+import SvgIcon from './SvgIcon.vue'
 
 const props = defineProps({
   name: String,

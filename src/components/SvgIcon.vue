@@ -32,9 +32,6 @@ const loadSvg = async (name) => {
     try {
         const svg = await import(`@/assets/svg/${name}.svg?raw`);
         svgContent.value = svg.default; // 将 SVG 文件的内容设置到变量中
-        // const response = await fetch(`/assets/svg/${name}.svg`);
-        // if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        // svgContent.value = await response.text(); // 获取 SVG 的原始内容
     } catch (error) {
         console.error(`Failed to load SVG: ${name}`, error);
         svgContent.value = null; // 加载失败时清空内容
