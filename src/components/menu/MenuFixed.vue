@@ -7,9 +7,11 @@
 
 <script setup >
 import { defineProps } from 'vue'
+import { useEditorStore } from '@/store/EditorStore'
+
+const editorStore = useEditorStore()
 
 const props = defineProps({ 
-  editor: Object, 
   extensions: Array
  })
 
@@ -21,7 +23,7 @@ function generateButtonCompontents() {
 
     if (button != undefined) {
       const buttonCompontent = button({
-        editor: props.editor,
+        editor: editorStore.editor,
         extension: extension,
       })
 

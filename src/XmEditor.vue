@@ -1,20 +1,22 @@
 <template>
-  <div v-if="editor" class="xm-editor-root">
+  <div class="xm-editor-root">
     <header>
-      <MenuFixed v-if="editor" :editor="editor" :extensions="props.options.extensions" />
+      <MenuFixed v-if="editorStore.isInit()" :extensions="props.options.extensions" />
     </header>
-    <editor-content :editor="editor" />
+    <div id="editor-container"></div>
     <footer />
   </div>
 </template>
 
-<script setup >
+<script setup>
 import { StarterKit } from '@tiptap/starter-kit'
-import { useEditor, EditorContent } from '@tiptap/vue-3'
-import { onUnmounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import MenuFixed from '@/components/menu/MenuFixed.vue'
 import { DependencieExtensions } from '@/components/extensions'
 
+import { useEditorStore } from './store/EditorStore'
+
+const editorStore = useEditorStore()
 const props = defineProps({
   options: {
     extensions: Array,
@@ -28,15 +30,26 @@ const defaultHeight = props.height || '300px';
 
 const placeholder = '<p>I’m running Tiptap with Vue.js. 🎉</p> '
 
-const editor = useEditor({
-  content: placeholder,
-  extensions: [StarterKit, ...DependencieExtensions].concat(
-    props.options.extensions,
-  ),
+// 获取拓展集合
+function getExtensions() {  
+  return [StarterKit, ...DependencieExtensions].concat(props.options.extensions)
+}
+
+
+onMounted(() => {
+  const editorContainer = document.querySelector('#editor-container')
+  if (!editorStore.editor) {
+    editorStore.initializeEditor(getExtensions(), placeholder);
+    editorContainer.append(editorStore.editor.options.element);
+    console.log('Editor initialized');
+  } else {
+    editorContainer.append(editorStore.editor.options.element);
+    console.log('Editor already initialized');
+  }
 })
 
 onUnmounted(() => {
-  editor.value?.destroy()
+  editorStore.destroy()
 })
 </script>
 
