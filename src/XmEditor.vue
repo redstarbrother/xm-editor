@@ -37,10 +37,23 @@ const props = defineProps({
         type: String,
         default: '<p>I’m running Tiptap with Vue.js. 🎉</p>',
     },
-    onUpdated: {
+    // 更改事件
+    onChanged: {
         required: false,
         type: Function,
-        default: () => { },
+        default: ({ editor }) => { },
+    },
+    // 聚焦事件
+    onFocus: {
+        required: false,
+        type: Function,
+        default: ({ editor, event }) => { },
+    },
+    // 失焦事件
+    onBlur: {
+        required: false,
+        type: Function,
+        default: ({ editor, event }) => { },
     },
 })
 
@@ -50,6 +63,9 @@ const extensions = computed(() => DependencieExtensions.concat(props.extensions)
 const editor = useEditor({
     content: props.placeholder,
     extensions: extensions.value,
+    onUpdate: props.onChanged,
+    onFocus: props.onFocus,
+    onBlur: props.onBlur,
 })
 
 onUnmounted(() => {
@@ -67,33 +83,9 @@ provide('editor', editor)
     border-radius: 5px;
     overflow: hidden;
 }
+
 .editor-content {
     max-height: 500px;
     overflow: auto;
 }
-
-/* 设置滚动条宽度 */
-::-webkit-scrollbar {
-  width: 10px;  /* 垂直滚动条宽度 */
-  height: 10px; /* 水平滚动条高度 */
-}
-
-/* 设置滚动条滑块的样式 */
-::-webkit-scrollbar-thumb {
-  background-color: #e4e3e3; /* 滑块颜色，柔和灰色 */
-  border-radius: 10px;     /* 滑块圆角 */
-  border: 2px solid #fff;  /* 滑块边框，增加一些对比度 */
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); /* 轻微的阴影效果 */
-}
-
-/* 设置滚动条轨道的样式 */
-::-webkit-scrollbar-track {
-    background-color: rgb(250, 251, 252);
-}
-
-/* 设置滚动条按钮的样式（通常用于上下箭头） */
-::-webkit-scrollbar-button {
-  display: none; /* 隐藏滚动条按钮 */
-}
-
 </style>

@@ -1,4 +1,3 @@
-// import XmEditor from './XmEditor.vue'
 import XmEditor from './XmEditor.vue'
 import './styles/base.css'
 

@@ -2,7 +2,7 @@
     <!-- 如果加载成功则渲染 SVG 内容 -->
     <div v-if="svgContent" v-html="svgContent" ref="svgWrapper"></div>
     <!-- 如果加载失败则显示占位 -->
-    <div v-else class="svg-icon error">SVG load failed</div>
+    <div v-else class="svg-icon error">error</div>
 </template>
 
 <script setup>
