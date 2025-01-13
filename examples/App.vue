@@ -1,6 +1,6 @@
 <template>
   <div>
-    <XmEditor :options="options" />
+    <XmEditor :extensions="options.extensions"/>
   </div>
 </template>
 

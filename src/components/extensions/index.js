@@ -14,9 +14,10 @@ export { default as HorizontalRule } from '@/components/extensions/horizontalRul
 export { default as CodeBlock } from '@/components/extensions/codeBlock'
 
 // default dependencies
+import StarterKit from '@tiptap/starter-kit'
 import TiptapTaskItem from '@tiptap/extension-task-item'
 
-const DependencieExtensions = [TiptapTaskItem]
+const DependencieExtensions = [StarterKit, TiptapTaskItem]
 
-export { DependencieExtensions};
+export { DependencieExtensions };
 
