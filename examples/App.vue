@@ -1,11 +1,20 @@
 <template>
   <div>
-    <XmEditor :extensions="options.extensions"/>
+    <!-- <XmEditor
+      :extensions="extensions"
+      :showToolbar="false"
+      :backgroundColorOnFocus="'#ffffff'"
+      :showBorder="false"
+    /> -->
+    <XmEditor
+      :extensions="extensions"
+      :showToolbar="true"
+    />
   </div>
 </template>
 
 <script setup>
-import XmEditor from '../src/index'
+import XmEditor from "../src/index";
 import {
   Heading,
   Bold,
@@ -18,24 +27,22 @@ import {
   Blockquote,
   HorizontalRule,
   CodeBlock,
-} from '../src/index'
-import '../src/styles/base.css'
+} from "../src/index";
+import "../src/styles/base.css";
 
-const options = {
-  extensions: [
-    Heading,
-    Bold,
-    Italic,
-    Underline,
-    Strike,
-    BulletList,
-    OrderedList,
-    TaskList,
-    Blockquote,
-    HorizontalRule,
-    CodeBlock,
-  ],
-}
+const extensions = [
+  Heading,
+  Bold,
+  Italic,
+  Underline,
+  Strike,
+  BulletList,
+  OrderedList,
+  TaskList,
+  Blockquote,
+  HorizontalRule,
+  CodeBlock,
+];
 </script>
 
 <style scoped></style>

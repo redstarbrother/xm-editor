@@ -1,38 +1,43 @@
 <template>
   <div class="menu-fixed">
-    <component :is="item.component" v-for="(item, index) in buttonCompontents" :key="`button-item-${index}`"
-      v-bind="item.componentProps" v-on="item.componentEvents || {}" />
+    <component
+      :is="item.component"
+      v-for="(item, index) in buttonCompontents"
+      :key="`button-item-${index}`"
+      v-bind="item.componentProps"
+      v-on="item.componentEvents || {}"
+    />
   </div>
 </template>
 
 <script setup >
-import { defineProps } from 'vue'
+import { defineProps } from "vue";
 
-const props = defineProps({ 
+const props = defineProps({
   editor: Object,
-  extensions: Array
- })
+  extensions: Array,
+});
 
-const buttonCompontents = generateButtonCompontents()
+const buttonCompontents = generateButtonCompontents();
 
 function generateButtonCompontents() {
   return props.extensions?.reduce((arr, extension) => {
-    const { button } = extension.options
+    const { button } = extension.options;
 
     if (button != undefined) {
       const buttonCompontent = button({
         editor: props.editor,
         extension: extension,
-      })
+      });
 
       if (Array.isArray(buttonCompontent)) {
-        return [...arr, ...buttonCompontent]
+        return [...arr, ...buttonCompontent];
       }
-      return [...arr, buttonCompontent]
+      return [...arr, buttonCompontent];
     } else {
-      return arr
+      return arr;
     }
-  }, [])
+  }, []);
 }
 </script>
 
