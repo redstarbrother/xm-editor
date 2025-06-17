@@ -16,6 +16,7 @@
       :editor="editor"
       :style="{
         '--editor-focus-bg': props.backgroundColorOnFocus,
+        '--editor-height': props.height,
       }"
     />
   </div>
@@ -83,15 +84,14 @@ import EditorProps from "@/config/EditorProps";
 
 const props = defineProps(EditorProps);
 
-console.log(props);
-console.log(props.backgroundColorOnFocus);
-
 // 拓展依赖集合
 const extensions = computed(() =>
   DependencieExtensions.concat(props.extensions)
 );
 
 const editor = useEditor({
+  autofocus: props.autofocus,
+  editable: props.editable,
   content: props.placeholder,
   extensions: extensions.value,
   onUpdate: props.onContentChange,
@@ -117,12 +117,18 @@ provide("editor", editor);
 }
 
 .editor-content {
-  max-height: 500px;
-  overflow: auto;
+  /* overflow: auto; */
 }
 
 /* ✅ 使用 :deep() 让 scoped 样式生效 */
+:deep(.ProseMirror) {
+  overflow: auto;
+  height: var(--editor-height);
+  transition: background-color 0.1s ease-in-out;
+}
+
 :deep(.ProseMirror:focus) {
+  transition: background-color 0.1s ease-in-out;
   background-color: var(--editor-focus-bg, #fff);
   outline: none;
 }

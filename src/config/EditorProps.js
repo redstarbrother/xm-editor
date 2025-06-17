@@ -24,7 +24,7 @@ export default {
    */
   height: {
     type: [String, Number],
-    default: "500px",
+    default: "300px",
   },
   theme: {
     type: String,
