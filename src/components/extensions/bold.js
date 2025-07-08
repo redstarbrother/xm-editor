@@ -1,5 +1,5 @@
 import TiptapBold from '@tiptap/extension-bold'
-import XmBaseButton from '../XmBaseButton.vue'
+import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
 
 const Bold = TiptapBold.extend({
   addOptions() {
@@ -7,7 +7,7 @@ const Bold = TiptapBold.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: XmBaseButton,
+          component: BaseButtonComponent,
           componentProps: {
             name: 'bold',
             isActive: () => editor.isActive('bold'),

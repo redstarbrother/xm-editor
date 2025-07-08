@@ -1,5 +1,5 @@
 import TiptapBulletList from '@tiptap/extension-bullet-list'
-import XmBaseButton from '../XmBaseButton.vue'
+import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
 
 const BulletList = TiptapBulletList.extend({
   addOptions() {
@@ -7,7 +7,7 @@ const BulletList = TiptapBulletList.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: XmBaseButton,
+          component: BaseButtonComponent,
           componentProps: {
             name: 'bulletList',
             isActive: () => editor.isActive('bulletList'),

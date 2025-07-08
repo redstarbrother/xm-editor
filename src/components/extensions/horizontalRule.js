@@ -1,5 +1,5 @@
 import TiptapHorizontalRule from '@tiptap/extension-horizontal-rule'
-import XmBaseButton from '../XmBaseButton.vue'
+import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
 
 const HorizontalRule = TiptapHorizontalRule.extend({
   addOptions() {
@@ -7,7 +7,7 @@ const HorizontalRule = TiptapHorizontalRule.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: XmBaseButton,
+          component: BaseButtonComponent,
           componentProps: {
             name: 'horizontalrule',
             execute: () => editor.commands.setHorizontalRule(),

@@ -9,6 +9,7 @@
     <XmEditor
       :extensions="extensions"
       :showToolbar="true"
+      :onUpdate="onUpdate"
     />
   </div>
 </template>
@@ -43,6 +44,10 @@ const extensions = [
   HorizontalRule,
   CodeBlock,
 ];
+
+const onUpdate = ({ editor }) => {
+  console.log(editor.getJSON());
+};
 </script>
 
 <style scoped></style>

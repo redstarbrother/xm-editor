@@ -1,5 +1,5 @@
 import TtHeading from '@tiptap/extension-heading'
-import XmBaseButton from '@/components/XmBaseButton.vue'
+import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
 
 const Heading = TtHeading.extend({
   addOptions() {
@@ -7,7 +7,7 @@ const Heading = TtHeading.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: XmBaseButton,
+          component: BaseButtonComponent,
           componentProps: {
             name: 'heading',
             isActive: () => editor.isActive('heading'),

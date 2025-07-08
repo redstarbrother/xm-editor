@@ -1,5 +1,5 @@
 import TiptapOrderedList from '@tiptap/extension-ordered-list'
-import XmBaseButton from '../XmBaseButton.vue'
+import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
 
 const OrderedList = TiptapOrderedList.extend({
   addOptions() {
@@ -7,7 +7,7 @@ const OrderedList = TiptapOrderedList.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: XmBaseButton,
+          component: BaseButtonComponent,
           componentProps: {
             name: 'orderedList',
             isActive: () => editor.isActive('orderedList'),

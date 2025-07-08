@@ -1,5 +1,5 @@
 import TiptapUnderline from '@tiptap/extension-underline'
-import XmBaseButton from '../XmBaseButton.vue'
+import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
 
 const Underline = TiptapUnderline.extend({
   addOptions() {
@@ -7,7 +7,7 @@ const Underline = TiptapUnderline.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: XmBaseButton,
+          component: BaseButtonComponent,
           componentProps: {
             name: 'underline',
             isActive: () => editor.isActive('underline'),

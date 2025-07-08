@@ -30,6 +30,7 @@ import {
   onUnmounted,
   watchEffect,
   onMounted,
+  watch
 } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { DependencieExtensions } from "@/components/extensions";
@@ -94,7 +95,7 @@ const editor = useEditor({
   editable: props.editable,
   content: props.placeholder,
   extensions: extensions.value,
-  onUpdate: props.onContentChange,
+  onUpdate: props.onUpdate,
   onFocus: props.onFocus,
   onBlur: props.onBlur,
 });
@@ -109,6 +110,13 @@ onUnmounted(() => {
 
 // 注入editor实例
 provide("editor", editor);
+
+// 监听placeholder的变化
+watch(() => props.placeholder, (newContent) => {
+  if (editor.value) {
+    editor.value.commands.setContent(newContent);
+  }
+});
 </script>
 
 <style scoped>

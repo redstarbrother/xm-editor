@@ -7,38 +7,21 @@
       v-bind="item.componentProps"
       v-on="item.componentEvents || {}"
     />
+    
   </div>
 </template>
 
-<script setup >
+<script setup>
 import { defineProps } from "vue";
+import { generateButtonCompontents } from "@/utils/buttonUtil";
 
 const props = defineProps({
   editor: Object,
   extensions: Array,
 });
-
-const buttonCompontents = generateButtonCompontents();
-
-function generateButtonCompontents() {
-  return props.extensions?.reduce((arr, extension) => {
-    const { button } = extension.options;
-
-    if (button != undefined) {
-      const buttonCompontent = button({
-        editor: props.editor,
-        extension: extension,
-      });
-
-      if (Array.isArray(buttonCompontent)) {
-        return [...arr, ...buttonCompontent];
-      }
-      return [...arr, buttonCompontent];
-    } else {
-      return arr;
-    }
-  }, []);
-}
+ 
+// 生成button组件
+const buttonCompontents = generateButtonCompontents(props.editor, props.extensions);
 </script>
 
 <style scoped>

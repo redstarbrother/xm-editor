@@ -1,5 +1,5 @@
 import TiptapBlockquote from '@tiptap/extension-blockquote'
-import XmBaseButton from '../XmBaseButton.vue'
+import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
 
 const Blockquote = TiptapBlockquote.extend({
   addOptions() {
@@ -7,7 +7,7 @@ const Blockquote = TiptapBlockquote.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: XmBaseButton,
+          component: BaseButtonComponent,
           componentProps: {
             name: 'blockquote',
             isActive: () => editor.isActive('blockquote'),

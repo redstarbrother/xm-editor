@@ -1,5 +1,5 @@
 import TiptapItalic from '@tiptap/extension-italic'
-import XmBaseButton from '../XmBaseButton.vue'
+import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
 
 const Italic = TiptapItalic.extend({
   addOptions() {
@@ -7,7 +7,7 @@ const Italic = TiptapItalic.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: XmBaseButton,
+          component: BaseButtonComponent,
           componentProps: {
             name: 'italic',
             isActive: () => editor.isActive('italic'),

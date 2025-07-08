@@ -3,7 +3,7 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { createLowlight, all } from 'lowlight'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import CodeBlockComponent from '@/components/extensions/CodeBlockComponent.vue'
-import XmBaseButton from '../XmBaseButton.vue'
+import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
 
 // 加载代码块样式
 // TODO 变为可动态更过css文件
@@ -17,7 +17,7 @@ const CodeBlock = CodeBlockLowlight.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: XmBaseButton,
+          component: BaseButtonComponent,
           componentProps: {
             name: 'codeBlock',
             isActive: () => editor.isActive('codeBlock'),

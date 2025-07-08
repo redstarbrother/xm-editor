@@ -1,5 +1,5 @@
 import TiptapStrike from '@tiptap/extension-strike'
-import XmBaseButton from '../XmBaseButton.vue'
+import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
 
 const Strike = TiptapStrike.extend({
   addOptions() {
@@ -7,7 +7,7 @@ const Strike = TiptapStrike.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: XmBaseButton,
+          component: BaseButtonComponent,
           componentProps: {
             name: 'strike',
             isActive: () => editor.isActive('strike'),

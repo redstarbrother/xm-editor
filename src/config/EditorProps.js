@@ -77,7 +77,7 @@ export default {
     type: Function,
     default: () => {},
   },
-  onContentChange: {
+  onUpdate: {
     type: Function,
     default: () => {},
   },

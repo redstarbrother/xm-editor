@@ -1,5 +1,5 @@
 import TiptapTaskList from '@tiptap/extension-task-list'
-import XmBaseButton from '../XmBaseButton.vue'
+import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
 
 const TaskList = TiptapTaskList.extend({
   addOptions() {
@@ -7,7 +7,7 @@ const TaskList = TiptapTaskList.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: XmBaseButton,
+          component: BaseButtonComponent,
           componentProps: {
             name: 'taskList',
             isActive: () => editor.isActive('taskList'),
