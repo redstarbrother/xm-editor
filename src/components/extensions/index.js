@@ -12,6 +12,7 @@ export { default as TaskList } from '@/components/extensions/taskList'
 export { default as Blockquote } from '@/components/extensions/blockquote'
 export { default as HorizontalRule } from '@/components/extensions/horizontalRule'
 export { default as CodeBlock } from '@/components/extensions/codeBlock'
+export { default as Image } from '@/components/extensions/image/image'
 
 // default dependencies
 import StarterKit from '@tiptap/starter-kit'

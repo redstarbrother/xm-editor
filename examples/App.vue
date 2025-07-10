@@ -28,6 +28,7 @@ import {
   Blockquote,
   HorizontalRule,
   CodeBlock,
+  Image,
 } from "../src/index";
 import "../src/styles/base.css";
 
@@ -43,6 +44,7 @@ const extensions = [
   Blockquote,
   HorizontalRule,
   CodeBlock,
+  Image,
 ];
 
 const onUpdate = ({ editor }) => {

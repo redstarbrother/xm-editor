@@ -1,32 +1,37 @@
 <template>
-  <div class="base-button" :class="{ 'is-active-par': active }" @click="onClick">
-    <SvgIcon :name="props.name" :active="active"/>
+  <div
+    class="base-button"
+    :class="{ 'is-active-par': active }"
+    @click="onClick"
+  >
+    <SvgIcon :name="props.name" :active="active" />
   </div>
 </template>
 
 <script setup>
-import { defineProps, computed } from 'vue'
-import SvgIcon from './SvgIcon.vue'
+import { defineProps, computed, ref } from "vue";
+import SvgIcon from "./SvgIcon.vue";
 
 const props = defineProps({
   name: String,
   isActive: Function,
-  execute: Function
-})
+  execute: Function,
+});
+
+const subComponentRef = ref(null);
 
 function onClick() {
   if (props.execute) {
-    props.execute()
-    console.log(props.isActive)
+    props.execute();
   }
 }
 
 const active = computed(() => {
   if (props.isActive) {
-    return props.isActive()
+    return props.isActive();
   }
-  return false
-})
+  return false;
+});
 </script>
 
 <style scoped>
