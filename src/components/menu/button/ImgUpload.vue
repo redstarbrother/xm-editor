@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <transition name="fade">
-      <div v-if="props.modelValue" class="dialog-mask" @click.self="close">
+      <div v-if="display" class="dialog-mask" @click.self="close">
         <div class="dialog-container">
           <div class="dialog-title">上传图片</div>
 
@@ -48,15 +48,12 @@
 <script setup>
 import { ref, watch, defineProps, defineEmits } from "vue";
 
-const props = defineProps({
-  modelValue: Boolean,
-});
-
-const emit = defineEmits(['update:modelValue', 'upload'])
-
+const display = defineModel()
 function close() {
-  emit('update:modelValue', false)
+  display.value = false
 }
+
+const emit = defineEmits(["upload"])
 
 const imageUrl = ref("");
 const fileInput = ref(null);

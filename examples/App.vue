@@ -44,7 +44,9 @@ const extensions = [
   Blockquote,
   HorizontalRule,
   CodeBlock,
-  Image,
+  Image.configure({
+    uploadUrl: 'http://127.0.0.1:9527/doc/uploadImg',
+  }),
 ];
 
 const onUpdate = ({ editor }) => {
