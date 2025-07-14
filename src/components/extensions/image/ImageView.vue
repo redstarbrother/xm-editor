@@ -47,6 +47,7 @@ const stopResize = () => {
 img {
   max-width: 100%;
   display: block;
+  border-radius: 2%;
 }
 .resize-handle {
   position: absolute;
@@ -56,5 +57,11 @@ img {
   height: 12px;
   background: gray;
   cursor: se-resize;
+}
+
+/* 当选中图片节点时，添加亮蓝边框 */
+.ProseMirror-selectednode img {
+  outline: 3px solid #3b82f6; /* Tailwind 的 blue-500 */
+
 }
 </style>

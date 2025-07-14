@@ -77,6 +77,9 @@ importers:
       lowlight:
         specifier: ^3.2.0
         version: 3.3.0
+      prosemirror-state:
+        specifier: ^1.4.3
+        version: 1.4.3
       vue:
         specifier: ^3.5.13
         version: 3.5.13
