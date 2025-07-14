@@ -2,6 +2,7 @@
   <div
     class="xm-editor-root"
     :style="{
+      height: props.height || '300px',
       border: props.showBorder ? '1px solid #d1d5da' : 'none',
       borderRadius: props.showBorder ? '5px' : 'none',
     }"
@@ -16,7 +17,6 @@
       :editor="editor"
       :style="{
         '--editor-focus-bg': props.backgroundColorOnFocus,
-        '--editor-height': props.height,
       }"
     />
   </div>
@@ -121,17 +121,20 @@ watch(() => props.placeholder, (newContent) => {
 
 <style scoped>
 .xm-editor-root {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
 .editor-content {
-  /* overflow: auto; */
+  flex: 1;
+  overflow: hidden;
 }
 
 /* ✅ 使用 :deep() 让 scoped 样式生效 */
 :deep(.ProseMirror) {
   overflow: auto;
-  height: var(--editor-height);
+  height: 100%;
   transition: background-color 0.1s ease-in-out;
 }
 

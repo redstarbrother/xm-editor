@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <!-- <XmEditor
       :extensions="extensions"
       :showToolbar="false"
@@ -10,6 +10,7 @@
       :extensions="extensions"
       :showToolbar="true"
       :onUpdate="onUpdate"
+      :height="'100%'"
     />
   </div>
 </template>
@@ -54,4 +55,8 @@ const onUpdate = ({ editor }) => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.container {
+  height: 50vh;
+}
+</style>
