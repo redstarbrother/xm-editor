@@ -43,11 +43,12 @@ const stopResize = () => {
 .image-container {
   position: relative;
   display: inline-block;
+  margin: 2px;
 }
 img {
   max-width: 100%;
   display: block;
-  border-radius: 2%;
+  border-radius: 0.3em;
 }
 .resize-handle {
   position: absolute;
