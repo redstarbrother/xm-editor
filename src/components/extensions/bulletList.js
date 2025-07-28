@@ -1,5 +1,6 @@
 import TiptapBulletList from '@tiptap/extension-bullet-list'
 import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import { iconMap } from '@/config/iconMap'
 
 const BulletList = TiptapBulletList.extend({
   addOptions() {
@@ -9,7 +10,7 @@ const BulletList = TiptapBulletList.extend({
         return {
           component: BaseButtonComponent,
           componentProps: {
-            name: 'bulletList',
+            icon: iconMap['bulletList'],
             isActive: () => editor.isActive('bulletList'),
             execute: () => editor.commands.toggleBulletList(),
           },

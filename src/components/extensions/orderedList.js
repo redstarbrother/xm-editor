@@ -1,5 +1,6 @@
 import TiptapOrderedList from '@tiptap/extension-ordered-list'
 import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import { iconMap } from '@/config/iconMap'
 
 const OrderedList = TiptapOrderedList.extend({
   addOptions() {
@@ -9,7 +10,7 @@ const OrderedList = TiptapOrderedList.extend({
         return {
           component: BaseButtonComponent,
           componentProps: {
-            name: 'orderedList',
+            icon: iconMap['orderedList'],
             isActive: () => editor.isActive('orderedList'),
             execute: () => editor.commands.toggleOrderedList(),
           },

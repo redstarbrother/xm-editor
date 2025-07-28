@@ -1,5 +1,6 @@
 import TiptapTaskList from '@tiptap/extension-task-list'
 import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import { iconMap } from '@/config/iconMap'
 
 const TaskList = TiptapTaskList.extend({
   addOptions() {
@@ -9,7 +10,7 @@ const TaskList = TiptapTaskList.extend({
         return {
           component: BaseButtonComponent,
           componentProps: {
-            name: 'taskList',
+            icon: iconMap['taskList'],
             isActive: () => editor.isActive('taskList'),
             execute: () => editor.commands.toggleTaskList(),
           },

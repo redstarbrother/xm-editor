@@ -1,19 +1,15 @@
 <template>
-  <div
-    class="base-button"
-    :class="{ 'is-active-par': active }"
-    @click="onClick"
-  >
-    <SvgIcon :name="props.name" :active="active" />
+  <div class="base-button" :class="{ 'is-active-par': active }" @click="onClick">
+    <component :is="props.icon" class="icon" />
   </div>
 </template>
 
 <script setup>
 import { defineProps, computed, ref } from "vue";
-import SvgIcon from "./SvgIcon.vue";
 
 const props = defineProps({
   name: String,
+  icon: Object,
   isActive: Function,
   execute: Function,
 });
@@ -36,7 +32,10 @@ const active = computed(() => {
 
 <style scoped>
 .base-button {
-  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px 4px;
   cursor: pointer;
 }
 

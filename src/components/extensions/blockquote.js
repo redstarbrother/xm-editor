@@ -1,5 +1,6 @@
 import TiptapBlockquote from '@tiptap/extension-blockquote'
 import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import { iconMap } from '@/config/iconMap'
 
 const Blockquote = TiptapBlockquote.extend({
   addOptions() {
@@ -9,7 +10,7 @@ const Blockquote = TiptapBlockquote.extend({
         return {
           component: BaseButtonComponent,
           componentProps: {
-            name: 'blockquote',
+            icon: iconMap['blockquote'],
             isActive: () => editor.isActive('blockquote'),
             execute: () => editor.commands.toggleBlockquote(),
           },

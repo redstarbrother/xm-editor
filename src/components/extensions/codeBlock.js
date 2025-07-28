@@ -4,6 +4,7 @@ import { createLowlight, all } from 'lowlight'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import CodeBlockComponent from '@/components/extensions/CodeBlockComponent.vue'
 import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import { iconMap } from '@/config/iconMap'
 
 // 加载代码块样式
 // TODO 变为可动态更过css文件
@@ -19,7 +20,7 @@ const CodeBlock = CodeBlockLowlight.extend({
         return {
           component: BaseButtonComponent,
           componentProps: {
-            name: 'codeBlock',
+            icon: iconMap['codeBlock'],
             isActive: () => editor.isActive('codeBlock'),
             execute: () => editor.commands.toggleCodeBlock(),
           },

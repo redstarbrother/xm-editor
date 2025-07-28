@@ -1,5 +1,6 @@
 import TtHeading from '@tiptap/extension-heading'
 import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import { iconMap } from '@/config/iconMap'
 
 const Heading = TtHeading.extend({
   addOptions() {
@@ -9,7 +10,7 @@ const Heading = TtHeading.extend({
         return {
           component: BaseButtonComponent,
           componentProps: {
-            name: 'heading',
+            icon: iconMap['heading'],
             isActive: () => editor.isActive('heading'),
           },
         }

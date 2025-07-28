@@ -1,5 +1,6 @@
 import TiptapStrike from '@tiptap/extension-strike'
 import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import { iconMap } from '@/config/iconMap'
 
 const Strike = TiptapStrike.extend({
   addOptions() {
@@ -9,7 +10,7 @@ const Strike = TiptapStrike.extend({
         return {
           component: BaseButtonComponent,
           componentProps: {
-            name: 'strike',
+            icon: iconMap['strike'],
             isActive: () => editor.isActive('strike'),
             execute: () => editor.commands.toggleStrike(),
           },

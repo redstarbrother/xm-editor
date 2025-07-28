@@ -1,5 +1,6 @@
 import TiptapUnderline from '@tiptap/extension-underline'
 import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import { iconMap } from '@/config/iconMap'
 
 const Underline = TiptapUnderline.extend({
   addOptions() {
@@ -9,7 +10,7 @@ const Underline = TiptapUnderline.extend({
         return {
           component: BaseButtonComponent,
           componentProps: {
-            name: 'underline',
+            icon: iconMap['underline'],
             isActive: () => editor.isActive('underline'),
             execute: () => editor.commands.toggleUnderline(),
           },
