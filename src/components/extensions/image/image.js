@@ -3,6 +3,7 @@ import ImageButton from "@/components/menu/button/ImageButton.vue";
 import ImageView from "@/components/extensions/image/ImageView.vue";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import { Plugin } from "prosemirror-state";
+import { iconMap } from '@/config/iconMap'
 
 const Image = TiptapImage.extend({
   inline() {
@@ -22,7 +23,7 @@ const Image = TiptapImage.extend({
         return {
           component: ImageButton,
           componentProps: {
-            name: "image",
+            icon: iconMap['image'],
             execute: () => {},
             editor,
           },

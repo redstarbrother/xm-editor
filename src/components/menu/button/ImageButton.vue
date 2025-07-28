@@ -1,6 +1,6 @@
 <template>
   <div class="base-button" @click="onClick">
-    <SvgIcon :name="props.name" />
+    <component :is="props.icon" />
   </div>
   <ImgUpload v-model="showDialog" :editor="props.editor" @upload="upload" />
 </template>
@@ -11,7 +11,7 @@ import ImgUpload from "./ImgUpload.vue";
 import SvgIcon from "../SvgIcon.vue";
 
 const props = defineProps({
-  name: String,
+  icon: Object,
   execute: Function,
   editor: Object,
 });

@@ -1,6 +1,15 @@
 <template>
-  <div class="base-button" :class="{ 'is-active-par': active }" @click="onClick">
-    <component :is="props.icon" class="icon" />
+  <div
+    class="base-button"
+    :class="{ 'is-active-par': active }"
+    @click="onClick"
+  >
+    <component
+      :is="props.icon"
+      :stroke-width="iconConfig.strokeWidth"
+      :size="iconConfig.size"
+      :class="['icon', active ? 'icon-active' : '']"
+    />
   </div>
 </template>
 
@@ -13,6 +22,11 @@ const props = defineProps({
   isActive: Function,
   execute: Function,
 });
+
+const iconConfig = {
+  size: "1.3rem",
+  strokeWidth: 2.5,
+};
 
 const subComponentRef = ref(null);
 
@@ -35,8 +49,24 @@ const active = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 2px 4px;
+  padding: 0.5rem;
   cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.base-button:hover {
+  background-color: #f0f4f8;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.icon {
+  transition: color 0.2s ease-in-out;
+}
+
+.icon-active {
+  color: #4285f4;
+  transition: color 0.2s ease-in-out;
 }
 
 .is-active {
@@ -44,7 +74,7 @@ const active = computed(() => {
 }
 
 .is-active-par {
-  border-radius: 50%;
-  background-color: #ecf5ff;
+  background-color: #ECF5FF;
+  transition: background-color 0.2s ease-in-out;
 }
 </style>
