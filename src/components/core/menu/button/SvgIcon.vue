@@ -27,8 +27,6 @@ const iconConfig = {
   strokeWidth: 2.5,
 };
 
-const subComponentRef = ref(null);
-
 function onClick() {
   if (props.execute) {
     props.execute();
