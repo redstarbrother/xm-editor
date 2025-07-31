@@ -2,8 +2,8 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 // load all highlight.js languages
 import { createLowlight, all } from 'lowlight'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
-import CodeBlockComponent from '@/components/extensions/CodeBlockComponent.vue'
-import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import CodeBlockComponent from './CodeBlockComponent.vue'
+import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 import { iconMap } from '@/config/iconMap'
 
 // 加载代码块样式
@@ -18,7 +18,7 @@ const CodeBlock = CodeBlockLowlight.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: BaseButtonComponent,
+          component: UniversalButton,
           componentProps: {
             icon: iconMap['codeBlock'],
             isActive: () => editor.isActive('codeBlock'),

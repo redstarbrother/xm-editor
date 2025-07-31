@@ -1,5 +1,5 @@
 import TiptapTaskList from '@tiptap/extension-task-list'
-import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 import { iconMap } from '@/config/iconMap'
 
 const TaskList = TiptapTaskList.extend({
@@ -8,7 +8,7 @@ const TaskList = TiptapTaskList.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: BaseButtonComponent,
+          component: UniversalButton,
           componentProps: {
             icon: iconMap['taskList'],
             isActive: () => editor.isActive('taskList'),

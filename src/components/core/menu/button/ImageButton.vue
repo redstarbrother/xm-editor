@@ -1,17 +1,16 @@
 <template>
-  <div class="base-button" @click="onClick">
-    <SvgIcon :name="props.name" />
-  </div>
+  <SvgIcon v-bind="props" />
   <ImgUpload v-model="showDialog" :editor="props.editor" @upload="upload" />
 </template>
 
 <script setup>
-import { defineProps, computed, ref, onMounted } from "vue";
-import ImgUpload from "./ImgUpload.vue";
-import SvgIcon from "../SvgIcon.vue";
+import { defineProps, ref, onMounted } from "vue";
+import ImgUpload from "@/components/core/extensions/nodes/image/ImgUpload.vue";
+import SvgIcon from "./SvgIcon.vue";
 
 const props = defineProps({
-  name: String,
+  icon: Object,
+  isActive: Function,
   execute: Function,
   editor: Object,
 });

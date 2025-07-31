@@ -1,5 +1,5 @@
 import TiptapHorizontalRule from '@tiptap/extension-horizontal-rule'
-import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 import { iconMap } from '@/config/iconMap'
 
 const HorizontalRule = TiptapHorizontalRule.extend({
@@ -8,7 +8,7 @@ const HorizontalRule = TiptapHorizontalRule.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: BaseButtonComponent,
+          component: UniversalButton,
           componentProps: {
             icon: iconMap['horizontalRule'],
             execute: () => editor.commands.setHorizontalRule(),

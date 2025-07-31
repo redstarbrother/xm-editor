@@ -33,8 +33,8 @@ import {
   watch
 } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
-import { DependencieExtensions } from "@/components/extensions";
-import MenuFixed from "@/components/menu/MenuFixed.vue";
+import { DependencieExtensions } from "./extensions";
+import MenuFixed from "./menu/MenuFixed.vue";
 import EditorProps from "@/config/EditorProps";
 
 // const props = defineProps({

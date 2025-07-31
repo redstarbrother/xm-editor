@@ -1,5 +1,5 @@
 import TiptapUnderline from '@tiptap/extension-underline'
-import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 import { iconMap } from '@/config/iconMap'
 
 const Underline = TiptapUnderline.extend({
@@ -8,7 +8,7 @@ const Underline = TiptapUnderline.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: BaseButtonComponent,
+          component: UniversalButton,
           componentProps: {
             icon: iconMap['underline'],
             isActive: () => editor.isActive('underline'),

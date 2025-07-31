@@ -1,5 +1,5 @@
 import TiptapStrike from '@tiptap/extension-strike'
-import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 import { iconMap } from '@/config/iconMap'
 
 const Strike = TiptapStrike.extend({
@@ -8,7 +8,7 @@ const Strike = TiptapStrike.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: BaseButtonComponent,
+          component: UniversalButton,
           componentProps: {
             icon: iconMap['strike'],
             isActive: () => editor.isActive('strike'),

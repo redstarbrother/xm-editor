@@ -1,5 +1,5 @@
 import TiptapItalic from '@tiptap/extension-italic'
-import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 import { iconMap } from '@/config/iconMap'
 
 const Italic = TiptapItalic.extend({
@@ -8,7 +8,7 @@ const Italic = TiptapItalic.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: BaseButtonComponent,
+          component: UniversalButton,
           componentProps: {
             icon: iconMap['italic'],
             isActive: () => editor.isActive('italic'),

@@ -1,5 +1,5 @@
 import TiptapBulletList from '@tiptap/extension-bullet-list'
-import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 import { iconMap } from '@/config/iconMap'
 
 const BulletList = TiptapBulletList.extend({
@@ -8,7 +8,7 @@ const BulletList = TiptapBulletList.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: BaseButtonComponent,
+          component: UniversalButton,
           componentProps: {
             icon: iconMap['bulletList'],
             isActive: () => editor.isActive('bulletList'),

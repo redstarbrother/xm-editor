@@ -1,5 +1,5 @@
 import TtHeading from '@tiptap/extension-heading'
-import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 import { iconMap } from '@/config/iconMap'
 
 const Heading = TtHeading.extend({
@@ -8,7 +8,7 @@ const Heading = TtHeading.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: BaseButtonComponent,
+          component: UniversalButton,
           componentProps: {
             icon: iconMap['heading'],
             isActive: () => editor.isActive('heading'),

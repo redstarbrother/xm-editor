@@ -1,6 +1,6 @@
 import TiptapBold from '@tiptap/extension-bold'
-import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
 import { iconMap } from '@/config/iconMap'
+import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 
 const Bold = TiptapBold.extend({
   addOptions() {
@@ -8,7 +8,7 @@ const Bold = TiptapBold.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: BaseButtonComponent,
+          component: UniversalButton,
           componentProps: {
             icon: iconMap['bold'],
             isActive: () => editor.isActive('bold'),

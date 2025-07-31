@@ -1,5 +1,5 @@
 import TiptapOrderedList from '@tiptap/extension-ordered-list'
-import BaseButtonComponent from '@/components/menu/BaseButtonComponent.vue'
+import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 import { iconMap } from '@/config/iconMap'
 
 const OrderedList = TiptapOrderedList.extend({
@@ -8,7 +8,7 @@ const OrderedList = TiptapOrderedList.extend({
       ...this.parent?.(),
       button({ editor }) {
         return {
-          component: BaseButtonComponent,
+          component: UniversalButton,
           componentProps: {
             icon: iconMap['orderedList'],
             isActive: () => editor.isActive('orderedList'),

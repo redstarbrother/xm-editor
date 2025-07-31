@@ -1,20 +1,17 @@
 <template>
-  <div class="base-button" :class="{ 'is-active-par': active }" @click="onClick">
-    <component :is="props.icon" class="icon" />
-  </div>
+    <div class="base-button" :class="{ 'is-active-par': active }" @click="onClick">
+        <component :is="props.icon" class="icon" />
+    </div>
 </template>
 
 <script setup>
-import { defineProps, computed, ref } from "vue";
+import { defineProps, computed } from "vue";
 
 const props = defineProps({
-  name: String,
   icon: Object,
   isActive: Function,
   execute: Function,
 });
-
-const subComponentRef = ref(null);
 
 function onClick() {
   if (props.execute) {
