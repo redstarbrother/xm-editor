@@ -30,7 +30,9 @@ const buttonCompontents = generateButtonCompontents(props.editor, props.extensio
   flex-wrap: wrap;
   justify-content: left;
   padding: 5px;
-  background-color: #f6f8fa;
+  /* background-color: #f6f8fa; */
+  background-color: #fff;
   border-bottom: 1px solid #d1d5da;
+  grid-gap: 5px;
 }
 </style>
