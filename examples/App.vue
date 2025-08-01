@@ -1,17 +1,14 @@
 <template>
   <div class="container">
-    <!-- <XmEditor
+    <div class="editor-area">
+      <!-- <XmEditor
       :extensions="extensions"
       :showToolbar="false"
       :backgroundColorOnFocus="'#ffffff'"
       :showBorder="false"
     /> -->
-    <XmEditor
-      :extensions="extensions"
-      :showToolbar="true"
-      :onUpdate="onUpdate"
-      :height="'100%'"
-    />
+      <XmEditor v-bind="editorProps" />
+    </div>
   </div>
 </template>
 
@@ -53,10 +50,27 @@ const extensions = [
 const onUpdate = ({ editor }) => {
   console.log(editor.getJSON());
 };
+
+// 使用EditorProps对象形式传入属性
+const editorProps = {
+  extensions,
+  showToolbar: true,
+  onUpdate,
+  height: '100%'
+};
 </script>
 
 <style scoped>
 .container {
-  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.editor-area {
+  height: 300px;
+  width: 700px;
 }
 </style>
