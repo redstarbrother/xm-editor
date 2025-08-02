@@ -1,6 +1,6 @@
 import TiptapStrike from '@tiptap/extension-strike'
 import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
-import { iconMap } from '@/config/iconMap'
+import { iconMap } from '@/components/setting/iconMap'
 
 const Strike = TiptapStrike.extend({
   addOptions() {

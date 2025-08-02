@@ -35,7 +35,7 @@ import {
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { DependencieExtensions } from "./extensions";
 import MenuFixed from "./menu/MenuFixed.vue";
-import EditorProps from "@/config/EditorProps";
+import EditorProps from "@/components/setting/EditorProps";
 
 // const props = defineProps({
 //     width: {

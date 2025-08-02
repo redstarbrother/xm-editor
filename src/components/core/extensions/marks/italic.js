@@ -1,6 +1,6 @@
 import TiptapItalic from '@tiptap/extension-italic'
 import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
-import { iconMap } from '@/config/iconMap'
+import { iconMap } from '@/components/setting/iconMap'
 
 const Italic = TiptapItalic.extend({
   addOptions() {

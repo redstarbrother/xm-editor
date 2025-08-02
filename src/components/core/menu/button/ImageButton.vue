@@ -9,7 +9,7 @@ import ImgUpload from "@/components/core/extensions/nodes/image/ImgUpload.vue";
 import SvgIcon from "./SvgIcon.vue";
 
 const props = defineProps({
-  icon: Object,
+  icon: [Object, Function],
   isActive: Function,
   execute: Function,
   editor: Object,

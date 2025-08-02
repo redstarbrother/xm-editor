@@ -4,7 +4,7 @@ import { createLowlight, all } from 'lowlight'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import CodeBlockComponent from './CodeBlockComponent.vue'
 import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
-import { iconMap } from '@/config/iconMap'
+import { iconMap } from '@/components/setting/iconMap'
 
 // 加载代码块样式
 // TODO 变为可动态更过css文件

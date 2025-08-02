@@ -1,5 +1,5 @@
 import TiptapBold from '@tiptap/extension-bold'
-import { iconMap } from '@/config/iconMap'
+import { iconMap } from '@/components/setting/iconMap'
 import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 
 const Bold = TiptapBold.extend({

@@ -1,6 +1,6 @@
 import TiptapHorizontalRule from '@tiptap/extension-horizontal-rule'
 import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
-import { iconMap } from '@/config/iconMap'
+import { iconMap } from '@/components/setting/iconMap'
 
 const HorizontalRule = TiptapHorizontalRule.extend({
   addOptions() {

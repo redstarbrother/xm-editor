@@ -1,6 +1,6 @@
 import TiptapUnderline from '@tiptap/extension-underline'
 import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
-import { iconMap } from '@/config/iconMap'
+import { iconMap } from '@/components/setting/iconMap'
 
 const Underline = TiptapUnderline.extend({
   addOptions() {

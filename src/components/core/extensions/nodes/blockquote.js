@@ -1,6 +1,6 @@
 import TiptapBlockquote from '@tiptap/extension-blockquote'
 import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
-import { iconMap } from '@/config/iconMap'
+import { iconMap } from '@/components/setting/iconMap'
 
 const Blockquote = TiptapBlockquote.extend({
   addOptions() {

@@ -15,17 +15,13 @@
 
 <script setup>
 import { defineProps, computed } from "vue";
+import { iconConfig } from "@/components/setting/iconMap";
 
 const props = defineProps({
   icon: Object,
   isActive: Function,
   execute: Function,
 });
-
-const iconConfig = {
-  size: "1.3rem",
-  strokeWidth: 2.5,
-};
 
 function onClick() {
   if (props.execute) {

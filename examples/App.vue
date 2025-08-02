@@ -20,9 +20,7 @@ import {
   Italic,
   Strike,
   Underline,
-  BulletList,
-  OrderedList,
-  TaskList,
+  List,
   Blockquote,
   HorizontalRule,
   CodeBlock,
@@ -36,9 +34,7 @@ const extensions = [
   Italic,
   Underline,
   Strike,
-  BulletList,
-  OrderedList,
-  TaskList,
+  List,
   Blockquote,
   HorizontalRule,
   CodeBlock,
@@ -70,7 +66,7 @@ const editorProps = {
 }
 
 .editor-area {
-  height: 300px;
-  width: 700px;
+  height: 500px;
+  width: 1200px;
 }
 </style>
