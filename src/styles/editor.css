@@ -1,0 +1,77 @@
+/* src/assets/editor.css */
+
+/* Tiptap 编辑器核心容器样式 */
+.ProseMirror {
+  min-height: 300px;
+  line-height: 1.4;
+  padding: 12px;
+  outline: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow: auto;
+  height: 100%;
+  transition: background-color 0.1s ease-in-out;
+  caret-color: black !important;
+  color: black !important;
+}
+
+/* .ProseMirror:focus {
+  transition: background-color 0.1s ease-in-out;
+  background-color: var(--editor-focus-bg, #fff);
+  outline: none;
+  caret-color: black !important;
+  color: black !important;
+} */
+
+/* 段落默认样式 */
+.ProseMirror p {
+  margin: 0.5em;
+}
+
+/* 去除标题之间的额外间距 */
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6 {
+  margin: 0.5em 0;
+  font-weight: bold;
+}
+
+/* 列表样式优化 */
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 1.5em;
+  margin: 0.5em 0;
+}
+
+.ProseMirror li {
+  margin: 0;
+}
+
+/* 引用块样式 */
+.ProseMirror blockquote {
+  margin: 0.5em 0;
+  padding-left: 1em;
+  border-left: 2px solid #ccc;
+  color: #666;
+}
+
+/* 代码块 */
+.ProseMirror pre {
+  background: #f6f6f6;
+  padding: 0.75em 1em;
+  border-radius: 4px;
+  font-family: monospace;
+  overflow-x: auto;
+  margin: 0.5em 0;
+}
+
+/* 行内代码 */
+.ProseMirror code {
+  background: #f1f1f1;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: monospace;
+}

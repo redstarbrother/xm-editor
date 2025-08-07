@@ -36,6 +36,9 @@ import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { DependencieExtensions } from "./extensions";
 import MenuFixed from "./menu/MenuFixed.vue";
 import EditorProps from "@/components/setting/EditorProps";
+import '@/styles/editor.css'
+
+
 
 // const props = defineProps({
 //     width: {
@@ -117,9 +120,20 @@ watch(() => props.placeholder, (newContent) => {
     editor.value.commands.setContent(newContent);
   }
 });
+
+onMounted(() => {
+  const interval = setInterval(() => {
+    const prose = document.querySelector('.ProseMirror')
+    if (prose) {
+      prose.style.caretColor = 'black';
+      prose.style.color = 'black';
+      clearInterval(interval);
+    }
+  }, 100); // 100ms 轮询，直到 ProseMirror 出现
+});
 </script>
 
-<style scoped>
+<style>
 .xm-editor-root {
   display: flex;
   flex-direction: column;
@@ -129,18 +143,6 @@ watch(() => props.placeholder, (newContent) => {
 .editor-content {
   flex: 1;
   overflow: hidden;
-}
-
-/* ✅ 使用 :deep() 让 scoped 样式生效 */
-:deep(.ProseMirror) {
-  overflow: auto;
-  height: 100%;
-  transition: background-color 0.1s ease-in-out;
-}
-
-:deep(.ProseMirror:focus) {
-  transition: background-color 0.1s ease-in-out;
-  background-color: var(--editor-focus-bg, #fff);
-  outline: none;
+  line-height: 1.4;
 }
 </style>
