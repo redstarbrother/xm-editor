@@ -37,6 +37,7 @@ export default {
   // 选中时背景颜色
   backgroundColorOnFocus: {
     type: String,
+    // default: "#FFF",
     default: "#FAFBFC",
   },
   showBorder: {

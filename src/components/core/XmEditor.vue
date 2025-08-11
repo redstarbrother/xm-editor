@@ -2,7 +2,7 @@
   <div
     class="xm-editor-root"
     :style="{
-      height: props.height || '300px',
+      height: props.height,
       border: props.showBorder ? '1px solid #d1d5da' : 'none',
       borderRadius: props.showBorder ? '5px' : 'none',
     }"
@@ -120,17 +120,6 @@ watch(() => props.placeholder, (newContent) => {
     editor.value.commands.setContent(newContent);
   }
 });
-
-onMounted(() => {
-  const interval = setInterval(() => {
-    const prose = document.querySelector('.ProseMirror')
-    if (prose) {
-      prose.style.caretColor = 'black';
-      prose.style.color = 'black';
-      clearInterval(interval);
-    }
-  }, 100); // 100ms 轮询，直到 ProseMirror 出现
-});
 </script>
 
 <style>
@@ -145,4 +134,6 @@ onMounted(() => {
   overflow: hidden;
   line-height: 1.4;
 }
+
+
 </style>

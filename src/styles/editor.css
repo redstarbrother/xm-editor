@@ -11,21 +11,16 @@
   overflow: auto;
   height: 100%;
   transition: background-color 0.1s ease-in-out;
-  caret-color: black !important;
-  color: black !important;
 }
 
-/* .ProseMirror:focus {
-  transition: background-color 0.1s ease-in-out;
-  background-color: var(--editor-focus-bg, #fff);
-  outline: none;
-  caret-color: black !important;
-  color: black !important;
-} */
+.ProseMirror:focus {
+  background-color: var(--editor-focus-bg, white); /* 默认白色 */
+}
+
 
 /* 段落默认样式 */
 .ProseMirror p {
-  margin: 0.5em;
+  margin: 0.5em 0;
 }
 
 /* 去除标题之间的额外间距 */
@@ -42,7 +37,7 @@
 /* 列表样式优化 */
 .ProseMirror ul,
 .ProseMirror ol {
-  padding-left: 1.5em;
+  padding-left: 1em;
   margin: 0.5em 0;
 }
 
@@ -75,3 +70,51 @@
   border-radius: 3px;
   font-family: monospace;
 }
+
+/* 任务列表容器 */
+ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul[data-type="taskList"] li {
+  display: flex;
+  align-items: center; /* 垂直居中 */
+}
+
+ul[data-type="taskList"] li > label {
+  display: flex;
+  align-items: center;
+  gap: 0.3em; /* 复选框和文字间距 */
+  margin: 0;
+}
+
+/* 复选框内联显示 */
+ul[data-type="taskList"] input[type="checkbox"] {
+  display: inline-block;
+  margin: 0;
+}
+
+/* 设置滚动条宽度 */
+::-webkit-scrollbar {
+    width: 10px;  /* 垂直滚动条宽度 */
+    height: 10px; /* 水平滚动条高度 */
+  }
+  
+  /* 设置滚动条滑块的样式 */
+  ::-webkit-scrollbar-thumb {
+    background-color: #e4e3e3; /* 滑块颜色，柔和灰色 */
+    border-radius: 10px;     /* 滑块圆角 */
+    border: 2px solid #fff;  /* 滑块边框，增加一些对比度 */
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); /* 轻微的阴影效果 */
+  }
+  
+  /* 设置滚动条轨道的样式 */
+  ::-webkit-scrollbar-track {
+      background-color: rgb(250, 251, 252);
+  }
+  
+  /* 设置滚动条按钮的样式（通常用于上下箭头） */
+  ::-webkit-scrollbar-button {
+    display: none; /* 隐藏滚动条按钮 */
+  }
