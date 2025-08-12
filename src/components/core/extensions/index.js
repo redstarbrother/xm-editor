@@ -11,6 +11,7 @@ export { default as Blockquote } from "./nodes/blockquote";
 export { default as HorizontalRule } from "./nodes/horizontalRule";
 export { default as CodeBlock } from "./nodes/codeBlock/codeBlock";
 export { default as Image } from "./nodes/image/image";
+export { default as Table } from "./nodes/table/table";
 
 // default dependencies
 import StarterKit from "@tiptap/starter-kit";

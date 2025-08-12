@@ -16,5 +16,7 @@ export { default as Blockquote } from '@/components/core/extensions/nodes/blockq
 export { default as HorizontalRule } from '@/components/core/extensions/nodes/horizontalRule'
 export { default as CodeBlock } from '@/components/core/extensions/nodes/codeBlock/codeBlock'
 export { default as Image } from '@/components/core/extensions/nodes/image/image'
+export { default as Table } from '@/components/core/extensions/nodes/table/table'
+
 
 export default XmEditor

@@ -25,6 +25,8 @@ import {
   HorizontalRule,
   CodeBlock,
   Image,
+  Table,
+
 } from "../src/index";
 import "../src/styles/base.css";
 
@@ -41,6 +43,7 @@ const extensions = [
   Image.configure({
     uploadUrl: 'http://127.0.0.1:9527/doc/uploadImg',
   }),
+  Table,
 ];
 
 const onUpdate = ({ editor }) => {

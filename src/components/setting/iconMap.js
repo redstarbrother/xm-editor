@@ -19,6 +19,7 @@ import {
   Image,
   Minus,
   CheckSquare,
+  Table2,
 } from 'lucide-vue-next'
 
 export const iconMap = {
@@ -45,6 +46,9 @@ export const iconMap = {
   codeBlock: Code,
   document: FileText,
   image: Image,
+
+  table: Table2,
+
 
   horizontalRule: Minus,
 }

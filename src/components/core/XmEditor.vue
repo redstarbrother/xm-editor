@@ -30,15 +30,13 @@ import {
   onUnmounted,
   watchEffect,
   onMounted,
-  watch
+  watch,
 } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { DependencieExtensions } from "./extensions";
 import MenuFixed from "./menu/MenuFixed.vue";
 import EditorProps from "@/components/setting/EditorProps";
-import '@/styles/editor.css'
-
-
+import "@/styles/editor.css";
 
 // const props = defineProps({
 //     width: {
@@ -115,14 +113,17 @@ onUnmounted(() => {
 provide("editor", editor);
 
 // 监听placeholder的变化
-watch(() => props.placeholder, (newContent) => {
-  if (editor.value) {
-    editor.value.commands.setContent(newContent);
+watch(
+  () => props.placeholder,
+  (newContent) => {
+    if (editor.value) {
+      editor.value.commands.setContent(newContent);
+    }
   }
-});
+);
 </script>
 
-<style>
+<style lang="scss">
 .xm-editor-root {
   display: flex;
   flex-direction: column;
@@ -134,6 +135,4 @@ watch(() => props.placeholder, (newContent) => {
   overflow: hidden;
   line-height: 1.4;
 }
-
-
 </style>
