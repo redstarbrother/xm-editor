@@ -17,6 +17,11 @@
   background-color: var(--editor-focus-bg, white); /* 默认白色 */
 }
 
+.ProseMirror:focus td,
+.ProseMirror:focus th {
+  background-color: var(--editor-focus-bg, white); /* 默认白色 */
+}
+
 /* 段落默认样式 */
 .ProseMirror p {
   margin: 0.5em 0;
@@ -94,6 +99,75 @@ ul[data-type="taskList"] input[type="checkbox"] {
   margin: 0;
 }
 
+/* 表格样式 */
+.ProseMirror table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  table-layout: fixed;
+  margin: 8px 0;
+  border-radius: 10px;
+  overflow: auto; /* 这样圆角才会裁切单元格背景 */
+}
+
+.ProseMirror th,
+.ProseMirror td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  vertical-align: top;
+  background-color: #fff;
+  transition: background-color 0.15s ease;
+}
+
+/* 表头样式 */
+.ProseMirror th {
+  background-color: #f9f9f9;
+  font-weight: 600;
+}
+
+/* hover 高亮当前单元格 */
+.ProseMirror td:hover,
+.ProseMirror th:hover {
+  background-color: #f3f9ff;
+}
+
+/* 选中单元格边框高亮 */
+.ProseMirror td.is-selected,
+.ProseMirror th.is-selected {
+  outline: 2px solid #2684ff;
+  outline-offset: -2px;
+  background-color: #eaf3ff;
+}
+
+/* 禁用光标闪烁时的奇怪背景（可选） */
+.ProseMirror td:focus,
+.ProseMirror th:focus {
+  background-color: inherit;
+}
+
+/* 防止文字挤在一起 */
+.ProseMirror table p {
+  margin: 0;
+}
+
+/* 四个角的圆角处理 */
+.ProseMirror tr:first-child th:first-child,
+.ProseMirror tr:first-child td:first-child {
+  border-top-left-radius: 4px;
+}
+
+.ProseMirror tr:first-child th:last-child,
+.ProseMirror tr:first-child td:last-child {
+  border-top-right-radius: 4px;
+}
+
+.ProseMirror tr:last-child td:first-child {
+  border-bottom-left-radius: 4px;
+}
+
+.ProseMirror tr:last-child td:last-child {
+  border-bottom-right-radius: 4px;
+}
 
 /* 设置滚动条宽度 */
 ::-webkit-scrollbar {

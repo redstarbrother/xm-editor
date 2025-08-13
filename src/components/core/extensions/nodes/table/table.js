@@ -1,15 +1,22 @@
-import { Extension } from "@tiptap/core";
-import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
-import { TableKit } from '@tiptap/extension-table'
+import UniversalButton from "@/components/core/menu/button/UniversalButton.vue";
+// import { TableKit } from '@tiptap/extension-table'
+import { Table as TiptapTable } from "@tiptap/extension-table";
+import { TableRow } from "@tiptap/extension-table-row";
+import { TableCell } from "@tiptap/extension-table-cell";
+import { TableHeader } from "@tiptap/extension-table-header";
 import { iconMap } from "@/components/setting/iconMap";
+import TableView from "@/components/core/extensions/nodes/table/TableView.vue";
+import { VueNodeViewRenderer } from "@tiptap/vue-3";
 
-const Table = Extension.create({
-  name: "table",
+const Table = TiptapTable.extend({
   addExtensions() {
-    return [
-      TableKit
-    ];
+    return [TableRow, TableCell, TableHeader];
   },
+
+  addNodeView() {
+    return VueNodeViewRenderer(TableView);
+  },
+
   addOptions() {
     return {
       ...this.parent?.(),
@@ -19,7 +26,12 @@ const Table = Extension.create({
           componentProps: {
             icon: iconMap["table"],
             isActive: () => editor.isActive("table"),
-            execute: () => editor.commands.insertTable({ rows: 3, cols: 3, withHeaderRow: false }),
+            execute: () =>
+              editor.commands.insertTable({
+                rows: 3,
+                cols: 3,
+                withHeaderRow: false,
+              }),
             editor: editor,
           },
         };
@@ -27,6 +39,5 @@ const Table = Extension.create({
     };
   },
 });
-
 
 export default Table;
