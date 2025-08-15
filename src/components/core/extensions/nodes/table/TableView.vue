@@ -2,7 +2,9 @@
   <!-- 根节点必须是 NodeViewWrapper -->
   <NodeViewWrapper as="table" class="xm-table">
     <!-- 渲染子节点（tableRow） -->
-    <NodeViewContent as="tbody" />
+    <div class="table-container" @contextmenu.prevent="onContextMenu">
+      <NodeViewContent as="tbody" />
+    </div>
   </NodeViewWrapper>
 </template>
 
