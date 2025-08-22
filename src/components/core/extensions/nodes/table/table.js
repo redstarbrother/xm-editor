@@ -27,11 +27,11 @@ const Table = TiptapTable.extend({
                         icon: iconMap["table"],
                         isActive: () => editor.isActive("table"),
                         execute: () =>
-                            editor.commands.insertTable({
+                            editor.chain().focus().insertTable({
                                 rows: 3,
                                 cols: 3,
                                 withHeaderRow: false,
-                            }),
+                            }).run(),
                         editor: editor,
                     },
                 };
