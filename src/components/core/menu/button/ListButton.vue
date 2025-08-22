@@ -28,21 +28,21 @@ const listItem = [
     icon: iconMap["bulletList"],
     label: "无序列表",
     execute: () => {
-      props.editor.commands.toggleBulletList();
+      props.editor.chain().focus().toggleBulletList().run();
     },
   },
   {
     icon: iconMap["orderedList"],
     label: "有序列表",
     execute: () => {
-      props.editor.commands.toggleOrderedList();
+      props.editor.chain().focus().toggleOrderedList().run();
     },
   },
   {
     icon: iconMap["taskList"],
     label: "任务列表",
     execute: () => {
-      props.editor.commands.toggleTaskList();
+      props.editor.chain().focus().toggleTaskList().run();
     },
   },
 ];

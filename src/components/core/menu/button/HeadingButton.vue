@@ -28,42 +28,42 @@ const headingList = [
     icon: iconMap["heading1"],
     label: "一级标题",
     execute: () => {
-      props.editor.commands.setHeading({ level: 1 });
+      props.editor.chain().focus().setHeading({ level: 1 }).run();
     },
   },
   {
     icon: iconMap["heading2"],
     label: "二级标题",
     execute: () => {
-      props.editor.commands.setHeading({ level: 2 });
+      props.editor.chain().focus().setHeading({ level: 2 }).run();
     },
   },
   {
     icon: iconMap["heading3"],
     label: "三级标题",
     execute: () => {
-      props.editor.commands.setHeading({ level: 3 });
+      props.editor.chain().focus().setHeading({ level: 3 }).run();
     },
   },
   // {
   //   icon: iconMap["heading4"],
   //   label: "四级标题",
   //   execute: () => {
-  //     props.editor.commands.setHeading({ level: 4 });
+  //     props.editor.chain().focus().setHeading({ level: 4 }).run();
   //   },
   // },
   // {
   //   icon: iconMap["heading5"],
   //   label: "五级标题",
   //   execute: () => {
-  //     props.editor.commands.setHeading({ level: 5 });
+  //     props.editor.chain().focus().setHeading({ level: 5 }).run();
   //   },
   // },
   // {
   //   icon: iconMap["heading6"],
   //   label: "六级标题",
   //   execute: () => {
-  //     props.editor.commands.setHeading({ level: 6 });
+  //     props.editor.chain().focus().setHeading({ level: 6 }).run();
   //   },
   // },
 ];

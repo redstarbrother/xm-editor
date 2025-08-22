@@ -4,7 +4,7 @@
       class="bubble-menu-item"
       v-for="item in menuList"
       :key="item.id"
-      @click="handleItemClick(item)"
+      @mousedown.prevent.stop="handleItemClick(item)"
     >
       <component
         :is="item.icon"

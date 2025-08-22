@@ -9,35 +9,35 @@ import TableView from "@/components/core/extensions/nodes/table/TableView.vue";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 
 const Table = TiptapTable.extend({
-  addExtensions() {
-    return [TableRow, TableCell, TableHeader];
-  },
+    addExtensions() {
+        return [TableRow, TableCell, TableHeader];
+    },
 
-  addNodeView() {
-    return VueNodeViewRenderer(TableView);
-  },
+    addNodeView() {
+        return VueNodeViewRenderer(TableView);
+    },
 
-  addOptions() {
-    return {
-      ...this.parent?.(),
-      button({ editor }) {
+    addOptions() {
         return {
-          component: UniversalButton,
-          componentProps: {
-            icon: iconMap["table"],
-            isActive: () => editor.isActive("table"),
-            execute: () =>
-              editor.commands.insertTable({
-                rows: 3,
-                cols: 3,
-                withHeaderRow: false,
-              }),
-            editor: editor,
-          },
+            ...this.parent?.(),
+            button({ editor }) {
+                return {
+                    component: UniversalButton,
+                    componentProps: {
+                        icon: iconMap["table"],
+                        isActive: () => editor.isActive("table"),
+                        execute: () =>
+                            editor.commands.insertTable({
+                                rows: 3,
+                                cols: 3,
+                                withHeaderRow: false,
+                            }),
+                        editor: editor,
+                    },
+                };
+            },
         };
-      },
-    };
-  },
+    },
 });
 
 export default Table;

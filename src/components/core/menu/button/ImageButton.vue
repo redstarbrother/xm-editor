@@ -59,8 +59,4 @@ const upload = (data) => {
 </script>
 
 <style scoped>
-.base-button {
-  padding: 2px;
-  cursor: pointer;
-}
 </style>

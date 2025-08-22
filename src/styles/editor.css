@@ -104,7 +104,7 @@ ul[data-type="taskList"] input[type="checkbox"] {
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
-  table-layout: fixed;
+  table-layout: auto;
   margin: 8px 0;
   border-radius: 10px;
   overflow: auto; /* 这样圆角才会裁切单元格背景 */
@@ -117,6 +117,7 @@ ul[data-type="taskList"] input[type="checkbox"] {
   vertical-align: top;
   background-color: #fff;
   transition: background-color 0.15s ease;
+  min-width: 80px;
 }
 
 /* 表头样式 */
