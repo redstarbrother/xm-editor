@@ -1,20 +1,21 @@
 <template>
   <SvgIcon v-bind="props" @click="handleClick" ref="iconRef" />
-  <BubbleMenu
-    v-if="showBubble"
-    ref="menuRef"
-    :menuList="headingList"
-    :position="position"
-    @close="showBubble = false"
-  />
+  <BubbleMenu v-if="showBubble" :position="position" ref="menuRef">
+    <div v-for="item in headingList" :key="item.label" class="bubble-menu-item"
+      @click="() => { item.execute(); showBubble = false; }">
+      <component :is="item.icon" :stroke-width="iconConfig.strokeWidth" :size="iconConfig.size - 2" />
+      <span>{{ item.label }}</span>
+    </div>
+  </BubbleMenu>
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted } from "vue";
+import { defineProps, ref } from "vue";
 import SvgIcon from "./SvgIcon.vue";
-import { iconMap } from "@/components/setting/iconMap";
+import { iconMap, iconConfig } from "@/components/setting/iconMap";
 import BubbleMenu from "./BubbleMenu.vue";
 import { onClickOutside } from "@vueuse/core";
+import { getPostionByElement } from "@/utils/positionUtil.js";
 
 const props = defineProps({
   icon: [Object, Function],
@@ -74,14 +75,9 @@ const iconRef = ref(null);
 const position = ref({ x: 0, y: 0 });
 
 const handleClick = () => {
-  // 获取图标元素的位置
-  if (iconRef.value) {
-    const rect = iconRef.value.$el.getBoundingClientRect();
-    position.value = {
-      x: rect.left,
-      y: rect.bottom, // 在图标下方5px处显示菜单
-    };
-  }
+  // 获取图标位置，气泡菜单向下偏移3个像素
+  position.value = getPostionByElement(iconRef)
+  position.value.y += 3
   if (showBubble.value == true) {
     showBubble.value = false;
   } else {
@@ -97,5 +93,4 @@ onClickOutside(menuRef, (event) => {
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
