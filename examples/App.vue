@@ -41,7 +41,25 @@ const extensions = [
   HorizontalRule,
   CodeBlock,
   Image.configure({
-    uploadUrl: 'http://127.0.0.1:9527/doc/uploadImg',
+    uploadHandler: (file) => {
+      return new Promise((resolve, reject) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        fetch('http://127.0.0.1:9527/doc/uploadImg', {
+          method: 'POST',
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            resolve({
+              url: data.data.url,
+            });
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
   }),
   Table,
 ];
