@@ -35,6 +35,8 @@ import {
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { DependencieExtensions } from "./extensions";
 import MenuFixed from "./menu/MenuFixed.vue";
+import SlashCommand from "./extensions/commands/slashCommand";
+import { collectSlashItems } from "@/utils/SlashUtil";
 import EditorProps from "@/components/setting/EditorProps";
 import "@/styles/editor.css";
 
@@ -87,15 +89,32 @@ import "@/styles/editor.css";
 const props = defineProps(EditorProps);
 
 // 拓展依赖集合
-const extensions = computed(() =>
-  DependencieExtensions.concat(props.extensions)
-);
+const getEditorExtensions = () => {
+  const extensions = DependencieExtensions.concat(props.extensions);
+  const slashItems = collectSlashItems(extensions);
+  console.log("slashItems:", JSON.stringify(slashItems, null, 2));
+  
+  // 确保 slashItems 是一个数组且每个项都有必要的属性
+  const validSlashItems = Array.isArray(slashItems) 
+    ? slashItems.filter(item => item && typeof item === 'object' && item.label)
+    : [];
+  
+  console.log("validSlashItems:", JSON.stringify(validSlashItems, null, 2));
+  
+  extensions.push(
+    // 配置slash menu
+    SlashCommand.configure({
+      items: validSlashItems,
+    })
+  );
+  return extensions;
+};
 
 const editor = useEditor({
   autofocus: props.autofocus,
   editable: props.editable,
   content: props.placeholder,
-  extensions: extensions.value,
+  extensions: getEditorExtensions(),
   onUpdate: props.onUpdate,
   onFocus: props.onFocus,
   onBlur: props.onBlur,

@@ -3,7 +3,7 @@ import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import SlashMenu from '../SlashMenu.vue'
 
-export function renderSlashMenu() {
+export default function renderSlashMenu() {
   let popup
   let vm
 

@@ -15,8 +15,7 @@ export { default as Table } from "./nodes/table/table";
 
 // default dependencies
 import StarterKit from "@tiptap/starter-kit";
-import SlashCommand from "./commands/slashCommand"
 
-const DependencieExtensions = [StarterKit, SlashCommand];
+const DependencieExtensions = [StarterKit];
 
 export { DependencieExtensions };

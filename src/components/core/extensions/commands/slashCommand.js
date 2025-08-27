@@ -1,62 +1,38 @@
-import { Extension } from '@tiptap/core'
-import Suggestion from '@tiptap/suggestion'
+import { Extension } from "@tiptap/core";
+import Suggestion from "@tiptap/suggestion";
+import renderSlashMenu from "./renderSlashMenu";
 
-// 菜单项定义
-export const slashCommands = [
-  {
-    title: 'Heading 1',
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).setNode('heading', { level: 1 }).run()
-    },
-  },
-  {
-    title: 'Heading 2',
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).setNode('heading', { level: 2 }).run()
-    },
-  },
-  {
-    title: 'Bullet List',
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).toggleBulletList().run()
-    },
-  },
-  {
-    title: 'Numbered List',
-    command: ({ editor, range }) => {
-      editor.chain().focus().deleteRange(range).toggleOrderedList().run()
-    },
-  },
-]
-
-export function calcSlashCommand(extensions) {
-  const slashCommands = extensions
-    .filter(ext => ext.type === 'node')
-    .map(ext => ({
-      title: ext.name,
-      command: ({ editor, range }) => {
-        editor.chain().focus().deleteRange(range).setNode(ext.name).run()
-      },
-    }))
-  return slashCommands;
-}
-
-export const SlashCommand = Extension.create({
-  name: 'slash-command',
+const SlashCommand = Extension.create({
+  name: "slash-command",
 
   addOptions() {
     return {
-      items: () => [], // 默认空数组
+      items: [], // 默认空数组
       suggestion: {
-        char: '/',
-        items: ({ query, editor }) => {
-          return this.options.items({ query, editor }) // 从 options 里取
+        char: "/",
+        // 关键修改：使用闭包存储 items，而不是依赖 this
+        items: function({ query }) {
+          // 直接从 SlashCommand.options 获取 items
+          const currentItems = SlashCommand.options.items || [];
+          
+          // 确保 items 是数组
+          if (!Array.isArray(currentItems)) {
+            console.log("items is not an array:", currentItems);
+            return [];
+          }
+          
+          // 过滤 items
+          return currentItems.filter(item => {
+            return item && item.label && typeof item.label === 'string' && 
+                   item.label.toLowerCase().includes(query.toLowerCase());
+          });
         },
         command: ({ editor, range, props }) => {
-          props.command({ editor, range })
+          props.command({ editor, range });
         },
+        render: renderSlashMenu,
       },
-    }
+    };
   },
 
   addProseMirrorPlugins() {
@@ -65,6 +41,8 @@ export const SlashCommand = Extension.create({
         editor: this.editor,
         ...this.options.suggestion,
       }),
-    ]
+    ];
   },
-})
+});
+
+export default SlashCommand;
