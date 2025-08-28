@@ -22,10 +22,11 @@ export function useBubbleMenuPosition() {
 
   // 基于光标/Range 定位
   const attachToRange = (range) => {
-    if (!range) return
-    const rect = range.getBoundingClientRect()
-    x.value = rect.left
-    y.value = rect.bottom
+    x.value = Math.round(range.left)
+    y.value = Math.round(range.bottom)
+    console.log("x", x.value);
+    console.log("y", y.value);
+    
   }
 
   return {

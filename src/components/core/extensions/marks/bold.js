@@ -17,7 +17,7 @@ const Bold = TiptapBold.extend({
         };
       },
       slash: () => ({
-        label: "加粗",
+        label: "bold",
         command: ({ editor, range }) => {
           editor.chain().focus().deleteRange(range).setBold().run();
         },

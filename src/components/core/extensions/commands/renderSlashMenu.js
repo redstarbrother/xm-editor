@@ -5,6 +5,7 @@ import { useBubbleMenuPosition } from "@/components/core/menu/composables/useBub
 export default function renderSlashMenu() {
   let vueApp = null;
   let container = null;
+  let component = null; // 👈 保存 SlashMenu 实例
   const { x, y, attachToRange } = useBubbleMenuPosition();
 
   return {
@@ -12,14 +13,17 @@ export default function renderSlashMenu() {
       try {
         container = document.createElement("div");
         document.body.appendChild(container);
-        
-        if (props.clientRect && typeof props.clientRect === 'function') {
+
+        if (props.clientRect && typeof props.clientRect === "function") {
           attachToRange(props.clientRect());
         }
 
         vueApp = createApp({
           render() {
             return h(SlashMenu, {
+              ref: (el) => {
+                component = el; // 👈 拿到实例
+              },
               items: Array.isArray(props.items) ? props.items : [],
               command: props.command,
               editor: props.editor,
@@ -37,12 +41,12 @@ export default function renderSlashMenu() {
         console.error("Error in slash menu onStart:", error);
       }
     },
+
     onUpdate: (props) => {
       try {
-        if (props.clientRect && typeof props.clientRect === 'function') {
+        if (props.clientRect && typeof props.clientRect === "function") {
           attachToRange(props.clientRect());
         }
-        
         if (vueApp && vueApp._instance && vueApp._instance.props) {
           vueApp._instance.props.items = Array.isArray(props.items) ? props.items : [];
         }
@@ -50,13 +54,30 @@ export default function renderSlashMenu() {
         console.error("Error in slash menu onUpdate:", error);
       }
     },
-    onKeyDown: (props) => false,
+
+    onKeyDown: (props) => {
+      if (!component) return false;
+
+      if (props.event.key === "ArrowDown") {
+        component.nextItem();
+        return true;
+      }
+      if (props.event.key === "ArrowUp") {
+        component.prevItem();
+        return true;
+      }
+      if (props.event.key === "Enter") {
+        component.selectItem();
+        return true;
+      }
+      return false;
+    },
+
     onExit: () => {
       try {
-        if (vueApp && typeof vueApp.unmount === 'function') {
+        if (vueApp && typeof vueApp.unmount === "function") {
           vueApp.unmount();
         }
-        
         if (container && container.parentNode) {
           container.remove();
         }
