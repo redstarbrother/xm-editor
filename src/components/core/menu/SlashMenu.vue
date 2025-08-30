@@ -5,14 +5,14 @@
       :key="index"
       class="menu-item"
       :class="{ selected: index === selectedIndex }"
-      @click="handleSelect(index)"
+      @mousedown.prevent="selectItem(index)"
       @mouseenter="selectedIndex = index"
     >
       <component
         :is="item.icon"
         :stroke-width="iconConfigSlashMenu.strokeWidth"
         :size="iconConfigSlashMenu.size"
-        :class="['icon', active ? 'icon-active' : '']"
+        :class="['icon', index === selectedIndex ? 'icon-active' : '']"
       />
       <span>{{ item.label }}</span>
     </div>
@@ -34,12 +34,10 @@ const props = defineProps({
 const selectedIndex = ref(0);
 
 // 选择菜单项
-const selectItem = () => {
-  const item = props.items[selectedIndex.value];
+const selectItem = (index) => {
+  const item = props.items[index];
   if (item) {
-    console.log("props: ", props);
     item.command({ editor: props.editor, range: props.range });
-    // props.command(item);
   }
 };
 
@@ -60,7 +58,7 @@ const onKeyDown = ({ event }) => {
   }
 
   if (event.key === "Enter") {
-    selectItem();
+    selectItem(selectedIndex.value);
     return true;
   }
 
@@ -80,11 +78,19 @@ defineExpose({
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
   padding: 0.5rem;
-  width: 12rem;
+  width: 8rem;
+  max-height: 10rem;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
 .menu-item {
-  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 0.3rem;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -95,5 +101,18 @@ defineExpose({
 
 .menu-item.selected {
   background-color: #e5e7eb;
+}
+
+.menu-item.selected span {
+  color: #4285f4;
+}
+
+.icon-active {
+  color: #4285f4;
+}
+
+/* 隐藏滚动条 */
+.menu-container::-webkit-scrollbar {
+  display: none;
 }
 </style>
