@@ -3,8 +3,10 @@ import { BulletList, OrderedList, TaskList, TaskItem, ListItem } from "@tiptap/e
 import ListButton from "@/components/core/menu/button/listButton.vue";
 import { iconMap } from "@/components/setting/iconMap";
 
+const name = 'list'
+
 const List = Extension.create({
-  name: "list",
+  name: name,
   addExtensions() {
     return [
       BulletList,
@@ -21,7 +23,7 @@ const List = Extension.create({
         return {
           component: ListButton,
           componentProps: {
-            icon: iconMap["list"],
+            icon: iconMap[name],
             isActive: () =>
               editor.isActive("taskList") ||
               editor.isActive("bulletList") ||
@@ -31,6 +33,31 @@ const List = Extension.create({
           },
         };
       },
+      slash: () => (
+        [
+          {
+            label: '无序列表',
+            icon: iconMap['bulletList'],
+            command: ({ editor, range }) => {
+              editor.chain().focus().deleteRange(range).toggleBulletList().run();
+            },
+          },
+          {
+            label: '有序列表',
+            icon: iconMap['orderedList'],
+            command: ({ editor, range }) => {
+              editor.chain().focus().deleteRange(range).toggleOrderedList().run();
+            },
+          },
+          {
+            label: '任务列表',
+            icon: iconMap['taskList'],
+            command: ({ editor, range }) => {
+              editor.chain().focus().deleteRange(range).toggleTaskList().run();
+            },
+          },
+        ]
+      ),
     };
   },
 });

@@ -2,6 +2,8 @@ import TiptapUnderline from '@tiptap/extension-underline'
 import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 import { iconMap } from '@/components/setting/iconMap'
 
+const name = 'underline'
+
 const Underline = TiptapUnderline.extend({
   addOptions() {
     return {
@@ -10,12 +12,19 @@ const Underline = TiptapUnderline.extend({
         return {
           component: UniversalButton,
           componentProps: {
-            icon: iconMap['underline'],
-            isActive: () => editor.isActive('underline'),
+            icon: iconMap[name],
+            isActive: () => editor.isActive(name),
             execute: () => editor.commands.toggleUnderline(),
           },
         }
       },
+      slash: () => ({
+        label: "下划线",
+        icon: iconMap[name],
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).toggleUnderline().run();
+        },
+      }),
     }
   },
 })

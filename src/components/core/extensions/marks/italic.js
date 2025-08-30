@@ -2,6 +2,8 @@ import TiptapItalic from '@tiptap/extension-italic'
 import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 import { iconMap } from '@/components/setting/iconMap'
 
+const name = 'italic'
+
 const Italic = TiptapItalic.extend({
   addOptions() {
     return {
@@ -10,12 +12,19 @@ const Italic = TiptapItalic.extend({
         return {
           component: UniversalButton,
           componentProps: {
-            icon: iconMap['italic'],
-            isActive: () => editor.isActive('italic'),
+            icon: iconMap[name],
+            isActive: () => editor.isActive(name),
             execute: () => editor.commands.toggleItalic(),
           },
         }
       },
+      slash: () => ({
+        label: "斜体",
+        icon: iconMap[name],
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).toggleItalic().run();
+        },
+      }),
     }
   },
 })

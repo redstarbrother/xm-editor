@@ -1,42 +1,23 @@
-import { createApp, h } from "vue";
+import { VueRenderer } from "@tiptap/vue-3";
 import SlashMenu from "@/components/core/menu/SlashMenu.vue";
-import { useBubbleMenuPosition } from "@/components/core/menu/composables/useBubbleMenuPosition";
 
 export default function renderSlashMenu() {
-  let vueApp = null;
-  let container = null;
   let component = null; // 👈 保存 SlashMenu 实例
-  const { x, y, attachToRange } = useBubbleMenuPosition();
+  let positionStyle = {};
 
   return {
     onStart: (props) => {
       try {
-        container = document.createElement("div");
-        document.body.appendChild(container);
+        positionStyle = generatePositionStyle(props.clientRect());
+        console.log("props.items: ", props.items);
+        props.positionStyle = positionStyle;
 
-        if (props.clientRect && typeof props.clientRect === "function") {
-          attachToRange(props.clientRect());
-        }
-
-        vueApp = createApp({
-          render() {
-            return h(SlashMenu, {
-              ref: (el) => {
-                component = el; // 👈 拿到实例
-              },
-              items: Array.isArray(props.items) ? props.items : [],
-              command: props.command,
-              editor: props.editor,
-              range: props.range,
-              style: {
-                position: "absolute",
-                top: y.value + "px",
-                left: x.value + "px",
-              },
-            });
-          },
+        component = new VueRenderer(SlashMenu, {
+          props,
+          editor: props.editor,
         });
-        vueApp.mount(container);
+
+        document.body.appendChild(component.element);
       } catch (error) {
         console.error("Error in slash menu onStart:", error);
       }
@@ -44,46 +25,48 @@ export default function renderSlashMenu() {
 
     onUpdate: (props) => {
       try {
-        if (props.clientRect && typeof props.clientRect === "function") {
-          attachToRange(props.clientRect());
-        }
-        if (vueApp && vueApp._instance && vueApp._instance.props) {
-          vueApp._instance.props.items = Array.isArray(props.items) ? props.items : [];
-        }
+        props.positionStyle = generatePositionStyle(props.clientRect());
+        component.updateProps(props);
       } catch (error) {
         console.error("Error in slash menu onUpdate:", error);
       }
     },
 
     onKeyDown: (props) => {
-      if (!component) return false;
+      try {
+        if (props.event.key === "Escape") {
+          document.body.removeChild(component.element);
+          component.destroy();
 
-      if (props.event.key === "ArrowDown") {
-        component.nextItem();
-        return true;
+          return true;
+        }
+        return component.ref?.onKeyDown(props);
+      } catch (error) {
+        console.error("Error in slash menu onKeyDown:", error);
       }
-      if (props.event.key === "ArrowUp") {
-        component.prevItem();
-        return true;
-      }
-      if (props.event.key === "Enter") {
-        component.selectItem();
-        return true;
-      }
-      return false;
     },
 
     onExit: () => {
       try {
-        if (vueApp && typeof vueApp.unmount === "function") {
-          vueApp.unmount();
+        if (document.body.contains(component.element)) {
+          document.body.removeChild(component.element);
         }
-        if (container && container.parentNode) {
-          container.remove();
-        }
+        component.destroy();
       } catch (error) {
         console.error("Error in slash menu onExit:", error);
       }
     },
   };
 }
+
+const generatePositionStyle = (clientRect) => {
+  if (!clientRect) {
+    return {};
+  }
+
+  return {
+    position: "absolute",
+    top: clientRect.bottom + "px",
+    left: clientRect.left + "px",
+  };
+};

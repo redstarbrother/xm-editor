@@ -1,5 +1,5 @@
 <template>
-  <div v-if="items.length" class="menu-container">
+  <div v-if="items" class="menu-container" :style="positionStyle">
     <div
       v-for="(item, index) in items"
       :key="index"
@@ -8,20 +8,27 @@
       @click="handleSelect(index)"
       @mouseenter="selectedIndex = index"
     >
-      {{ item.label }}
+      <component
+        :is="item.icon"
+        :stroke-width="iconConfigSlashMenu.strokeWidth"
+        :size="iconConfigSlashMenu.size"
+        :class="['icon', active ? 'icon-active' : '']"
+      />
+      <span>{{ item.label }}</span>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, defineExpose } from "vue";
+import { iconConfigSlashMenu } from "@/components/setting/iconMap";
 
 const props = defineProps({
   items: Array,
   command: Function,
   editor: Object,
   range: Object,
-  clientRect: Function,
+  positionStyle: Object,
 });
 
 const selectedIndex = ref(0);
@@ -30,27 +37,38 @@ const selectedIndex = ref(0);
 const selectItem = () => {
   const item = props.items[selectedIndex.value];
   if (item) {
-    props.command(item);
+    console.log("props: ", props);
+    item.command({ editor: props.editor, range: props.range });
+    // props.command(item);
   }
 };
 
-const nextItem = () => {
-  if (props.items.length) {
-    selectedIndex.value = (selectedIndex.value + 1) % props.items.length;
+const onKeyDown = ({ event }) => {
+  if (event.key === "ArrowUp") {
+    if (props.items.length) {
+      selectedIndex.value =
+        (selectedIndex.value - 1 + props.items.length) % props.items.length;
+    }
+    return true;
   }
+
+  if (event.key === "ArrowDown") {
+    if (props.items.length) {
+      selectedIndex.value = (selectedIndex.value + 1) % props.items.length;
+    }
+    return true;
+  }
+
+  if (event.key === "Enter") {
+    selectItem();
+    return true;
+  }
+
+  return false;
 };
 
-const prevItem = () => {
-  if (props.items.length) {
-    selectedIndex.value =
-      (selectedIndex.value - 1 + props.items.length) % props.items.length;
-  }
-};
-
-// 👇 暴露给外部调用
 defineExpose({
-  nextItem,
-  prevItem,
+  onKeyDown,
   selectItem,
 });
 </script>

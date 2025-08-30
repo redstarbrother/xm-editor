@@ -2,6 +2,8 @@ import TiptapStrike from '@tiptap/extension-strike'
 import UniversalButton from '@/components/core/menu/button/UniversalButton.vue'
 import { iconMap } from '@/components/setting/iconMap'
 
+const name = 'strike'
+
 const Strike = TiptapStrike.extend({
   addOptions() {
     return {
@@ -10,12 +12,19 @@ const Strike = TiptapStrike.extend({
         return {
           component: UniversalButton,
           componentProps: {
-            icon: iconMap['strike'],
-            isActive: () => editor.isActive('strike'),
+            icon: iconMap[name],
+            isActive: () => editor.isActive(name),
             execute: () => editor.commands.toggleStrike(),
           },
         }
       },
+      slash: () => ({
+        label: "删除线",
+        icon: iconMap[name],
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).toggleStrike().run();
+        },
+      }),
     }
   },
 })

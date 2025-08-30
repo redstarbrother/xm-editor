@@ -2,6 +2,8 @@ import TiptapBold from "@tiptap/extension-bold";
 import { iconMap } from "@/components/setting/iconMap";
 import UniversalButton from "@/components/core/menu/button/UniversalButton.vue";
 
+const name = "bold";
+
 const Bold = TiptapBold.extend({
   addOptions() {
     return {
@@ -10,14 +12,15 @@ const Bold = TiptapBold.extend({
         return {
           component: UniversalButton,
           componentProps: {
-            icon: iconMap["bold"],
-            isActive: () => editor.isActive("bold"),
+            icon: iconMap[name],
+            isActive: () => editor.isActive(name),
             execute: () => editor.commands.toggleBold(),
           },
         };
       },
       slash: () => ({
-        label: "bold",
+        label: "加粗",
+        icon: iconMap[name],
         command: ({ editor, range }) => {
           editor.chain().focus().deleteRange(range).setBold().run();
         },

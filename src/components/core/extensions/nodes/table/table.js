@@ -8,6 +8,8 @@ import { iconMap } from "@/components/setting/iconMap";
 import TableView from "@/components/core/extensions/nodes/table/TableView.vue";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 
+const name = "table";
+
 const Table = TiptapTable.extend({
   addExtensions() {
     return [TableRow, TableCell, TableHeader];
@@ -24,8 +26,8 @@ const Table = TiptapTable.extend({
         return {
           component: UniversalButton,
           componentProps: {
-            icon: iconMap["table"],
-            isActive: () => editor.isActive("table"),
+            icon: iconMap[name],
+            isActive: () => editor.isActive(name),
             execute: () =>
               editor
                 .chain()
@@ -40,6 +42,17 @@ const Table = TiptapTable.extend({
           },
         };
       },
+      slash: () => ({
+        label: "表格",
+        icon: iconMap[name],
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).insertTable({
+            rows: 3,
+            cols: 3,
+            withHeaderRow: false,
+          }).run();
+        },
+      }),
     };
   },
   // ✨ 添加快捷键

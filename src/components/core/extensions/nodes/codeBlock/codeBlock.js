@@ -11,6 +11,7 @@ import { iconMap } from '@/components/setting/iconMap'
 import '@/styles/codeBlock/github-dark.css'
 
 const lowlight = createLowlight(all)
+const name = 'codeBlock'
 
 const CodeBlock = CodeBlockLowlight.extend({
   addOptions() {
@@ -20,12 +21,19 @@ const CodeBlock = CodeBlockLowlight.extend({
         return {
           component: UniversalButton,
           componentProps: {
-            icon: iconMap['codeBlock'],
-            isActive: () => editor.isActive('codeBlock'),
+            icon: iconMap[name],
+            isActive: () => editor.isActive(name),
             execute: () => editor.commands.toggleCodeBlock(),
           },
         }
       },
+      slash: () => ({
+        label: "代码块",
+        icon: iconMap[name],
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).setCodeBlock().run();
+        },
+      }),
     }
   },
   addNodeView() {

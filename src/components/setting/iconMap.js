@@ -57,3 +57,8 @@ export const iconConfig = {
   strokeWidth: 2,
   size: 20,
 }
+
+export const iconConfigSlashMenu = {
+  strokeWidth: 2,
+  size: 15,
+}

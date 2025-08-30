@@ -22,6 +22,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tiptap/cli": "^3.0.3",
     "@tiptap/core": "^3.0.9",
     "@tiptap/extension-blockquote": "^3.0.9",
     "@tiptap/extension-bold": "^3.0.9",

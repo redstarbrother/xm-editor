@@ -1,6 +1,5 @@
 // 根据扩展列表收集slash菜单项
 const collectSlashItems = (extensions) => {
-  console.log("extensions length:", extensions.length);
 
   return extensions
     .map((ext) => {
