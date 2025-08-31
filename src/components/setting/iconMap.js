@@ -20,6 +20,7 @@ import {
   Minus,
   CheckSquare,
   Table2,
+  SquircleDashed
 } from 'lucide-vue-next'
 
 export const iconMap = {
@@ -49,6 +50,7 @@ export const iconMap = {
 
   table: Table2,
 
+  emptyStatus: SquircleDashed,
 
   horizontalRule: Minus,
 }

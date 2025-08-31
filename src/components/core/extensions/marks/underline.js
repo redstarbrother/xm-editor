@@ -18,13 +18,13 @@ const Underline = TiptapUnderline.extend({
           },
         }
       },
-      slash: () => ({
-        label: "下划线",
-        icon: iconMap[name],
-        command: ({ editor, range }) => {
-          editor.chain().focus().deleteRange(range).toggleUnderline().run();
-        },
-      }),
+      // slash: () => ({
+      //   label: "下划线",
+      //   icon: iconMap[name],
+      //   command: ({ editor, range }) => {
+      //     editor.chain().focus().deleteRange(range).toggleUnderline().run();
+      //   },
+      // }),
     }
   },
 })

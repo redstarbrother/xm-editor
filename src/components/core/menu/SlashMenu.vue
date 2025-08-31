@@ -1,27 +1,40 @@
 <template>
   <div v-if="items" class="menu-container" :style="positionStyle">
-    <div
-      v-for="(item, index) in items"
-      :key="index"
-      class="menu-item"
-      :class="{ selected: index === selectedIndex }"
-      @mousedown.prevent="selectItem(index)"
-      @mouseenter="selectedIndex = index"
-    >
-      <component
-        :is="item.icon"
-        :stroke-width="iconConfigSlashMenu.strokeWidth"
-        :size="iconConfigSlashMenu.size"
-        :class="['icon', index === selectedIndex ? 'icon-active' : '']"
-      />
-      <span>{{ item.label }}</span>
-    </div>
+    <template v-if="props.items && props.items.length">
+      <div
+        v-for="(item, index) in items"
+        :key="index"
+        class="menu-item"
+        :class="{ selected: index === selectedIndex }"
+        @mousedown.prevent="selectItem(index)"
+        @mouseenter="selectedIndex = index"
+      >
+        <component
+          :is="item.icon"
+          :stroke-width="iconConfigSlashMenu.strokeWidth"
+          :size="iconConfigSlashMenu.size"
+          :class="['icon', index === selectedIndex ? 'icon-active' : '']"
+        />
+        <span>{{ item.label }}</span>
+      </div>
+    </template>
+    <template v-else>
+      <div class="menu-item selected" @mousedown.prevent="selectDefault">
+        <component
+          :is="iconMap.emptyStatus"
+          :stroke-width="iconConfigSlashMenu.strokeWidth"
+          :size="iconConfigSlashMenu.size"
+          class="icon-active"
+        />
+        <span>暂无选项</span>
+      </div>
+    </template>
   </div>
 </template>
 
 <script setup>
-import { ref, defineExpose } from "vue";
-import { iconConfigSlashMenu } from "@/components/setting/iconMap";
+import { ref, defineExpose, watch, nextTick } from "vue";
+import { iconMap, iconConfigSlashMenu } from "@/components/setting/iconMap";
 
 const props = defineProps({
   items: Array,
@@ -64,6 +77,32 @@ const onKeyDown = ({ event }) => {
 
   return false;
 };
+
+// 监听选中项变化，保证滚动条跟随
+watch(selectedIndex, async (newIndex) => {
+  await nextTick();
+  const container = document.querySelector(".menu-container");
+  const el = container?.querySelector(
+    `.menu-item:nth-child(${newIndex + 1})`
+  );
+
+  if (el && container) {
+    const buffer = 8;
+    const itemTop = el.offsetTop;
+    const itemBottom = itemTop + el.offsetHeight;
+
+    // 元素在上方不可见 → 滚到元素顶（减去 buffer）
+    if (itemTop < container.scrollTop + buffer) {
+      container.scrollTop = itemTop - buffer;
+    }
+    // 元素在下方不可见 → 滚到元素底部（加上 buffer）
+    else if (itemBottom > container.scrollTop + container.clientHeight - buffer) {
+      container.scrollTop = itemBottom - container.clientHeight + buffer;
+    }
+  }
+});
+
+
 
 defineExpose({
   onKeyDown,

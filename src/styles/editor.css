@@ -77,16 +77,37 @@
   font-family: monospace;
 }
 
+/* 列表样式优化 */
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 1em;
+  margin: 0.25em 0; /* 改小整体间距 */
+}
+
+.ProseMirror li {
+  margin: 0.1em 0; /* 更紧密的行间距 */
+  line-height: 1.8; /* 紧凑但不拥挤 */
+}
+
+.ProseMirror li p {
+  margin: 0; 
+}
+
+/* 任务列表 */
+ul[data-type="taskList"] li {
+  margin: 0.1em 0; /* 任务列表也更紧凑 */
+}
+
+
 /* 任务列表容器 */
 ul[data-type="taskList"] {
   list-style: none;
-  padding-left: 0;
+  padding-left: 0px;
 }
 
 ul[data-type="taskList"] li {
   display: flex;
   align-items: center;
-  /* 垂直居中 */
 }
 
 ul[data-type="taskList"] li>label {

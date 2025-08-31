@@ -18,13 +18,13 @@ const Italic = TiptapItalic.extend({
           },
         }
       },
-      slash: () => ({
-        label: "斜体",
-        icon: iconMap[name],
-        command: ({ editor, range }) => {
-          editor.chain().focus().deleteRange(range).toggleItalic().run();
-        },
-      }),
+      // slash: () => ({
+      //   label: "斜体",
+      //   icon: iconMap[name],
+      //   command: ({ editor, range }) => {
+      //     editor.chain().focus().deleteRange(range).toggleItalic().run();
+      //   },
+      // }),
     }
   },
 })
