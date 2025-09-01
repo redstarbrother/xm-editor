@@ -7,6 +7,9 @@
       borderRadius: props.showBorder ? '5px' : 'none',
     }"
   >
+    <BubbleMenu :editor="editor" v-if="editor">
+      <MenuBubble :editor="editor" :extensions="bubbleMenuList" />
+    </BubbleMenu>
     <MenuFixed
       v-if="props.showToolbar && isEditorReady"
       :editor="editor"
@@ -31,6 +34,7 @@ import {
   watchEffect,
   onMounted,
   watch,
+  ref,
 } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import { DependencieExtensions } from "./extensions";
@@ -38,6 +42,8 @@ import MenuFixed from "./menu/MenuFixed.vue";
 import SlashCommand from "./extensions/commands/slashCommand";
 import { collectSlashItems } from "@/utils/SlashUtil";
 import EditorProps from "@/components/setting/EditorProps";
+import { BubbleMenu } from "@tiptap/vue-3/menus";
+import MenuBubble from "@/components/core/menu/MenuBubble.vue";
 import "@/styles/editor.css";
 
 // const props = defineProps({
@@ -88,40 +94,17 @@ import "@/styles/editor.css";
 
 const props = defineProps(EditorProps);
 
-// 拓展依赖集合
-// const getEditorExtensions = () => {
-//   const extensions = DependencieExtensions.concat(props.extensions);
-//   const slashItems = collectSlashItems(extensions);
-//   console.log("slashItems:", JSON.stringify(slashItems, null, 2));
-  
-//   // 确保 slashItems 是一个数组且每个项都有必要的属性
-//   const validSlashItems = Array.isArray(slashItems) 
-//     ? slashItems.filter(item => item && typeof item === 'object' && item.label)
-//     : [];
-  
-//   console.log("validSlashItems:", JSON.stringify(validSlashItems, null, 2));
-  
-//   extensions.push(
-//     // 配置slash menu
-//     SlashCommand.configure({
-//       items: validSlashItems,
-//     })
-//   );
-//   return extensions;
-// };
-
 const getEditorExtensions = () => {
   const extensions = DependencieExtensions.concat(props.extensions);
   const slashItems = collectSlashItems(extensions);
-  console.log("slashItems:", JSON.stringify(slashItems, null, 2));
-  
+
   // 确保 slashItems 是一个数组且每个项都有必要的属性
-  const validSlashItems = Array.isArray(slashItems) 
-    ? slashItems.filter(item => item && typeof item === 'object' && item.label)
+  const validSlashItems = Array.isArray(slashItems)
+    ? slashItems.filter(
+        (item) => item && typeof item === "object" && item.label
+      )
     : [];
-  
-  console.log("validSlashItems:", JSON.stringify(validSlashItems, null, 2));
-  
+
   extensions.push(
     // 配置slash menu
     SlashCommand.configure({
@@ -130,6 +113,20 @@ const getEditorExtensions = () => {
   );
   return extensions;
 };
+
+const getBubbleMenuList = () => {
+  return DependencieExtensions.concat(props.extensions).filter((extension) => {
+    if (extension.type === "mark") {
+      return true;
+    }
+  });
+};
+
+const bubbleMenuList = ref([]);
+
+onMounted(() => {
+  bubbleMenuList.value = getBubbleMenuList();
+})
 
 const editor = useEditor({
   autofocus: props.autofocus,
@@ -175,4 +172,5 @@ watch(
   overflow: hidden;
   line-height: 1.4;
 }
+
 </style>

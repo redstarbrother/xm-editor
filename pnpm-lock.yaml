@@ -20,6 +20,9 @@ importers:
       '@tiptap/extension-bold':
         specifier: ^3.0.9
         version: 3.0.9(@tiptap/core@3.0.9(@tiptap/pm@3.0.9))
+      '@tiptap/extension-bubble-menu':
+        specifier: ^3.3.0
+        version: 3.3.0(@tiptap/core@3.0.9(@tiptap/pm@3.0.9))(@tiptap/pm@3.0.9)
       '@tiptap/extension-code':
         specifier: ^3.0.9
         version: 3.0.9(@tiptap/core@3.0.9(@tiptap/pm@3.0.9))
@@ -839,11 +842,11 @@ packages:
     peerDependencies:
       '@tiptap/core': ^3.0.9
 
-  '@tiptap/extension-bubble-menu@3.0.9':
-    resolution: {integrity: sha512-fZQfdSbKJl3J+Yi+s8NrcLBgXHOaGVD4g+vn+orTPUlZdG9FWvEoon8DexOdK9OvYnW6QMM7kS8whOgpogVyUQ==}
+  '@tiptap/extension-bubble-menu@3.3.0':
+    resolution: {integrity: sha512-339PWX//JanNK+gNIccV0K+XYRcWUIftfGPZDVPrP0xnAYdDBVyEaRh7CXh56uijPrr7UfL69f+GYvEYnpn2bQ==}
     peerDependencies:
-      '@tiptap/core': ^3.0.9
-      '@tiptap/pm': ^3.0.9
+      '@tiptap/core': ^3.3.0
+      '@tiptap/pm': ^3.3.0
 
   '@tiptap/extension-bullet-list@3.0.9':
     resolution: {integrity: sha512-Aob5TVfrtoEzfTm3wl7lognmWia6EEilOxLihSGISCvI4FTndJg+mwhumduQeYCLWkF9i/DR87m2/3EbjR3R4Q==}
@@ -2985,12 +2988,11 @@ snapshots:
     dependencies:
       '@tiptap/core': 3.0.9(@tiptap/pm@3.0.9)
 
-  '@tiptap/extension-bubble-menu@3.0.9(@tiptap/core@3.0.9(@tiptap/pm@3.0.9))(@tiptap/pm@3.0.9)':
+  '@tiptap/extension-bubble-menu@3.3.0(@tiptap/core@3.0.9(@tiptap/pm@3.0.9))(@tiptap/pm@3.0.9)':
     dependencies:
       '@floating-ui/dom': 1.7.3
       '@tiptap/core': 3.0.9(@tiptap/pm@3.0.9)
       '@tiptap/pm': 3.0.9
-    optional: true
 
   '@tiptap/extension-bullet-list@3.0.9(@tiptap/extension-list@3.0.9(@tiptap/core@3.0.9(@tiptap/pm@3.0.9))(@tiptap/pm@3.0.9))':
     dependencies:
@@ -3174,7 +3176,7 @@ snapshots:
       '@tiptap/pm': 3.0.9
       vue: 3.5.13
     optionalDependencies:
-      '@tiptap/extension-bubble-menu': 3.0.9(@tiptap/core@3.0.9(@tiptap/pm@3.0.9))(@tiptap/pm@3.0.9)
+      '@tiptap/extension-bubble-menu': 3.3.0(@tiptap/core@3.0.9(@tiptap/pm@3.0.9))(@tiptap/pm@3.0.9)
       '@tiptap/extension-floating-menu': 3.0.9(@floating-ui/dom@1.7.3)(@tiptap/core@3.0.9(@tiptap/pm@3.0.9))(@tiptap/pm@3.0.9)
 
   '@trysound/sax@0.2.0': {}

@@ -10,6 +10,7 @@ const props = defineProps({
   icon: Object,
   isActive: Function,
   execute: Function,
+  iconConfig: Object,
 });
 
 </script>

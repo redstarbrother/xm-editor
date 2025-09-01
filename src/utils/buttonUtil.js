@@ -5,7 +5,6 @@ export function generateButtonCompontents(editor, extensions) {
     if (button != undefined) {
       const buttonCompontent = button({
         editor: editor,
-        extension: extension,
       });
 
       if (Array.isArray(buttonCompontent)) {

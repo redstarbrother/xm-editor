@@ -13,6 +13,7 @@ const props = defineProps({
   isActive: Function,
   execute: Function,
   editor: Object,
+  iconConfig: Object,
 });
 
 const uploadUrl = ref("");

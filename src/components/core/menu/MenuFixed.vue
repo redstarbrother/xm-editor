@@ -4,21 +4,24 @@
       :is="item.component"
       v-for="(item, index) in buttonCompontents"
       :key="`button-item-${index}`"
-      v-bind="item.componentProps"
+      v-bind="{...item.componentProps, iconConfig: fixMenuIconConfig}"
       v-on="item.componentEvents || {}"
     />
-    
   </div>
 </template>
 
 <script setup>
 import { defineProps } from "vue";
 import { generateButtonCompontents } from "@/utils/buttonUtil";
+import { fixMenuIconConfig } from "@/components/core/config/IconConfig";
 
 const props = defineProps({
   editor: Object,
   extensions: Array,
 });
+
+console.log("fixMenuIconConfig: ", fixMenuIconConfig);
+
  
 // 生成button组件
 const buttonCompontents = generateButtonCompontents(props.editor, props.extensions);

@@ -26,6 +26,7 @@
     "@tiptap/core": "^3.0.9",
     "@tiptap/extension-blockquote": "^3.0.9",
     "@tiptap/extension-bold": "^3.0.9",
+    "@tiptap/extension-bubble-menu": "^3.3.0",
     "@tiptap/extension-code": "^3.0.9",
     "@tiptap/extension-code-block-lowlight": "^3.0.9",
     "@tiptap/extension-document": "^3.0.9",
