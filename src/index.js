@@ -5,7 +5,6 @@ export * as Extensions from '@/components/extensions'
 
 export { default as Text } from '@tiptap/extension-text'
 
-export { default as Document } from '@/components/extensions/nodes/document'
 export { default as Heading } from '@/components/extensions/nodes/heading/heading'
 export { default as Bold } from '@/components/extensions/marks/bold'
 export { default as Italic } from '@/components/extensions/marks/italic'  

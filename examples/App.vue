@@ -26,7 +26,6 @@ import {
   CodeBlock,
   Image,
   Table,
-
 } from "../src/index";
 import "../src/styles/base.css";
 
@@ -42,24 +41,48 @@ const extensions = [
   CodeBlock,
   Image.configure({
     uploadHandler: (file) => {
-      return new Promise((resolve, reject) => {
-        const formData = new FormData();
-        formData.append('file', file);
-        fetch('http://127.0.0.1:9527/doc/uploadImg', {
-          method: 'POST',
-          body: formData,
+      const formData = new FormData();
+      formData.append("type", file.type);
+      formData.append("file", file);
+      for (let [k, v] of formData.entries()) {
+        console.log(k, v);
+      }
+      return fetch("http://127.0.0.1:9527/doc/uploadImg", {
+        headers: { "Content-Type": "multipart/form-data" },
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => {
+          console.log('res:', res);
+          
+          return {
+            url: res.data.url,
+          };
         })
-          .then((res) => res.json())
-          .then((data) => {
-            resolve({
-              url: data.data.url,
-            });
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
+        .catch((err) => {
+          console.log("err:", err);
+          return Promise.reject(err);
+        });
     },
+    // uploadHandler: (file) => {
+    //   return new Promise((resolve, reject) => {
+    //     const formData = new FormData();
+    //     formData.append('file', file);
+    //     fetch('http://127.0.0.1:9527/doc/uploadImg', {
+    //       method: 'POST',
+    //       body: formData,
+    //     })
+    //       .then((res) => res.json())
+    //       .then((data) => {
+    //         resolve({
+    //           url: data.data.url,
+    //         });
+    //       })
+    //       .catch((err) => {
+    //         reject(err);
+    //       });
+    //   });
+    // },
   }),
   Table,
 ];
@@ -73,7 +96,7 @@ const editorProps = {
   extensions,
   showToolbar: true,
   onUpdate,
-  height: '100%'
+  height: "100%",
 };
 </script>
 

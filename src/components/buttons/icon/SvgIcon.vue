@@ -17,7 +17,7 @@
 import { defineProps, computed } from "vue";
 
 const props = defineProps({
-  icon: Object,
+  icon: Function,
   isActive: Function,
   execute: Function,
   iconConfig: Object,

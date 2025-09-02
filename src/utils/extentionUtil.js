@@ -1,26 +1,43 @@
-const getEditorExtensions = () => {
-  const extensions = DependencieExtensions.concat(props.extensions);
-  const slashItems = collectSlashItems(extensions);
-  console.log("slashItems:", JSON.stringify(slashItems, null, 2));
+import { NecessaryExtensions } from "@/components/extensions";
+import SlashCommand from "@/components/extensions/commands/slash/SlashCommand";
 
-  // 确保 slashItems 是一个数组且每个项都有必要的属性
-  const validSlashItems = Array.isArray(slashItems)
-    ? slashItems.filter(
-        (item) => item && typeof item === "object" && item.label
-      )
-    : [];
-
-  console.log("validSlashItems:", JSON.stringify(validSlashItems, null, 2));
-
-  extensions.push(
-    // 配置slash menu
-    SlashCommand.configure({
-      items: validSlashItems,
-    })
-  );
+const getEditorExtensions = (props) => {
+  const extensions = props.extensions
+  // 判断是否开启slash menu
+  if(props.slashMenuEnabled) {
+    const slashItems = collectSlashItems(extensions);
+    extensions.push(
+      // 配置slash menu
+      SlashCommand.configure({
+        items: slashItems,
+      })
+    );
+  }
+  // 添加必要扩展
+  extensions.push(...NecessaryExtensions);
   return extensions;
 };
 
+const getBubbleMenuExtensions = (extensions) => {
+  return extensions.filter((extension) => {
+    if (extension.type === "mark") {
+      return true;
+    }
+  });
+};
 
+const getFixedMenuExtensions = (extensions) => {
+  return extensions;
+};
 
-export { getEditorExtensions };
+const collectSlashItems = (extensions) => {
+  return extensions
+    .map((ext) => {
+      const slash = ext.options?.slash?.();
+      const items = Array.isArray(slash) ? slash : slash ? [slash] : [];
+      return items;
+    })
+    .flat();
+}
+
+export { getEditorExtensions, getBubbleMenuExtensions, getFixedMenuExtensions };

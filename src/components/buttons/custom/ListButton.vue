@@ -18,7 +18,7 @@ import { onClickOutside } from "@vueuse/core";
 import { getPostionByElement } from "@/utils/positionUtil.js";
 
 const props = defineProps({
-  icon: [Object, Function],
+  icon: Function,
   isActive: Function,
   execute: Function,
   editor: Object,

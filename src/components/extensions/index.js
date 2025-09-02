@@ -1,6 +1,5 @@
 export { default as Text } from "@tiptap/extension-text";
 
-export { default as Document } from "./nodes/document";
 export { default as Heading } from "./nodes/heading/heading";
 export { default as Bold } from "./marks/bold";
 export { default as Italic } from "./marks/italic";
@@ -14,8 +13,13 @@ export { default as Image } from "./nodes/image/image";
 export { default as Table } from "./nodes/table/table";
 
 // default dependencies
-import StarterKit from "@tiptap/starter-kit";
+import Document from '@tiptap/extension-document'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
+import HardBreak from '@tiptap/extension-hard-break'
+import { Dropcursor, Gapcursor, TrailingNode, UndoRedo } from '@tiptap/extensions'
 
-const DependencieExtensions = [StarterKit];
 
-export { DependencieExtensions };
+const NecessaryExtensions = [Document, Paragraph, Text, HardBreak, Dropcursor, Gapcursor, TrailingNode, UndoRedo];
+
+export { NecessaryExtensions };

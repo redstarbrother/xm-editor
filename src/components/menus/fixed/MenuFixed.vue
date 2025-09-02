@@ -20,9 +20,6 @@ const props = defineProps({
   extensions: Array,
 });
 
-console.log("fixMenuIconConfig: ", fixMenuIconConfig);
-
- 
 // 生成button组件
 const buttonCompontents = generateButtonCompontents(props.editor, props.extensions);
 </script>

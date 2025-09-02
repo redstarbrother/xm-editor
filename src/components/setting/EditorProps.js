@@ -51,13 +51,17 @@ export default {
     type: Array,
     default: () => [],
   },
-  showToolbar: {
+  fixedMenuEnabled: {
     type: Boolean,
     default: true,
   },
-  showMenuBubble: {
+  bubbleMenuEnabled: {
     type: Boolean,
-    default: false,
+    default: true,
+  },
+  slashMenuEnabled: {
+    type: Boolean,
+    default: true,
   },
   /**
    * 生命周期钩子

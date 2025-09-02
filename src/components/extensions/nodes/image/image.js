@@ -2,7 +2,8 @@ import TiptapImage from "@tiptap/extension-image";
 import ImageButton from "@/components/buttons/custom/ImageButton.vue";
 import ImageView from "./ImageView.vue";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
-import { Plugin } from "prosemirror-state";
+// import { Plugin } from "prosemirror-state";
+import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { iconMap } from "@/components/setting/iconMap";
 
 const Image = TiptapImage.extend({
@@ -57,6 +58,7 @@ const Image = TiptapImage.extend({
   addProseMirrorPlugins() {
     return [
       new Plugin({
+        key: new PluginKey('imageUploadPlugin'),
         props: {
           // 粘贴上传
           handlePaste: (view, event) => {
