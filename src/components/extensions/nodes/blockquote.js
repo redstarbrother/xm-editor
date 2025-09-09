@@ -14,7 +14,7 @@ const Blockquote = TiptapBlockquote.extend({
           componentProps: {
             icon: iconMap[name],
             isActive: () => editor.isActive(name),
-            execute: () => editor.commands.toggleBlockquote(),
+            execute: () => editor.chain().focus().toggleBlockquote().run(),
           },
         }
       },

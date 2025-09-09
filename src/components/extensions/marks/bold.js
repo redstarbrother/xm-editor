@@ -14,7 +14,7 @@ const Bold = TiptapBold.extend({
           componentProps: {
             icon: iconMap[name],
             isActive: () => editor.isActive(name),
-            execute: () => editor.commands.toggleBold(),
+            execute: () => editor.chain().focus().toggleBold().run(),
           },
         };
       },

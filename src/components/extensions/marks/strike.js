@@ -14,7 +14,7 @@ const Strike = TiptapStrike.extend({
           componentProps: {
             icon: iconMap[name],
             isActive: () => editor.isActive(name),
-            execute: () => editor.commands.toggleStrike(),
+            execute: () => editor.chain().focus().toggleStrike().run(),
           },
         }
       },

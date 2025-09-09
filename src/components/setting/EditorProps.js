@@ -6,9 +6,16 @@ export default {
     type: Boolean,
     default: true,
   },
-  placeholder: {
+  contentType: {
     type: String,
-    default: "I’m running xm-editor with Vue.js. 🎉",
+    default: "json", // 'json' | 'html' 
+    validator(output) {
+      return ['html', 'json'].includes(output);
+    },
+  },
+  content: {
+    type: [String, Object],
+    default: "",
   },
   autofocus: {
     type: Boolean,

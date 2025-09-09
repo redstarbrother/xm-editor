@@ -2,7 +2,6 @@ import TiptapImage from "@tiptap/extension-image";
 import ImageButton from "@/components/buttons/custom/ImageButton.vue";
 import ImageView from "./ImageView.vue";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
-// import { Plugin } from "prosemirror-state";
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { iconMap } from "@/components/setting/iconMap";
 

@@ -7,12 +7,13 @@
       :backgroundColorOnFocus="'#ffffff'"
       :showBorder="false"
     /> -->
-      <XmEditor v-bind="editorProps" />
+      <XmEditor v-bind="editorProps" v-model:content="content"/>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import XmEditor from "../src/index";
 import {
   Heading,
@@ -87,14 +88,15 @@ const extensions = [
   Table,
 ];
 
-const onUpdate = ({ editor }) => {
-  console.log(editor.getJSON());
+const content = ref({});
+
+const onUpdate = () => {
+  console.log("content:", content.value);
 };
 
 // 使用EditorProps对象形式传入属性
 const editorProps = {
   extensions,
-  showToolbar: true,
   onUpdate,
   height: "100%",
 };

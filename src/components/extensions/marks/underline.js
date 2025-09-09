@@ -14,7 +14,7 @@ const Underline = TiptapUnderline.extend({
           componentProps: {
             icon: iconMap[name],
             isActive: () => editor.isActive(name),
-            execute: () => editor.commands.toggleUnderline(),
+            execute: () => editor.chain().focus().toggleUnderline().run(),
           },
         }
       },

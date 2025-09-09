@@ -23,7 +23,7 @@ const CodeBlock = CodeBlockLowlight.extend({
           componentProps: {
             icon: iconMap[name],
             isActive: () => editor.isActive(name),
-            execute: () => editor.commands.toggleCodeBlock(),
+            execute: () => editor.chain().focus().toggleCodeBlock().run(),
           },
         }
       },

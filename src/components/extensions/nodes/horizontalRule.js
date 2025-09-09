@@ -13,7 +13,7 @@ const HorizontalRule = TiptapHorizontalRule.extend({
           component: UniversalButton,
           componentProps: {
             icon: iconMap[name],
-            execute: () => editor.commands.setHorizontalRule(),
+            execute: () => editor.chain().focus().setHorizontalRule().run(),
           },
         }
       },

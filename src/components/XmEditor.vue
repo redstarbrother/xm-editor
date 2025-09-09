@@ -7,7 +7,7 @@
       borderRadius: props.showBorder ? '5px' : 'none',
     }"
   >
-    <BubbleMenu :editor="editor" v-if="editor">
+    <BubbleMenu v-if="props.bubbleMenuEnabled && isEditorReady" :editor="editor">
       <MenuBubble :editor="editor" :extensions="bubbleMenuList" />
     </BubbleMenu>
     <MenuFixed
@@ -45,6 +45,7 @@ import { getEditorExtensions, getBubbleMenuExtensions, getFixedMenuExtensions } 
 import "@/styles/editor.css";
 
 const props = defineProps(EditorProps);
+const emit = defineEmits(['update:content']);
 
 const bubbleMenuList = ref([]);
 const fixMenuList = ref([]);
@@ -54,12 +55,27 @@ onMounted(() => {
   fixMenuList.value = getFixedMenuExtensions(props.extensions);
 })
 
+const onUpdate = ({ editor }) => {
+  let content;
+  if (props.contentType === 'json') {
+    content = editor.getJSON();
+  } else {
+    content = editor.getHTML();
+  } 
+  // 触发更新事件, 实现content双向绑定
+  emit("update:content", content);
+  // 调用外部更新方法
+  props.onUpdate(content, editor);
+}
+console.log("props.content: ", typeof props.content);
+
+const initContent = props.content instanceof String ? props.content : props.content.value ;
 const editor = useEditor({
   autofocus: props.autofocus,
   editable: props.editable,
-  content: props.placeholder,
+  content: initContent,
   extensions: getEditorExtensions(props),
-  onUpdate: props.onUpdate,
+  onUpdate: onUpdate,
   onFocus: props.onFocus,
   onBlur: props.onBlur,
 });
@@ -71,19 +87,6 @@ onUnmounted(() => {
     editor.destroy();
   }
 });
-
-// 注入editor实例
-provide("editor", editor);
-
-// 监听placeholder的变化
-watch(
-  () => props.placeholder,
-  (newContent) => {
-    if (editor.value) {
-      editor.value.commands.setContent(newContent);
-    }
-  }
-);
 </script>
 
 <style lang="scss">

@@ -14,7 +14,7 @@ const Italic = TiptapItalic.extend({
           componentProps: {
             icon: iconMap[name],
             isActive: () => editor.isActive(name),
-            execute: () => editor.commands.toggleItalic(),
+            execute: () => editor.chain().focus().toggleItalic().run(),
           },
         }
       },
