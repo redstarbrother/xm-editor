@@ -1,27 +1,16 @@
 <template>
-  <div
-    class="xm-editor-root"
-    :style="{
-      height: props.height,
-      border: props.showBorder ? '1px solid #d1d5da' : 'none',
-      borderRadius: props.showBorder ? '5px' : 'none',
-    }"
-  >
+  <div class="xm-editor-root" :style="{
+    height: props.height,
+    border: props.showBorder ? '1px solid #d1d5da' : 'none',
+    borderRadius: props.showBorder ? '5px' : 'none',
+  }">
     <BubbleMenu v-if="props.bubbleMenuEnabled && isEditorReady" :editor="editor">
       <MenuBubble :editor="editor" :extensions="bubbleMenuList" />
     </BubbleMenu>
-    <MenuFixed
-      v-if="props.fixedMenuEnabled && isEditorReady"
-      :editor="editor"
-      :extensions="fixMenuList"
-    />
-    <editor-content
-      class="editor-content"
-      :editor="editor"
-      :style="{
-        '--editor-focus-bg': props.backgroundColorOnFocus,
-      }"
-    />
+    <MenuFixed v-if="props.fixedMenuEnabled && isEditorReady" :editor="editor" :extensions="fixMenuList" />
+    <editor-content class="editor-content" :editor="editor" :style="{
+      '--editor-focus-bg': props.backgroundColorOnFocus,
+    }" />
   </div>
 </template>
 
@@ -29,12 +18,11 @@
 import {
   computed,
   defineProps,
-  provide,
   onUnmounted,
-  watchEffect,
   onMounted,
-  watch,
+  defineModel,
   ref,
+  watch
 } from "vue";
 import { useEditor, EditorContent } from "@tiptap/vue-3";
 import MenuFixed from "@/components/menus/fixed/MenuFixed.vue";
@@ -45,7 +33,7 @@ import { getEditorExtensions, getBubbleMenuExtensions, getFixedMenuExtensions } 
 import "@/styles/editor.css";
 
 const props = defineProps(EditorProps);
-const emit = defineEmits(['update:content']);
+const content = defineModel('content');
 
 const bubbleMenuList = ref([]);
 const fixMenuList = ref([]);
@@ -56,24 +44,42 @@ onMounted(() => {
 })
 
 const onUpdate = ({ editor }) => {
-  let content;
+  let newContent;
   if (props.contentType === 'json') {
-    content = editor.getJSON();
+    newContent = editor.getJSON();
   } else {
-    content = editor.getHTML();
-  } 
+    newContent = editor.getHTML();
+  }
   // 触发更新事件, 实现content双向绑定
-  emit("update:content", content);
+  content.value = newContent;
   // 调用外部更新方法
-  props.onUpdate(content, editor);
+  props.onUpdate(editor);
 }
-console.log("props.content: ", typeof props.content);
 
-const initContent = props.content instanceof String ? props.content : props.content.value ;
+// 监听content变化, 同步到editor
+watch(() => content.value, (newContent) => {
+  if (!editor.value) return;
+
+  const current =
+    props.contentType === "json"
+      ? editor.value.getJSON()
+      : editor.value.getHTML();
+
+  if (JSON.stringify(newContent) !== JSON.stringify(current)) {
+    console.log("change editor content");
+    
+    if (props.contentType === 'json') {
+      editor.value.commands.setContent(newContent);
+    } else {
+      editor.value.commands.setContent(newContent, false);
+    }
+  }
+}, { deep: true })
+
 const editor = useEditor({
   autofocus: props.autofocus,
   editable: props.editable,
-  content: initContent,
+  content: content.value,
   extensions: getEditorExtensions(props),
   onUpdate: onUpdate,
   onFocus: props.onFocus,
@@ -101,5 +107,4 @@ onUnmounted(() => {
   overflow: hidden;
   line-height: 1.4;
 }
-
 </style>

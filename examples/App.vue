@@ -8,6 +8,7 @@
       :showBorder="false"
     /> -->
       <XmEditor v-bind="editorProps" v-model:content="content"/>
+      <button @click="changeContent">change</button>
     </div>
   </div>
 </template>
@@ -89,6 +90,10 @@ const extensions = [
 ];
 
 const content = ref({});
+
+const changeContent = () => {
+  content.value = '123';
+}
 
 const onUpdate = () => {
   console.log("content:", content.value);
