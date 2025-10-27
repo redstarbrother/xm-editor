@@ -8,7 +8,7 @@
       :showBorder="false"
     /> -->
       <XmEditor v-bind="editorProps" v-model:content="content"/>
-      <button @click="changeContent">change</button>
+      <!-- <button @click="changeContent">change</button> -->
     </div>
   </div>
 </template>
