@@ -6,10 +6,6 @@ import CodeBlockComponent from './CodeBlockComponent.vue'
 import UniversalButton from '@/components/buttons/base/UniversalButton.vue'
 import { iconMap } from '@/components/setting/iconMap'
 
-// 加载代码块样式
-// TODO 变为可动态更过css文件
-import '@/styles/codeBlock/github-dark.css'
-
 const lowlight = createLowlight(all)
 const name = 'codeBlock'
 

@@ -30,6 +30,7 @@ import MenuBubble from "@/components/menus/bubble/MenuBubble.vue";
 import EditorProps from "@/components/setting/EditorProps";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
 import { getEditorExtensions, getBubbleMenuExtensions, getFixedMenuExtensions } from "@/utils/extentionUtil";
+import { loadCodeTheme } from "@/utils/themeLoader";
 import "@/styles/editor.css";
 
 const props = defineProps(EditorProps);
@@ -85,6 +86,29 @@ const editor = useEditor({
   onFocus: props.onFocus,
   onBlur: props.onBlur,
 });
+const codeTheme = [
+  "atom-one-dark.min",
+  "atom-one-light.min",
+  "foundation.min",
+  "github-dark-dimmed.min",
+  "github-dark.min",
+  "github.min",
+  "googlecode.min",
+  "grayscale.min",
+  "hybrid.min",
+  "idea.min",
+  "monokai-sublime.min",
+  "monokai.min",
+  "night-owl.min",
+  "nord.min",
+  "pojoaque.min",
+  "tomorrow-night-blue.min",
+  "tomorrow-night-bright.min",
+  "vs.min",
+  "xcode.min"
+]
+
+loadCodeTheme(codeTheme[5])
 
 const isEditorReady = computed(() => !!editor.value);
 
