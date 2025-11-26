@@ -11,7 +11,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
 import { generateButtonCompontents } from "@/utils/buttonUtil";
 import { bubbleMenuIconConfig } from "@/config/IconConfig";
 

@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref, defineExpose, watch, nextTick } from "vue";
+import { ref, watch, nextTick } from "vue";
 import { iconMap, iconConfigSlashMenu } from "@/components/setting/iconMap";
 
 const props = defineProps({

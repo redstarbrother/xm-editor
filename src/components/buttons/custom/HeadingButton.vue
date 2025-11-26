@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 import SvgIcon from "../icon/SvgIcon.vue";
 import { iconMap, iconConfig } from "@/components/setting/iconMap";
 import Popover from "../popovers/Popover.vue";
