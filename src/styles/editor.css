@@ -2,14 +2,17 @@
 
 /* Tiptap 编辑器核心容器样式 */
 .ProseMirror {
+  outline: none; /* 去掉点击时的蓝色边框 */
+  padding: 2rem; /* 给编辑器内部留白，就像纸张的页边距 */
   min-height: 300px;
-  line-height: 1.4;
-  padding: 12px;
-  outline: none;
-  white-space: pre-wrap;
-  word-break: break-word;
+  
+  /* 字体与排版核心 */
+  font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  color: #333333;       /* 柔和的深灰 */
+  font-size: 16px;      /* 适合阅读的字号 */
+  line-height: 1.8;     /* 关键：1.8倍行高让中文阅读更舒适 */
+  text-align: justify;  /* 两端对齐，让大段文字块更整齐 */
   overflow: auto;
-  height: 100%;
   transition: background-color 0.1s ease-in-out;
 }
 
@@ -26,29 +29,37 @@
 
 /* 段落默认样式 */
 .ProseMirror p {
-  margin: 0.5em 0;
+  margin-top: 0;
+  margin-bottom: 1.25em; /* 段落间距 */
 }
 
-/* 去除标题之间的额外间距 */
-.ProseMirror h1,
-.ProseMirror h2,
-.ProseMirror h3,
-.ProseMirror h4,
-.ProseMirror h5,
-.ProseMirror h6 {
-  margin: 0.5em 0;
-  font-weight: bold;
+/* 3. 标题层级优化 */
+.ProseMirror h1, 
+.ProseMirror h2, 
+.ProseMirror h3 {
+  color: #1a202c; /* 标题颜色更深一点 */
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 2em; /* 标题上方留白要大 */
+  margin-bottom: 0.8em;
 }
+
+.ProseMirror h1 { font-size: 1.8em; border-bottom: 2px solid #eaeaea; padding-bottom: 0.3em; }
+.ProseMirror h2 { font-size: 1.5em; }
+.ProseMirror h3 { font-size: 1.25em; }
 
 /* 列表样式优化 */
 .ProseMirror ul,
 .ProseMirror ol {
-  padding-left: 1em;
-  margin: 0.5em 0;
+  /* padding-left: 1em;
+  margin: 0.5em 0; */
+  padding-left: 1.5em;
+  margin-bottom: 1.25em;
 }
 
 .ProseMirror li {
-  margin: 0;
+  /* margin: 0; */
+  margin-bottom: 0.5em;
 }
 
 /* 引用块样式 */
