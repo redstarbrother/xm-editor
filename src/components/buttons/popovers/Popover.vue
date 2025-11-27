@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed, ref } from "vue"
+import { computed, ref } from "vue"
 
 const props = defineProps({
   position: { type: Object, required: true }, // 直接传 useBubbleMenu() 的返回对象

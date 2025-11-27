@@ -4,7 +4,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import ImgUpload from "@/components/extensions/nodes/image/ImgUpload.vue";
 import SvgIcon from "../icon/SvgIcon.vue";
 

@@ -17,10 +17,8 @@
 <script setup>
 import {
   computed,
-  defineProps,
   onUnmounted,
   onMounted,
-  defineModel,
   ref,
   watch
 } from "vue";
