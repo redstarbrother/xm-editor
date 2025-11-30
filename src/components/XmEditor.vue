@@ -4,7 +4,7 @@
     border: props.showBorder ? '1px solid #d1d5da' : 'none',
     borderRadius: props.showBorder ? '5px' : 'none',
   }">
-    <BubbleMenu v-if="props.bubbleMenuEnabled && isEditorReady" :editor="editor">
+    <BubbleMenu v-if="props.bubbleMenuEnabled && isEditorReady" :editor="editor" :should-show="shouldShowBubbleMenu">
       <MenuBubble :editor="editor" :extensions="bubbleMenuList" />
     </BubbleMenu>
     <MenuFixed v-if="props.fixedMenuEnabled && isEditorReady" :editor="editor" :extensions="fixMenuList" />
@@ -84,6 +84,13 @@ const editor = useEditor({
   onFocus: props.onFocus,
   onBlur: props.onBlur,
 });
+
+const shouldShowBubbleMenu = ({ editor, state }) => {
+  if (!state || !editor) return false;
+  const { empty } = state.selection || {};
+  if (empty) return false;
+  return !editor.isActive('codeBlock');
+};
 const codeTheme = [
   "atom-one-dark.min",
   "atom-one-light.min",
