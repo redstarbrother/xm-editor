@@ -7,41 +7,43 @@
       :backgroundColorOnFocus="'#ffffff'"
       :showBorder="false"
     /> -->
-      <XmEditor v-bind="editorProps" v-model:content="content"/>
+      <!-- <XmEditor v-bind="editorProps" v-model:content="content"/> -->
+      <div id="xm-editor" style="height: 100%"></div>
       <!-- <button @click="changeContent">change</button> -->
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import XmEditor from "../src/index";
-import {
-  Heading,
-  Bold,
-  Italic,
-  Strike,
-  Underline,
-  List,
-  Blockquote,
-  HorizontalRule,
-  CodeBlock,
-  Image,
-  Table,
-} from "../src/index";
-import "../src/styles/base.css";
+import { ref, onMounted } from 'vue'
+// import XmEditor from "../src/index";
+// import {
+//   Heading,
+//   Bold,
+//   Italic,
+//   Strike,
+//   Underline,
+//   List,
+//   Blockquote,
+//   HorizontalRule,
+//   CodeBlock,
+//   Image,
+//   Table,
+// } from "../src/index";
+// import "../src/styles/base.css";
+import { XmEditor, Extensions, Presets } from '../src/index'
 
 const extensions = [
-  Heading,
-  Bold,
-  Italic,
-  Underline,
-  Strike,
-  List,
-  Blockquote,
-  HorizontalRule,
-  CodeBlock,
-  Image.configure({
+  Extensions.Heading,
+  Extensions.Bold,
+  Extensions.Italic,
+  Extensions.Underline,
+  Extensions.Strike,
+  Extensions.List,
+  Extensions.Blockquote,
+  Extensions.HorizontalRule,
+  Extensions.CodeBlock,
+  Extensions.Image.configure({
     uploadHandler: (file) => {
       const formData = new FormData();
       formData.append("type", file.type);
@@ -66,27 +68,8 @@ const extensions = [
           return Promise.reject(err);
         });
     },
-    // uploadHandler: (file) => {
-    //   return new Promise((resolve, reject) => {
-    //     const formData = new FormData();
-    //     formData.append('file', file);
-    //     fetch('http://127.0.0.1:9527/doc/uploadImg', {
-    //       method: 'POST',
-    //       body: formData,
-    //     })
-    //       .then((res) => res.json())
-    //       .then((data) => {
-    //         resolve({
-    //           url: data.data.url,
-    //         });
-    //       })
-    //       .catch((err) => {
-    //         reject(err);
-    //       });
-    //   });
-    // },
   }),
-  Table,
+  Extensions.Table,
 ];
 
 const content = ref({});
@@ -99,12 +82,17 @@ const onUpdate = () => {
   console.log("content:", content.value);
 };
 
-// 使用EditorProps对象形式传入属性
-const editorProps = {
-  extensions,
-  onUpdate,
-  height: "100%",
-};
+let editor
+onMounted(() => {
+  editor = new XmEditor({
+    el: '#xm-editor',
+    config: {
+      ...Presets.NotionLike,
+      showBorder: true,
+      fixedMenuEnabled: true,
+    },
+  })
+})
 </script>
 
 <style scoped>

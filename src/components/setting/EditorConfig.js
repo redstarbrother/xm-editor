@@ -17,6 +17,10 @@ export default {
     type: [String, Object],
     default: "",
   },
+  placeholder: {
+    type: String,
+    default: "",
+  },
   autofocus: {
     type: Boolean,
     default: false,
