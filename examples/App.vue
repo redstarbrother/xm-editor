@@ -9,7 +9,7 @@
     /> -->
       <!-- <XmEditor v-bind="editorProps" v-model:content="content"/> -->
       <div id="xm-editor" style="height: 100%"></div>
-      <!-- <button @click="changeContent">change</button> -->
+      <button @click="changeContent">change</button>
     </div>
   </div>
 </template>
@@ -72,15 +72,17 @@ const extensions = [
   Extensions.Table,
 ];
 
-const content = ref({});
+const onUpdate = () => {
+  console.log("content:", editor.getHTML());
+};
 
-const changeContent = () => {
-  content.value = '123';
+const onFocus = () => {
+  console.log("onFocus");
 }
 
-const onUpdate = () => {
-  console.log("content:", content.value);
-};
+const changeContent = () => {
+  editor.setContent('123');
+}
 
 let editor
 onMounted(() => {
@@ -90,6 +92,8 @@ onMounted(() => {
       ...Presets.NotionLike,
       showBorder: true,
       fixedMenuEnabled: true,
+      onUpdate,
+      onFocus,
     },
   })
 })
