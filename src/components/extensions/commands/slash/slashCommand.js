@@ -28,6 +28,9 @@ const SlashCommand = Extension.create({
           });
         },
         render: renderSlashMenu,
+        command: ({ editor, range, props }) => {
+          props.command({ editor, range });
+        },
       },
     };
   },

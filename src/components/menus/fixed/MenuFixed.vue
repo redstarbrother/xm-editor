@@ -11,6 +11,7 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
 import { generateButtonCompontents } from "@/utils/buttonUtil";
 import { fixMenuIconConfig } from "@/config/IconConfig";
 
@@ -19,8 +20,15 @@ const props = defineProps({
   extensions: Array,
 });
 
-// 生成button组件
-const buttonCompontents = generateButtonCompontents(props.editor, props.extensions);
+console.log(props.editor);
+
+console.log(props.extensions);
+
+
+// 生成button组件（随 props.editor / props.extensions 变更而更新）
+const buttonCompontents = computed(() =>
+  generateButtonCompontents(props.editor, props.extensions)
+);
 </script>
 
 <style scoped>

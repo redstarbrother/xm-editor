@@ -4,11 +4,11 @@
     border: props.config.showBorder ? '1px solid #d1d5da' : 'none',
     borderRadius: props.config.showBorder ? '5px' : 'none',
   }">
-    <BubbleMenu v-if="props.config.bubbleMenuEnabled && isEditorReady" :editor="editorRef" :should-show="shouldShowBubbleMenu">
-      <MenuBubble :editor="editorRef" :extensions="bubbleMenuExtensions" />
+    <BubbleMenu v-if="props.config.bubbleMenuEnabled && isEditorReady" :editor="props.editor" :should-show="shouldShowBubbleMenu">
+      <MenuBubble :editor="props.editor" :extensions="bubbleMenuExtensions" />
     </BubbleMenu>
-    <MenuFixed v-if="props.config.fixedMenuEnabled && isEditorReady" :editor="editorRef" :extensions="fixMenuExtensions" />
-    <editor-content class="editor-content" :editor="editorRef" :style="{
+    <MenuFixed v-if="props.config.fixedMenuEnabled && isEditorReady" :editor="props.editor" :extensions="fixMenuExtensions" />
+    <editor-content class="editor-content" :editor="props.editor" :style="{
       '--editor-focus-bg': props.config.backgroundColorOnFocus,
     }" />
   </div>
@@ -27,7 +27,7 @@ import { EditorContent } from "@tiptap/vue-3";
 import MenuFixed from "@/components/menus/fixed/MenuFixed.vue";
 import MenuBubble from "@/components/menus/bubble/MenuBubble.vue";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
-import { getBubbleMenuExtensions, getFixedMenuExtensions, getEditorExtensions } from "@/utils/extentionUtil";
+import { getBubbleMenuExtensions, getFixedMenuExtensions } from "@/utils/extentionUtil";
 import { loadCodeTheme } from "@/utils/themeLoader";
 import "@/styles/editor.css";
 import "@/styles/base.css";
@@ -56,8 +56,8 @@ const handleUpdate = () => {
 
 // 初始化菜单extension
 onMounted(() => {
-  bubbleMenuExtensions.value = getBubbleMenuExtensions(editorRef.value.extensionManager.extensions);
-  fixMenuExtensions.value = getFixedMenuExtensions(editorRef.value.extensionManager.extensions);
+  bubbleMenuExtensions.value = getBubbleMenuExtensions(props.editor.extensionManager.extensions);
+  fixMenuExtensions.value = getFixedMenuExtensions(props.editor.extensionManager.extensions);
 })
 
 // 监听编辑器事件
@@ -109,7 +109,7 @@ const codeTheme = [
 
 loadCodeTheme(codeTheme[5])
 
-const isEditorReady = computed(() => !!editorRef.value);
+const isEditorReady = computed(() => !!props.editor);
 
 </script>
 

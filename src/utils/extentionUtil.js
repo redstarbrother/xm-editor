@@ -6,6 +6,8 @@ const getEditorExtensions = (props) => {
   // 判断是否开启slash menu
   if(props.slashMenuEnabled) {
     const slashItems = collectSlashItems(extensions);
+    console.log("slashItems:", slashItems);
+    
     extensions.push(
       // 配置slash menu
       SlashCommand.configure({

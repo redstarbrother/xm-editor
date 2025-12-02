@@ -50,7 +50,7 @@ const selectedIndex = ref(0);
 const selectItem = (index) => {
   const item = props.items[index];
   if (item) {
-    item.command({ editor: props.editor, range: props.range });
+    props.command(item);
   }
 };
 
@@ -77,6 +77,8 @@ const onKeyDown = ({ event }) => {
 
   return false;
 };
+
+const selectDefault = () => {};
 
 // 监听选中项变化，保证滚动条跟随
 watch(selectedIndex, async (newIndex) => {
@@ -107,6 +109,7 @@ watch(selectedIndex, async (newIndex) => {
 defineExpose({
   onKeyDown,
   selectItem,
+  selectDefault,
 });
 </script>
 
