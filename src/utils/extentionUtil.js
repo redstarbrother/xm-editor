@@ -16,8 +16,7 @@ const getEditorExtensions = (props) => {
     );
   }
   // 添加必要扩展
-  extensions.push(...NecessaryExtensions);
-  return extensions;
+  return [...NecessaryExtensions, ...extensions];
 };
 
 const getBubbleMenuExtensions = (extensions) => {

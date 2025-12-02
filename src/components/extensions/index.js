@@ -19,7 +19,10 @@ import Text from '@tiptap/extension-text'
 import HardBreak from '@tiptap/extension-hard-break'
 import { Dropcursor, Gapcursor, TrailingNode, UndoRedo } from '@tiptap/extensions'
 
+// 全局快捷键（优先级要求，需要放在最前面引入）
+import GlobalTab from './shortcutKeys/globalTab'
 
-const NecessaryExtensions = [Document, Paragraph, Text, HardBreak, Dropcursor, Gapcursor, TrailingNode, UndoRedo];
+
+const NecessaryExtensions = [GlobalTab, Document, Paragraph, Text, HardBreak, Dropcursor, Gapcursor, TrailingNode, UndoRedo];
 
 export { NecessaryExtensions };

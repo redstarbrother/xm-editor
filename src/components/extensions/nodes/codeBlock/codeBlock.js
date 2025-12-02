@@ -35,6 +35,21 @@ const CodeBlock = CodeBlockLowlight.extend({
   addNodeView() {
     return VueNodeViewRenderer(CodeBlockComponent)
   },
+
+  // addKeyboardShortcuts() {
+  //   return {
+  //     Tab: ({ editor }) => {
+  //       console.log('Tab 键被按下');
+
+  //       if (editor.isActive(name)) {
+  //         console.log('当前位置是代码块');
+  //         editor.commands.insertContent('  ');
+  //         return true;
+  //       }
+  //       return false;
+  //     }
+  //   }
+  // }
 }).configure({ lowlight, defaultLanguage: null })
 
 export default CodeBlock
