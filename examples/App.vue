@@ -33,45 +33,6 @@ import { ref, onMounted } from 'vue'
 // import "../src/styles/base.css";
 import { XmEditor, Extensions, Presets } from '../src/index'
 
-const extensions = [
-  Extensions.Heading,
-  Extensions.Bold,
-  Extensions.Italic,
-  Extensions.Underline,
-  Extensions.Strike,
-  Extensions.List,
-  Extensions.Blockquote,
-  Extensions.HorizontalRule,
-  Extensions.CodeBlock,
-  Extensions.Image.configure({
-    uploadHandler: (file) => {
-      const formData = new FormData();
-      formData.append("type", file.type);
-      formData.append("file", file);
-      for (let [k, v] of formData.entries()) {
-        console.log(k, v);
-      }
-      return fetch("http://127.0.0.1:9527/doc/uploadImg", {
-        headers: { "Content-Type": "multipart/form-data" },
-        method: "POST",
-        body: formData,
-      })
-        .then((res) => {
-          console.log('res:', res);
-          
-          return {
-            url: res.data.url,
-          };
-        })
-        .catch((err) => {
-          console.log("err:", err);
-          return Promise.reject(err);
-        });
-    },
-  }),
-  Extensions.Table,
-];
-
 const onUpdate = () => {
   console.log("content:", editor.getHTML());
 };
@@ -88,13 +49,39 @@ let editor
 onMounted(() => {
   editor = new XmEditor({
     el: '#xm-editor',
-    config: {
-      ...Presets.NotionLike,
-      showBorder: true,
-      fixedMenuEnabled: true,
-      onUpdate,
-      onFocus,
-    },
+    config: Presets.getPreset(Presets.Basic, {
+      extensions: [
+        Extensions.Image.configure({
+          uploadHandler: (file) => {
+            const formData = new FormData();
+            formData.append("type", file.type);
+            formData.append("file", file);
+            console.log("123");
+            
+            let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzNzY0MTI5ODM5MjAxOTc2MzIiLCJ1c2VybmFtZSI6ImpoeCIsInBob25lIjoiMTMyMjA4MzkwNjEiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NDg1NzIwNywiZXhwIjoxNzY0OTQzNjA3fQ.1BLGHemnCab4rRlahg3HAUX5_YWaI6peAX7lAaMCWD8"
+            return fetch("http://127.0.0.1:9527/doc/uploadImg", {
+              headers: {
+                "Authorization": "Bearer " + token
+              },
+              method: "POST",
+              body: formData,
+            })
+            .then(res => res.json())
+              .then((res) => {
+                console.log('res:', res);
+
+                return {
+                  url: res.data.url,
+                };
+              })
+              .catch((err) => {
+                console.log("err:", err);
+                return Promise.reject(err);
+              });
+          },
+        })
+      ]
+    }),
   })
 })
 </script>

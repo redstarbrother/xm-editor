@@ -39,7 +39,7 @@ export default {
    * 工具栏与扩展
    */
   extensions: extensions,
-  fixedMenuEnabled: true,
+  fixedMenuEnabled: false,
   bubbleMenuEnabled: true,
   slashMenuEnabled: true,
   /**
