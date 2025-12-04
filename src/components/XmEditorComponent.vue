@@ -122,7 +122,7 @@ const isEditorReady = computed(() => !!props.editor);
 
 .editor-content {
   flex: 1;
-  overflow: hidden;
+  overflow: auto;
   line-height: 1.4;
 }
 </style>

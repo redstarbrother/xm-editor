@@ -30,7 +30,7 @@
 /* 段落默认样式 */
 .ProseMirror p {
   margin-top: 0;
-  margin-bottom: 1.25em; /* 段落间距 */
+  margin-bottom: 0.75em; /* 段落间距 */
 }
 
 /* 3. 标题层级优化 */
