@@ -1,36 +1,14 @@
 <template>
   <div class="container">
     <div class="editor-area">
-      <!-- <XmEditor
-      :extensions="extensions"
-      :showToolbar="false"
-      :backgroundColorOnFocus="'#ffffff'"
-      :showBorder="false"
-    /> -->
-      <!-- <XmEditor v-bind="editorProps" v-model:content="content"/> -->
-      <div id="xm-editor" style="height: 100%"></div>
+      <div id="xm-editor"></div>
       <button @click="changeContent">change</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-// import XmEditor from "../src/index";
-// import {
-//   Heading,
-//   Bold,
-//   Italic,
-//   Strike,
-//   Underline,
-//   List,
-//   Blockquote,
-//   HorizontalRule,
-//   CodeBlock,
-//   Image,
-//   Table,
-// } from "../src/index";
-// import "../src/styles/base.css";
+import { onMounted } from 'vue'
 import { XmEditor, Extensions, Presets } from '../src/index'
 
 const onUpdate = () => {
@@ -49,7 +27,7 @@ let editor
 onMounted(() => {
   editor = new XmEditor({
     el: '#xm-editor',
-    config: Presets.getPreset(Presets.Basic, {
+    config: Presets.NotionLike.configure({
       extensions: [
         Extensions.Image.configure({
           uploadHandler: (file) => {
@@ -57,7 +35,7 @@ onMounted(() => {
             formData.append("type", file.type);
             formData.append("file", file);
             console.log("123");
-            
+
             let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzNzY0MTI5ODM5MjAxOTc2MzIiLCJ1c2VybmFtZSI6ImpoeCIsInBob25lIjoiMTMyMjA4MzkwNjEiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NDg1NzIwNywiZXhwIjoxNzY0OTQzNjA3fQ.1BLGHemnCab4rRlahg3HAUX5_YWaI6peAX7lAaMCWD8"
             return fetch("http://127.0.0.1:9527/doc/uploadImg", {
               headers: {
@@ -66,7 +44,7 @@ onMounted(() => {
               method: "POST",
               body: formData,
             })
-            .then(res => res.json())
+              .then(res => res.json())
               .then((res) => {
                 console.log('res:', res);
 
@@ -80,7 +58,9 @@ onMounted(() => {
               });
           },
         })
-      ]
+      ],
+      onUpdate,
+      onFocus,
     }),
   })
 })

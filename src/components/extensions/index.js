@@ -1,5 +1,3 @@
-export { default as Text } from "@tiptap/extension-text";
-
 export { default as Heading } from "./nodes/heading/heading";
 export { default as Bold } from "./marks/bold";
 export { default as Italic } from "./marks/italic";
