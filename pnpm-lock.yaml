@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  xm-editor: link:C:/Users/redstar/AppData/Local/pnpm/global/5/node_modules/xm-editor
+
 importers:
 
   .:
@@ -104,6 +107,9 @@ importers:
       vue:
         specifier: ^3.5.13
         version: 3.5.13
+      xm-editor:
+        specifier: link:C:/Users/redstar/AppData/Local/pnpm/global/5/node_modules/xm-editor
+        version: link:C:/Users/redstar/AppData/Local/pnpm/global/5/node_modules/xm-editor
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^5.2.1
