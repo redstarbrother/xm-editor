@@ -1,5 +1,6 @@
 import { Extension } from "@tiptap/core";
 import Suggestion from "@tiptap/suggestion";
+import { PluginKey } from "@tiptap/pm/state";
 import renderSlashMenu from "./renderSlashMenu";
 
 const SlashCommand = Extension.create({
@@ -9,6 +10,7 @@ const SlashCommand = Extension.create({
     return {
       items: [], // 默认空数组
       suggestion: {
+        pluginKey: new PluginKey('slashCommandSuggestion'),
         char: "/",
         items: function ({ query, editor }) {
           console.log("query: ", query);
