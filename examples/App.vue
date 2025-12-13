@@ -27,7 +27,7 @@ let editor
 onMounted(() => {
   editor = new XmEditor({
     el: '#xm-editor',
-    config: Presets.NotionLike.configure({
+    config: Presets.Basic.configure({
       extensions: [
         Extensions.Image.configure({
           uploadHandler: (file) => {

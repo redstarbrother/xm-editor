@@ -8,7 +8,6 @@ function mergePresetConfig(defaultConfig, userConfig) {
 
         // 默认扩展映射：key 为 extension.name
         defaultConfig.extensions.forEach((ext) => {
-            console.log("ext:", ext);
             defaultMap.set(ext.name, ext);
         });
 

@@ -1,11 +1,9 @@
-import { computePosition } from '@floating-ui/dom'
-import { VueRenderer } from '@tiptap/vue-3'
-import { PluginKey } from '@tiptap/pm/state'
+import { createSuggestion } from '@/components/menus/suggestion/suggestionFactory'
 
-import EmojiList from './EmojiList.vue'
+export const emojiSuggestion = createSuggestion({
+  name: 'emoji',
+  char: ':',
 
-export default {
-  pluginKey: new PluginKey('emojiSuggestion'),
   items: ({ editor, query }) => {
     return editor.storage.emoji.emojis
       .filter(({ shortcodes, tags }) => {
@@ -17,64 +15,12 @@ export default {
       .slice(0, 5)
   },
 
-  render: () => {
-    let component
-
-    function repositionComponent(clientRect) {
-      if (!component || !component.element) {
-        return
-      }
-
-      const virtualElement = {
-        getBoundingClientRect() {
-          return clientRect
-        },
-      }
-
-      computePosition(virtualElement, component.element, {
-        placement: 'bottom-start',
-      }).then(pos => {
-        Object.assign(component.element.style, {
-          left: `${pos.x}px`,
-          top: `${pos.y}px`,
-          position: pos.strategy === 'fixed' ? 'fixed' : 'absolute',
-        })
-      })
-    }
-
-    return {
-      onStart: props => {
-        component = new VueRenderer(EmojiList, {
-          props,
-          editor: props.editor,
-        })
-
-        document.body.appendChild(component.element)
-        repositionComponent(props.clientRect())
-      },
-
-      onUpdate(props) {
-        component.updateProps(props)
-        repositionComponent(props.clientRect())
-      },
-
-      onKeyDown(props) {
-        if (props.event.key === 'Escape') {
-          document.body.removeChild(component.element)
-          component.destroy()
-
-          return true
-        }
-
-        return component.ref?.onKeyDown(props)
-      },
-
-      onExit() {
-        if (document.body.contains(component.element)) {
-          document.body.removeChild(component.element)
-        }
-        component.destroy()
-      },
-    }
+  command: ({ editor, range, props }) => {
+    editor
+      .chain()
+      .focus()
+      .deleteRange(range)   // 删除 关键词
+      .insertContent(props.emoji) // 插入 emoji
+      .run()
   },
-}
+})
