@@ -1,42 +1,47 @@
-// suggestionFactory.js
-import { createSuggestionPopup } from './suggestionPopup'
+import Suggestion from "@tiptap/suggestion";
+import { createSuggestionPopup } from "./suggestionPopup";
 
-export function createSuggestion(options) {
+export function createSuggestion(suggestionConfig) {
   const {
-    char,
     name,
-    allow,
-    items,
-    command,
-    renderItem,
-  } = options
-
-  return {
     char,
+    pluginKey,
     allow,
     items,
     command,
+  } = suggestionConfig;
+
+  return Suggestion({
+    char,
+    pluginKey,
+    allow,
+    items,
+    command,
+
     render: () => {
-      let popup
+      let popup;
 
       return {
         onStart(props) {
           popup = createSuggestionPopup({
             name,
             ...props,
-            renderItem,
-          })
+          });
         },
+
         onUpdate(props) {
-          popup.update(props)
+          popup?.update(props);
         },
+
         onKeyDown(props) {
-          return popup.onKeyDown(props)
+          return popup?.onKeyDown(props);
         },
+
         onExit() {
-          popup.destroy()
+          popup?.destroy();
+          popup = null;
         },
-      }
+      };
     },
-  }
+  });
 }
