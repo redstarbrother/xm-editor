@@ -8,7 +8,7 @@ export class XmEditor {
     this.options = options;
 
     // 如果配置中包含 name 字段，说明是预置配置，需要提取默认配置
-    if(options.config.name) {
+    if (options.config.name) {
       options.config = options.config.defaultConfig;
     }
 
@@ -33,7 +33,6 @@ export class XmEditor {
 
   // 生成 Tiptap 原生 Editor 配置
   editorOptionsGenerator = (config) => {
-    
     // 生成extensions
     const extensions = getEditorExtensions(config);
     const {

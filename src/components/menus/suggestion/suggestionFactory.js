@@ -1,47 +1,45 @@
 import Suggestion from "@tiptap/suggestion";
 import { createSuggestionPopup } from "./suggestionPopup";
+import { Extension } from "@tiptap/core";
+import { PluginKey } from "@tiptap/pm/state";
 
 export function createSuggestion(suggestionConfig) {
-  const {
-    name,
-    char,
-    pluginKey,
-    allow,
-    items,
-    command,
-  } = suggestionConfig;
+  const { name, char, allow, items, command } = suggestionConfig;
 
-  return Suggestion({
-    char,
-    pluginKey,
-    allow,
-    items,
-    command,
+  return Extension.create({
+    name: `${name}Suggestion`,
 
-    render: () => {
-      let popup;
+    addProseMirrorPlugins() {
+      return [
+        Suggestion({
+          editor: this.editor,
+          char,
+          pluginKey: new PluginKey(`suggestion:${name}`),
+          allow,
+          items,
+          command,
 
-      return {
-        onStart(props) {
-          popup = createSuggestionPopup({
-            name,
-            ...props,
-          });
-        },
+          render: () => {
+            let popup;
 
-        onUpdate(props) {
-          popup?.update(props);
-        },
-
-        onKeyDown(props) {
-          return popup?.onKeyDown(props);
-        },
-
-        onExit() {
-          popup?.destroy();
-          popup = null;
-        },
-      };
+            return {
+              onStart(props) {
+                popup = createSuggestionPopup({ name, ...props });
+              },
+              onUpdate(props) {
+                popup?.update(props);
+              },
+              onKeyDown(props) {
+                return popup?.onKeyDown(props);
+              },
+              onExit() {
+                popup?.destroy();
+                popup = null;
+              },
+            };
+          },
+        }),
+      ];
     },
   });
 }

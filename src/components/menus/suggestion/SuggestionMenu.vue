@@ -7,7 +7,7 @@
       :class="['item', { active: index === selected }]"
       @mousedown.prevent="select(item)"
     >
-      {{ item.label }}
+      {{ item.emoji }}{{ item.name }}
     </div>
   </div>
 </template>

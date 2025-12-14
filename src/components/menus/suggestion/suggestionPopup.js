@@ -1,7 +1,7 @@
 // suggestion/suggestionPopup.js
 import tippy from "tippy.js";
 import SuggestionMenu from "./SuggestionMenu.vue";
-import { createApp } from "vue";
+import { createApp, h, reactive } from "vue";
 
 export function createSuggestionPopup({
   editor,
@@ -10,10 +10,19 @@ export function createSuggestionPopup({
   command,
 }) {
   const el = document.createElement("div");
-
-  const app = createApp(SuggestionMenu, {
+  const state = reactive({
     items,
     command,
+  });
+
+  const app = createApp({
+    render() {
+      return h(SuggestionMenu, {
+        items: state.items,
+        command: state.command,
+        ref: 'menu'
+      });
+    }
   });
 
   const vm = app.mount(el);
@@ -30,14 +39,21 @@ export function createSuggestionPopup({
 
   return {
     update(props) {
-      vm.items = props.items;
+      state.items = props.items;
+      if (props.command) {
+        state.command = props.command;
+      }
       popup[0].setProps({
         getReferenceClientRect: props.clientRect,
       });
     },
 
     onKeyDown({ event }) {
-      return vm.onKeyDown(event);
+      if (event.key === 'Escape') {
+        popup[0].hide();
+        return true;
+      }
+      return vm.$refs.menu?.onKeyDown(event);
     },
 
     destroy() {

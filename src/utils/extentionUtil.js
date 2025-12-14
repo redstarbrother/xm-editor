@@ -1,9 +1,10 @@
 import { NecessaryExtensions } from "@/components/extensions";
 import SlashCommand from "@/components/extensions/commands/slash/SlashCommand";
+import { createSuggestion } from "@/components/menus/suggestion/suggestionFactory";
 
 const getEditorExtensions = (props) => {
-  const extensions = props.extensions
-  const suggestionExtensions = resolveSuggestions(extensions);
+  const extensions = props.extensions;
+  const suggestionExtensions = [];
 
   // 生成suggestionExtensions
   props.extensions.forEach((ext) => {
@@ -13,11 +14,12 @@ const getEditorExtensions = (props) => {
       });
     }
   });
+
   // 判断是否开启slash menu
-  if(props.slashMenuEnabled) {
+  if (props.slashMenuEnabled) {
     const slashItems = collectSlashItems(extensions);
     console.log("slashItems:", slashItems);
-    
+
     extensions.push(
       // 配置slash menu
       SlashCommand.configure({
@@ -25,6 +27,9 @@ const getEditorExtensions = (props) => {
       })
     );
   }
+  console.log("extensions:", extensions);
+  
+  console.log("suggestionExtensions:", suggestionExtensions);
   // 添加必要扩展
   return [...NecessaryExtensions, ...extensions, ...suggestionExtensions];
 };
@@ -49,6 +54,6 @@ const collectSlashItems = (extensions) => {
       return items;
     })
     .flat();
-}
+};
 
 export { getEditorExtensions, getBubbleMenuExtensions, getFixedMenuExtensions };
