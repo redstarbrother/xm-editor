@@ -19,6 +19,8 @@ const Blockquote = TiptapBlockquote.extend({
         }
       },
       slash: () => ({
+        id: name,
+        iconType: "svg",
         label: "引用",
         icon: iconMap[name],
         command: ({ editor, range }) => {

@@ -18,6 +18,8 @@ const HorizontalRule = TiptapHorizontalRule.extend({
         }
       },
       slash: () => ({
+        id: name,
+        iconType: "svg",
         label: "水平分割线",
         icon: iconMap[name],
         command: ({ editor, range }) => {

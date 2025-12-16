@@ -36,6 +36,8 @@ const List = Extension.create({
       slash: () => (
         [
           {
+            id: 'bulletList',
+            iconType: 'svg',
             label: '无序列表',
             icon: iconMap['bulletList'],
             command: ({ editor, range }) => {
@@ -43,6 +45,8 @@ const List = Extension.create({
             },
           },
           {
+            id: 'orderedList',
+            iconType: 'svg',
             label: '有序列表',
             icon: iconMap['orderedList'],
             command: ({ editor, range }) => {
@@ -50,6 +54,8 @@ const List = Extension.create({
             },
           },
           {
+            id: 'taskList',
+            iconType: 'svg',
             label: '任务列表',
             icon: iconMap['taskList'],
             command: ({ editor, range }) => {

@@ -3,12 +3,7 @@ import tippy from "tippy.js";
 import SuggestionMenu from "./SuggestionMenu.vue";
 import { createApp, h, reactive } from "vue";
 
-export function createSuggestionPopup({
-  editor,
-  clientRect,
-  items,
-  command,
-}) {
+export function createSuggestionPopup({ editor, clientRect, items, command }) {
   const el = document.createElement("div");
   const state = reactive({
     items,
@@ -20,9 +15,9 @@ export function createSuggestionPopup({
       return h(SuggestionMenu, {
         items: state.items,
         command: state.command,
-        ref: 'menu'
+        ref: "menu",
       });
-    }
+    },
   });
 
   const vm = app.mount(el);
@@ -49,7 +44,7 @@ export function createSuggestionPopup({
     },
 
     onKeyDown({ event }) {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         popup[0].hide();
         return true;
       }

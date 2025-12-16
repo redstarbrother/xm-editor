@@ -20,6 +20,8 @@ const Heading = TtHeading.extend({
       },
       slash: () => [
         {
+          id: "heading1",
+          iconType: "svg",
           label: "一级标题",
           icon: iconMap["heading1"],
           command: ({ editor, range }) => {
@@ -32,6 +34,8 @@ const Heading = TtHeading.extend({
           },
         },
         {
+          id: "heading2",
+          iconType: "svg",
           label: "二级标题",
           icon: iconMap["heading2"],
           command: ({ editor, range }) => {
@@ -44,6 +48,8 @@ const Heading = TtHeading.extend({
           },
         },
         {
+          id: "heading3",
+          iconType: "svg",
           label: "三级标题",
           icon: iconMap["heading3"],
           command: ({ editor, range }) => {

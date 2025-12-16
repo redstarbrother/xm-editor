@@ -24,6 +24,8 @@ const CodeBlock = CodeBlockLowlight.extend({
         }
       },
       slash: () => ({
+        id: name,
+        iconType: "svg",
         label: "代码块",
         icon: iconMap[name],
         command: ({ editor, range }) => {

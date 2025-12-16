@@ -6,15 +6,6 @@ const getEditorExtensions = (props) => {
   const extensions = props.extensions;
   const suggestionExtensions = [];
 
-  // 生成suggestionExtensions
-  props.extensions.forEach((ext) => {
-    if (ext.__suggestions) {
-      ext.__suggestions.forEach((config) => {
-        suggestionExtensions.push(createSuggestion(config));
-      });
-    }
-  });
-
   // 判断是否开启slash menu
   if (props.slashMenuEnabled) {
     const slashItems = collectSlashItems(extensions);
@@ -27,8 +18,19 @@ const getEditorExtensions = (props) => {
       })
     );
   }
+
+  // 生成suggestionExtensions
+  extensions.forEach((ext) => {
+    if (ext.__suggestions) {
+      ext.__suggestions.forEach((config) => {
+        console.log("suggestion config:", config);
+        suggestionExtensions.push(createSuggestion(config));
+      });
+    }
+  });
+
   console.log("extensions:", extensions);
-  
+
   console.log("suggestionExtensions:", suggestionExtensions);
   // 添加必要扩展
   return [...NecessaryExtensions, ...extensions, ...suggestionExtensions];

@@ -43,6 +43,8 @@ const Table = TiptapTable.extend({
         };
       },
       slash: () => ({
+        id: name,
+        iconType: "svg",
         label: "表格",
         icon: iconMap[name],
         command: ({ editor, range }) => {
