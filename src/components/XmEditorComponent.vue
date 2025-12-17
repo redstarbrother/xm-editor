@@ -4,10 +4,12 @@
     border: props.config.showBorder ? '1px solid #d1d5da' : 'none',
     borderRadius: props.config.showBorder ? '5px' : 'none',
   }">
-    <BubbleMenu v-if="props.config.bubbleMenuEnabled && isEditorReady" :editor="props.editor" :should-show="shouldShowBubbleMenu">
+    <BubbleMenu v-if="props.config.bubbleMenuEnabled && isEditorReady" :editor="props.editor"
+      :should-show="shouldShowBubbleMenu" :tippy-options="{ duration: 100, moveTransition: 'transform 0.2s ease-out' }">
       <MenuBubble :editor="props.editor" :extensions="bubbleMenuExtensions" />
     </BubbleMenu>
-    <MenuFixed v-if="props.config.fixedMenuEnabled && isEditorReady" :editor="props.editor" :extensions="fixMenuExtensions" />
+    <MenuFixed v-if="props.config.fixedMenuEnabled && isEditorReady" :editor="props.editor"
+      :extensions="fixMenuExtensions" />
     <editor-content class="editor-content" :editor="props.editor" :style="{
       '--editor-focus-bg': props.config.backgroundColorOnFocus,
     }" />
