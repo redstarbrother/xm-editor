@@ -1,6 +1,30 @@
-import { NecessaryExtensions } from "@/components/extensions";
+// default dependencies
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Text from "@tiptap/extension-text";
+import HardBreak from "@tiptap/extension-hard-break";
+import {
+  Dropcursor,
+  Gapcursor,
+  TrailingNode,
+  UndoRedo,
+} from "@tiptap/extensions";
+// 全局快捷键（优先级要求，需要放在最前面引入）
+import GlobalTab from "@/components/extensions/shortcutKeys/globalTab";
 import SlashCommand from "@/components/extensions/commands/slash/slashCommand";
 import { createSuggestion } from "@/components/menus/suggestion/suggestionFactory";
+
+const NecessaryExtensions = [
+  GlobalTab,
+  Document,
+  Paragraph,
+  Text,
+  HardBreak,
+  Dropcursor,
+  Gapcursor,
+  TrailingNode,
+  UndoRedo,
+];
 
 const resolveExtensions = (menuConfig, extensions) => {
   const suggestionExtensions = [];
@@ -28,18 +52,6 @@ const resolveExtensions = (menuConfig, extensions) => {
   return [...NecessaryExtensions, ...extensions, ...suggestionExtensions];
 };
 
-const filterBubbleMenuExtensions = (extensions) => {
-  return extensions.filter((extension) => {
-    if (extension.type === "mark") {
-      return true;
-    }
-  });
-};
-
-const filterFixedMenuExtensions = (extensions) => {
-  return extensions
-};
-
 const collectSlashItems = (extensions) => {
   return extensions
     .map((ext) => {
@@ -50,4 +62,4 @@ const collectSlashItems = (extensions) => {
     .flat();
 };
 
-export default { resolveExtensions, filterBubbleMenuExtensions, filterFixedMenuExtensions };
+export default { resolveExtensions };

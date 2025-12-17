@@ -1,7 +1,7 @@
 import { Editor } from "@tiptap/core";
 import { createEditorProxy } from "./proxyEditor";
 import { mountVueEditor } from "./mountVueEditor";
-import { getEditorExtensions } from "@/utils/extentionUtil";
+import ExtensionUtil from "@/utils/extentionUtil";
 
 export class XmEditor {
   constructor(options) {
@@ -12,8 +12,13 @@ export class XmEditor {
       options.config = options.config.defaultConfig;
     }
 
+    // 生成 Tiptap 原生 Editor 配置
+    const editorOption = this.generateEditorOptions(options.config);
+    // 生成用户自定义配置
+    const customConfig = this.generateCustomConfig(options.config);
+
     // 1. 初始化 Tiptap 原生 Editor
-    this.editor = new Editor(this.editorOptionsGenerator(options.config));
+    this.editor = new Editor(editorOption);
 
     // 2. 创建代理对象（对外暴露）
     this.proxy = createEditorProxy(this.editor);
@@ -23,7 +28,7 @@ export class XmEditor {
       el: options.el,
       props: {
         editor: this.editor,
-        config: this.customConfigGenerator(options.config),
+        config: customConfig,
       },
     });
 
@@ -31,10 +36,14 @@ export class XmEditor {
     return this.proxy;
   }
 
-  // 生成 Tiptap 原生 Editor 配置
-  editorOptionsGenerator = (config) => {
+  generateEditorOptions = (config) => {
     // 生成extensions
-    const extensions = getEditorExtensions(config);
+    const menuConfig = {
+      fixedMenuEnabled: config.fixedMenuEnabled,
+      bubbleMenuEnabled: config.bubbleMenuEnabled,
+      slashMenuEnabled: config.slashMenuEnabled,
+    };
+    const extensions = ExtensionUtil.resolveExtensions(menuConfig, config.extensions);
     const {
       content,
       editable,
@@ -58,8 +67,7 @@ export class XmEditor {
     };
   };
 
-  // 生成自定义配置
-  customConfigGenerator = (config) => {
+  generateCustomConfig = (config) => {
     const {
       height,
       theme,
