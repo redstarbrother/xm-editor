@@ -10,7 +10,7 @@ import {
   UndoRedo,
 } from "@tiptap/extensions";
 // 全局快捷键（优先级要求，需要放在最前面引入）
-import GlobalTab from "@/components/extensions/shortcutKeys/globalTab";
+import GlobalTab from "@/components/extensions/commands/shortcutKeys/globalTab";
 import SlashCommand from "@/components/extensions/commands/slash/slashCommand";
 import { createSuggestion } from "@/components/menus/suggestion/suggestionFactory";
 

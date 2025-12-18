@@ -1,75 +1,50 @@
 <template>
   <div class="menu-bubble">
     <div class="menu-item" v-for="item in bubbleItems" :key="item.id">
-      <component v-if="item.component" :is="item.component" :editor="editor" :item="item" />
-      <button v-else @click="item.action(editor)" :class="{ 'is-active': item.isActive(editor) }" class="menu-item-btn"
-        type="button" @mousedown.prevent>
-        <i :class="item.icon" v-if="typeof item.icon === 'string'"></i>
-        <component :is="item.icon" v-else />
-        <span v-if="item.label" class="label">{{ item.label }}</span>
-      </button>
+      <icon-item :icon="item.iconCom" :active="item.isActive(editor)" :stroke-width="bubbleMenuIconConfig.strokeWidth"
+        :size="bubbleMenuIconConfig.size" @click="clickIcon(item.id)"></icon-item>
     </div>
-
-
-    <component :is="item.component" v-for="(item, index) in buttonCompontents" :key="`button-item-${index}`"
-      v-bind="{ ...item.componentProps, iconConfig: bubbleMenuIconConfig }" v-on="item.componentEvents || {}" />
   </div>
 </template>
 
 <script setup>
 import { computed } from "vue";
-import { bubbleMenuIconConfig } from "@/config/IconConfig";
+import IconItem from "@/components/icon/IconItem.vue";
+import IconManager from "@/components/icon/iconManager";
 
 const props = defineProps({
   editor: Object,
   extensions: Array,
 });
 
+// 气泡菜单图标配置
+const bubbleMenuIconConfig = {
+  strokeWidth: 2,
+  size: 18,
+}
 
+// 存储所有气泡菜单的 action 函数
+let bubbleAction = {}
+
+// 生成气泡菜单列表（随 props.editor / props.extensions 变更而更新）
 const bubbleItems = computed(() => {
-  const { editor } = props;
-  if (!editor) return [];
-
-  // 1. 遍历所有扩展，提取 options.bubble 配置
-  // Tiptap 的扩展实例存放在 editor.extensionManager.extensions 中
-  return editor.extensionManager.extensions
-    .map(ext => ext.options.bubble)
-    .filter(config => {
-      // 过滤：必须有配置，且满足 shouldShow 条件
-      if (!config) return false;
-      if (typeof config.shouldShow === 'function') {
-        return config.shouldShow(editor);
-      }
-      return true;
-    })
-    .sort((a, b) => (b.priority || 0) - (a.priority || 0));
+  bubbleAction = {}
+  let items = [];
+  props.extensions.forEach(extension => {
+    if (extension.options?.bubble) {
+      let item = extension.options.bubble;
+      if (!item.id) item.id = extension.name;
+      item.iconCom = IconManager.getIconComponent(item.icon);
+      bubbleAction[item.id] = item.action;
+      items.push(item);
+    }
+  })
+  items.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+  return items;
 });
 
-console.log("bubbleItems", bubbleItems.value);
-
-
-// 生成button组件（随 props.editor / props.extensions 变更而更新）
-const buttonCompontents = computed(() =>
-  generateButtonCompontents(props.editor, props.extensions)
-);
-
-const generateButtonCompontents = (editor, extensions) => {
-  return extensions?.reduce((arr, extension) => {
-    const { button } = extension.options;
-
-    if (button != undefined) {
-      const buttonCompontent = button({
-        editor: editor,
-      });
-
-      if (Array.isArray(buttonCompontent)) {
-        return [...arr, ...buttonCompontent];
-      }
-      return [...arr, buttonCompontent];
-    } else {
-      return arr;
-    }
-  }, []);
+const clickIcon = (id) => {
+  bubbleAction[id]?.(props.editor);
 }
 </script>
 
@@ -105,5 +80,9 @@ const generateButtonCompontents = (editor, extensions) => {
     font-size: 12px;
     color: #333;
   }
+}
+
+.is-active {
+  background-color: #e0e0e0;
 }
 </style>

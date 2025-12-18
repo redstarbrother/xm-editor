@@ -30,7 +30,7 @@ const resolveExtensions = (menuConfig, extensions) => {
 
 const filterBubbleMenuExtensions = (extensions) => {
   return extensions.filter((extension) => {
-    if (extension.type === "mark") {
+    if (extension.options?.bubble) {
       return true;
     }
   });
