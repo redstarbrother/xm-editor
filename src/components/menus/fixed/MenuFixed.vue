@@ -48,6 +48,7 @@ const fixedItems = computed(() => {
   })
   // 按优先级排序
   items.sort((a, b) => (b.priority || 0) - (a.priority || 0));
+  console.log(items);
   return items;
 });
 

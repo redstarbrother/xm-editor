@@ -12,7 +12,7 @@
 
 <script setup>
 import { ref, watch, defineProps, defineExpose } from 'vue';
-import { iconMap, iconConfigSlashMenu } from "@/components/setting/iconMap";
+import { iconConfigSlashMenu } from "@/components/setting/iconMap";
 
 const props = defineProps({
   items: {

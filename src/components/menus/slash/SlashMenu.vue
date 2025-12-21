@@ -1,5 +1,5 @@
 <template>
-  <div v-if="items" class="menu-container" :style="positionStyle">
+  <div v-if="items && items.length" class="menu-container" :style="positionStyle">
     <template v-if="props.items && props.items.length">
       <div
         v-for="(item, index) in items"

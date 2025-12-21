@@ -1,6 +1,7 @@
 import TtHeading from "@tiptap/extension-heading";
 import HeadingButton from "@/components/buttons/custom/HeadingButton.vue";
 import { iconMap } from "@/components/setting/iconMap";
+import fixedConfig from "./fixed";
 
 const name = "heading";
 
@@ -18,6 +19,7 @@ const Heading = TtHeading.extend({
           },
         };
       },
+      fixed: fixedConfig,
       slash: () => [
         {
           id: "heading1",
