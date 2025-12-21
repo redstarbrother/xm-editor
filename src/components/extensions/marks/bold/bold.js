@@ -1,5 +1,6 @@
 import TiptapBold from "@tiptap/extension-bold";
 import bubbleConfig from "./bubble";
+import fixedConfig from "./fixed";
 import { iconMap } from "@/components/setting/iconMap";
 import UniversalButton from "@/components/buttons/base/UniversalButton.vue";
 
@@ -19,6 +20,7 @@ const Bold = TiptapBold.extend({
           },
         };
       },
+      fixed: fixedConfig,
       bubble: bubbleConfig,
     };
   },

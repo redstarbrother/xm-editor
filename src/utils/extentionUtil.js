@@ -37,7 +37,11 @@ const filterBubbleMenuExtensions = (extensions) => {
 };
 
 const filterFixedMenuExtensions = (extensions) => {
-  return extensions
+  return extensions.filter((extension) => {
+    if (extension.options?.fixed) {
+      return true;
+    }
+  });
 };
 
 const collectSlashItems = (extensions) => {

@@ -5,6 +5,7 @@ import { TableRow } from "@tiptap/extension-table-row";
 import { TableCell } from "@tiptap/extension-table-cell";
 import { TableHeader } from "@tiptap/extension-table-header";
 import { iconMap } from "@/components/setting/iconMap";
+import fixedConfig from "./fixed";
 import TableView from "@/components/extensions/nodes/table/TableView.vue";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 
@@ -42,6 +43,7 @@ const Table = TiptapTable.extend({
           },
         };
       },
+      fixed: fixedConfig,
       slash: () => ({
         id: name,
         iconType: "svg",

@@ -1,5 +1,6 @@
 import TiptapStrike from '@tiptap/extension-strike'
 import bubbleConfig from './bubble'
+import fixedConfig from './fixed'
 import UniversalButton from '@/components/buttons/base/UniversalButton.vue'
 import { iconMap } from '@/components/setting/iconMap'
 
@@ -19,6 +20,7 @@ const Strike = TiptapStrike.extend({
           },
         }
       },
+      fixed: fixedConfig,
       bubble: bubbleConfig,
       // slash: () => ({
       //   label: "删除线",
