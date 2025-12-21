@@ -1,7 +1,7 @@
 <template>
   <div class="menu-bubble">
     <div class="menu-item" v-for="item in bubbleItems" :key="item.id">
-      <icon-item :icon="item.iconCom" :active="item.isActive(editor)" :stroke-width="bubbleMenuIconConfig.strokeWidth"
+      <icon-item :icon="item.iconCom" :active="activeStates[item.id]" :stroke-width="bubbleMenuIconConfig.strokeWidth"
         :size="bubbleMenuIconConfig.size" @click="clickIcon(item.id)"></icon-item>
     </div>
   </div>
@@ -11,6 +11,7 @@
 import { computed } from "vue";
 import IconItem from "@/components/icon/IconItem.vue";
 import IconManager from "@/components/icon/iconManager";
+import { useMenuActiveState } from "@/composables/useEditorMenu";
 
 const props = defineProps({
   editor: Object,
@@ -42,6 +43,8 @@ const bubbleItems = computed(() => {
   items.sort((a, b) => (b.priority || 0) - (a.priority || 0));
   return items;
 });
+
+const activeStates = useMenuActiveState(props.editor, bubbleItems);
 
 const clickIcon = (id) => {
   bubbleAction[id]?.(props.editor);

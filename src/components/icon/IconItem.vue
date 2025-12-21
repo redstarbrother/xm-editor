@@ -1,9 +1,4 @@
 <template>
-  <!-- <div class="base-button" :class="{ 'is-active-par': active }" @click="onClick">
-    <component :is="props.icon" :stroke-width="iconConfig.strokeWidth" :size="iconConfig.size"
-      :class="['icon', active ? 'icon-active' : '']" />
-  </div> -->
-
   <div class="base-button" :class="{ 'is-active-par': active }">
     <component :is="icon" :stroke-width="strokeWidth" :size="size"
       :class="['icon', active ? 'icon-active' : '']" />
@@ -14,8 +9,8 @@
 const props = defineProps({
   icon: Function,
   active: Boolean,
-  strokeWidth: String,
-  size: String,
+  strokeWidth: [String, Number],
+  size: [String, Number],
 });
 </script>
 

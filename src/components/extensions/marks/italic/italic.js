@@ -1,4 +1,5 @@
 import TiptapItalic from '@tiptap/extension-italic'
+import bubbleConfig from './bubble'
 import UniversalButton from '@/components/buttons/base/UniversalButton.vue'
 import { iconMap } from '@/components/setting/iconMap'
 
@@ -18,6 +19,7 @@ const Italic = TiptapItalic.extend({
           },
         }
       },
+      bubble: bubbleConfig,
       // slash: () => ({
       //   label: "斜体",
       //   icon: iconMap[name],

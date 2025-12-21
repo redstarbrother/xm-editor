@@ -1,4 +1,5 @@
 import TiptapUnderline from '@tiptap/extension-underline'
+import bubbleConfig from './bubble'
 import UniversalButton from '@/components/buttons/base/UniversalButton.vue'
 import { iconMap } from '@/components/setting/iconMap'
 
@@ -18,6 +19,7 @@ const Underline = TiptapUnderline.extend({
           },
         }
       },
+      bubble: bubbleConfig,
       // slash: () => ({
       //   label: "下划线",
       //   icon: iconMap[name],
