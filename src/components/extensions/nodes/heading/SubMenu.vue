@@ -13,7 +13,7 @@
 <script setup>
 import { ref } from 'vue'
 import { iconConfigSlashMenu } from '@/components/setting/iconMap'
-
+const emit = defineEmits(['close']);
 const props = defineProps({
     editor: Object,
     items: {
@@ -28,6 +28,7 @@ const selectItem = (item) => {
     if (item.action) {
         item.action(props.editor)
     }
+    emit('close');
 }
 </script>
 
