@@ -33,6 +33,11 @@ const selectItem = (item) => {
 
 <style lang="scss" scoped>
 .xm-heading-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    margin-top: 4px;
     background: #ffffff;
     border: none;
     border-radius: 8px;
