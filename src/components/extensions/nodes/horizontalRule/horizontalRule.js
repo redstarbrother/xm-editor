@@ -1,6 +1,7 @@
 import TiptapHorizontalRule from '@tiptap/extension-horizontal-rule'
 import UniversalButton from '@/components/buttons/base/UniversalButton.vue'
 import { iconMap } from '@/components/setting/iconMap'
+import fixedConfig from './fixed.js'
 
 const name = 'horizontalRule'
 
@@ -17,6 +18,7 @@ const HorizontalRule = TiptapHorizontalRule.extend({
           },
         }
       },
+      fixed: fixedConfig,
       slash: () => ({
         id: name,
         iconType: "svg",

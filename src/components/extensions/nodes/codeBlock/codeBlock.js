@@ -1,10 +1,10 @@
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-// load all highlight.js languages
 import { createLowlight, all } from 'lowlight'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import CodeBlockComponent from './CodeBlockComponent.vue'
 import UniversalButton from '@/components/buttons/base/UniversalButton.vue'
 import { iconMap } from '@/components/setting/iconMap'
+import filedConfig from './fixed.js'
 
 const lowlight = createLowlight(all)
 const name = 'codeBlock'
@@ -23,6 +23,7 @@ const CodeBlock = CodeBlockLowlight.extend({
           },
         }
       },
+      fixed: filedConfig,
       slash: () => ({
         id: name,
         iconType: "svg",

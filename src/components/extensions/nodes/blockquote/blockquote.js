@@ -1,6 +1,7 @@
 import TiptapBlockquote from '@tiptap/extension-blockquote'
 import UniversalButton from '@/components/buttons/base/UniversalButton.vue'
 import { iconMap } from '@/components/setting/iconMap'
+import fixedConfig from './fixed.js'
 
 const name = 'blockquote'
 
@@ -18,6 +19,7 @@ const Blockquote = TiptapBlockquote.extend({
           },
         }
       },
+      fixed: fixedConfig,
       slash: () => ({
         id: name,
         iconType: "svg",

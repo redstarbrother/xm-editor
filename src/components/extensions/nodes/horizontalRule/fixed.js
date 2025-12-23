@@ -1,0 +1,9 @@
+let name = "horizontalRule";
+export default {
+  id: name,
+  icon: name,
+  label: "水平分割线",
+  priority: 100,
+  isActive: (editor) => editor.isActive(name),
+  action: (editor) => editor.chain().focus().setHorizontalRule().run(),
+};
