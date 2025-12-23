@@ -1,6 +1,7 @@
 import { Extension } from "@tiptap/core";
 import { BulletList, OrderedList, TaskList, TaskItem, ListItem } from "@tiptap/extension-list";
-import ListButton from "@/components/buttons/custom/listButton.vue";
+// import ListButton from "@/components/buttons/custom/listButton
+import fixedConfig from "./fixed";
 import { iconMap } from "@/components/setting/iconMap";
 
 const name = 'list'
@@ -33,6 +34,7 @@ const List = Extension.create({
           },
         };
       },
+      fixed: fixedConfig,
       slash: () => (
         [
           {

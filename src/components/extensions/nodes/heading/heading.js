@@ -1,6 +1,6 @@
 import TtHeading from "@tiptap/extension-heading";
 import HeadingButton from "@/components/buttons/custom/HeadingButton.vue";
-import { iconMap } from "@/components/setting/iconMap";
+import iconManager from "@/components/icon/iconManager";
 import fixedConfig from "./fixed";
 
 const name = "heading";
@@ -13,7 +13,7 @@ const Heading = TtHeading.extend({
         return {
           component: HeadingButton,
           componentProps: {
-            icon: iconMap[name],
+            icon: iconManager.getIconComponent(name),
             isActive: () => editor.isActive(name),
             editor: editor,
           },
@@ -25,7 +25,7 @@ const Heading = TtHeading.extend({
           id: "heading1",
           iconType: "svg",
           label: "一级标题",
-          icon: iconMap["heading1"],
+          icon: iconManager.getIconComponent("heading1"),
           command: ({ editor, range }) => {
             editor
               .chain()
@@ -39,7 +39,7 @@ const Heading = TtHeading.extend({
           id: "heading2",
           iconType: "svg",
           label: "二级标题",
-          icon: iconMap["heading2"],
+          icon: iconManager.getIconComponent("heading2"),
           command: ({ editor, range }) => {
             editor
               .chain()
@@ -53,7 +53,7 @@ const Heading = TtHeading.extend({
           id: "heading3",
           iconType: "svg",
           label: "三级标题",
-          icon: iconMap["heading3"],
+          icon: iconManager.getIconComponent("heading3"),
           command: ({ editor, range }) => {
             editor
               .chain()

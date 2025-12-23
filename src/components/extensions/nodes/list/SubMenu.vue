@@ -14,10 +14,7 @@ import { ref } from 'vue'
 const emit = defineEmits(['close']);
 const props = defineProps({
     editor: Object,
-    items: {
-        type: Array,
-        default: () => []
-    },
+    items: Array,
 })
 
 const iconConfig = {
