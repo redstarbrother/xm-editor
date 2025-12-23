@@ -86,18 +86,9 @@ importers:
       '@tiptap/extensions':
         specifier: ^3.3.1
         version: 3.3.1(@tiptap/core@3.3.1(@tiptap/pm@3.3.1))(@tiptap/pm@3.3.1)
-      '@tiptap/pm':
-        specifier: ^3.3.1
-        version: 3.3.1
       '@tiptap/suggestion':
         specifier: ^3.3.1
         version: 3.3.1(@tiptap/core@3.3.1(@tiptap/pm@3.3.1))(@tiptap/pm@3.3.1)
-      '@tiptap/vue-3':
-        specifier: ^3.3.1
-        version: 3.3.1(@floating-ui/dom@1.7.4)(@tiptap/core@3.3.1(@tiptap/pm@3.3.1))(@tiptap/pm@3.3.1)(vue@3.5.13)
-      '@vueuse/core':
-        specifier: ^13.5.0
-        version: 13.5.0(vue@3.5.13)
       fast-glob:
         specifier: ^3.3.2
         version: 3.3.2
@@ -110,16 +101,19 @@ importers:
       tippy.js:
         specifier: ^6.3.7
         version: 6.3.7
-      vue:
-        specifier: ^3.5.13
-        version: 3.5.13
-      xm-editor:
-        specifier: link:C:/Users/redstar/AppData/Local/pnpm/global/5/node_modules/xm-editor
-        version: link:C:/Users/redstar/AppData/Local/pnpm/global/5/node_modules/xm-editor
     devDependencies:
+      '@tiptap/pm':
+        specifier: ^3.3.1
+        version: 3.3.1
+      '@tiptap/vue-3':
+        specifier: ^3.3.1
+        version: 3.3.1(@floating-ui/dom@1.7.4)(@tiptap/core@3.3.1(@tiptap/pm@3.3.1))(@tiptap/pm@3.3.1)(vue@3.5.13)
       '@vitejs/plugin-vue':
         specifier: ^5.2.1
         version: 5.2.1(vite@6.0.5(sass-embedded@1.89.2)(yaml@2.8.1))(vue@3.5.13)
+      '@vueuse/core':
+        specifier: ^13.5.0
+        version: 13.5.0(vue@3.5.13)
       sass-embedded:
         specifier: ^1.89.2
         version: 1.89.2
@@ -135,6 +129,9 @@ importers:
       vite-svg-loader:
         specifier: ^5.1.0
         version: 5.1.0(vue@3.5.13)
+      vue:
+        specifier: ^3.5.13
+        version: 3.5.13
 
 packages:
 
