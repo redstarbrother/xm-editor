@@ -117,7 +117,7 @@ ul[data-type="taskList"] {
 
 ul[data-type="taskList"] li {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 ul[data-type="taskList"] li > label {
@@ -126,6 +126,7 @@ ul[data-type="taskList"] li > label {
   gap: 0.3em;
   /* 复选框和文字间距 */
   margin: 0;
+  margin-top: 0.5em;
 }
 
 /* 复选框内联显示 */
