@@ -1,3 +1,5 @@
+import SubMenuImage from "./SubMenu.vue";
+
 const name = "image";
 export default {
   id: name,
@@ -6,7 +8,7 @@ export default {
   priority: 100,
   isActive: (editor) => editor.isActive(name),
   action: (editor) => {},
-  // component: SubMenuHeading,
+  component: SubMenuImage,
   componentProps: {
   },
 };

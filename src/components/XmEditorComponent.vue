@@ -87,7 +87,7 @@ const shouldShowBubbleMenu = ({ editor, state }) => {
   if (!state || !editor) return false;
   const { empty } = state.selection || {};
   if (empty) return false;
-  return !editor.isActive('codeBlock');
+  return !editor.isActive('codeBlock') && !editor.isActive('image');
 };
 
 const codeTheme = [

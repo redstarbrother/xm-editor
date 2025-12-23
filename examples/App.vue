@@ -36,7 +36,7 @@ onMounted(() => {
             formData.append("file", file);
             console.log("123");
 
-            let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzNzY0MTI5ODM5MjAxOTc2MzIiLCJ1c2VybmFtZSI6ImpoeCIsInBob25lIjoiMTMyMjA4MzkwNjEiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NDg1NzIwNywiZXhwIjoxNzY0OTQzNjA3fQ.1BLGHemnCab4rRlahg3HAUX5_YWaI6peAX7lAaMCWD8"
+            let token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzNzY0MTI5ODM5MjAxOTc2MzIiLCJ1c2VybmFtZSI6ImpoeCIsInBob25lIjoiMTMyMjA4MzkwNjEiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NjQ5NzMyMSwiZXhwIjoxNzY2NTgzNzIxfQ.KIlhApFgFLIgfuiEBqp_4FhjVZXGlDWgsBQCruru02E"
             return fetch("http://127.0.0.1:9527/doc/uploadImg", {
               headers: {
                 "Authorization": "Bearer " + token

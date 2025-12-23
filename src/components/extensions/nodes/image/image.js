@@ -1,9 +1,7 @@
 import TiptapImage from "@tiptap/extension-image";
-import ImageButton from "@/components/buttons/custom/ImageButton.vue";
 import ImageView from "./ImageView.vue";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import { Plugin, PluginKey } from '@tiptap/pm/state'
-import { iconMap } from "@/components/setting/iconMap";
 import fixedConfig from "./fixed";
 
 const Image = TiptapImage.extend({
@@ -26,17 +24,6 @@ const Image = TiptapImage.extend({
        * @returns Promise<{ url: string }>
        */
       uploadHandler: null,
-      button({ editor }) {
-        return {
-          component: ImageButton,
-          componentProps: {
-            icon: iconMap["image"],
-            isActive: () => {},
-            execute: () => {},
-            editor,
-          },
-        };
-      },
       fixed: fixedConfig,
     };
   },
