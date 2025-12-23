@@ -20,7 +20,7 @@
 
       <!-- Size Tooltip -->
       <div v-if="isResizing" class="size-tooltip">
-        {{ currentWidth }}px
+        {{ currentWidth }} px
       </div>
     </div>
   </NodeViewWrapper>
@@ -152,10 +152,10 @@ onUnmounted(() => {
   position: absolute;
   bottom: 100%;
   right: 0;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
   background: rgba(0, 0, 0, 0.8);
   color: white;
-  padding: 4px 8px;
+  padding: 8px 8px;
   border-radius: 4px;
   font-size: 12px;
   pointer-events: none;
