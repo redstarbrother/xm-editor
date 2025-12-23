@@ -1,4 +1,4 @@
-let name = "italic";
+const name = "italic";
 export default {
   id: name,
   icon: name,

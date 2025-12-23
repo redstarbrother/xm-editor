@@ -1,34 +1,13 @@
 import TiptapBlockquote from '@tiptap/extension-blockquote'
-import UniversalButton from '@/components/buttons/base/UniversalButton.vue'
-import { iconMap } from '@/components/setting/iconMap'
 import fixedConfig from './fixed.js'
-
-const name = 'blockquote'
+import slashConfig from './slash.js'
 
 const Blockquote = TiptapBlockquote.extend({
   addOptions() {
     return {
       ...this.parent?.(),
-      button({ editor }) {
-        return {
-          component: UniversalButton,
-          componentProps: {
-            icon: iconMap[name],
-            isActive: () => editor.isActive(name),
-            execute: () => editor.chain().focus().toggleBlockquote().run(),
-          },
-        }
-      },
       fixed: fixedConfig,
-      slash: () => ({
-        id: name,
-        iconType: "svg",
-        label: "引用",
-        icon: iconMap[name],
-        command: ({ editor, range }) => {
-          editor.chain().focus().deleteRange(range).toggleBlockquote().run();
-        },
-      }),
+      slash: slashConfig
     }
   },
 })

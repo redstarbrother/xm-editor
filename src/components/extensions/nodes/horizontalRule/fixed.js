@@ -1,4 +1,4 @@
-let name = "horizontalRule";
+const name = "horizontalRule";
 export default {
   id: name,
   icon: name,

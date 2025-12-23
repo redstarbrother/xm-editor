@@ -1,25 +1,11 @@
 import TiptapStrike from '@tiptap/extension-strike'
 import bubbleConfig from './bubble'
 import fixedConfig from './fixed'
-import UniversalButton from '@/components/buttons/base/UniversalButton.vue'
-import { iconMap } from '@/components/setting/iconMap'
-
-const name = 'strike'
 
 const Strike = TiptapStrike.extend({
   addOptions() {
     return {
       ...this.parent?.(),
-      button({ editor }) {
-        return {
-          component: UniversalButton,
-          componentProps: {
-            icon: iconMap[name],
-            isActive: () => editor.isActive(name),
-            execute: () => editor.chain().focus().toggleStrike().run(),
-          },
-        }
-      },
       fixed: fixedConfig,
       bubble: bubbleConfig,
       // slash: () => ({

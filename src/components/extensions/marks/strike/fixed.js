@@ -1,4 +1,4 @@
-let name = "strike";
+const name = "strike";
 export default {
   id: name,
   icon: name,

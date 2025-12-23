@@ -4,6 +4,7 @@ import ImageView from "./ImageView.vue";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { iconMap } from "@/components/setting/iconMap";
+import fixedConfig from "./fixed";
 
 const Image = TiptapImage.extend({
   inline() {
@@ -36,6 +37,7 @@ const Image = TiptapImage.extend({
           },
         };
       },
+      fixed: fixedConfig,
     };
   },
   addAttributes() {

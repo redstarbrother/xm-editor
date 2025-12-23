@@ -1,25 +1,11 @@
 import TiptapUnderline from '@tiptap/extension-underline'
 import bubbleConfig from './bubble'
 import fixedConfig from './fixed'
-import UniversalButton from '@/components/buttons/base/UniversalButton.vue'
-import { iconMap } from '@/components/setting/iconMap'
-
-const name = 'underline'
 
 const Underline = TiptapUnderline.extend({
   addOptions() {
     return {
       ...this.parent?.(),
-      button({ editor }) {
-        return {
-          component: UniversalButton,
-          componentProps: {
-            icon: iconMap[name],
-            isActive: () => editor.isActive(name),
-            execute: () => editor.chain().focus().toggleUnderline().run(),
-          },
-        }
-      },
       fixed: fixedConfig,
       bubble: bubbleConfig,
       // slash: () => ({

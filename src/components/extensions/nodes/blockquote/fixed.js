@@ -1,4 +1,4 @@
-let name = "blockquote";
+const name = "blockquote";
 export default {
   id: name,
   icon: name,

@@ -1,8 +1,7 @@
 import { Extension } from "@tiptap/core";
 import { BulletList, OrderedList, TaskList, TaskItem, ListItem } from "@tiptap/extension-list";
-// import ListButton from "@/components/buttons/custom/listButton
 import fixedConfig from "./fixed";
-import { iconMap } from "@/components/setting/iconMap";
+import slashConfig from "./slash"
 
 const name = 'list'
 
@@ -20,52 +19,8 @@ const List = Extension.create({
   addOptions() {
     return {
       ...this.parent?.(),
-      button({ editor }) {
-        return {
-          component: ListButton,
-          componentProps: {
-            icon: iconMap[name],
-            isActive: () =>
-              editor.isActive("taskList") ||
-              editor.isActive("bulletList") ||
-              editor.isActive("orderedList"),
-            execute: () => {},
-            editor: editor,
-          },
-        };
-      },
       fixed: fixedConfig,
-      slash: () => (
-        [
-          {
-            id: 'bulletList',
-            iconType: 'svg',
-            label: '无序列表',
-            icon: iconMap['bulletList'],
-            command: ({ editor, range }) => {
-              editor.chain().focus().deleteRange(range).toggleBulletList().run();
-            },
-          },
-          {
-            id: 'orderedList',
-            iconType: 'svg',
-            label: '有序列表',
-            icon: iconMap['orderedList'],
-            command: ({ editor, range }) => {
-              editor.chain().focus().deleteRange(range).toggleOrderedList().run();
-            },
-          },
-          {
-            id: 'taskList',
-            iconType: 'svg',
-            label: '任务列表',
-            icon: iconMap['taskList'],
-            command: ({ editor, range }) => {
-              editor.chain().focus().deleteRange(range).toggleTaskList().run();
-            },
-          },
-        ]
-      ),
+      slash: slashConfig,
     };
   },
 });

@@ -1,4 +1,4 @@
-let name = "codeBlock";
+const name = "codeBlock";
 export default {
   id: name,
   icon: name,

@@ -1,4 +1,4 @@
-let name = "bold";
+const name = "bold";
 export default {
   id: name,
   icon: name,

@@ -1,4 +1,4 @@
-let name = "table";
+const name = "table";
 export default {
   id: name,
   icon: name,

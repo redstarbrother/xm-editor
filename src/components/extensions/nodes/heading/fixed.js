@@ -1,7 +1,7 @@
 import SubMenuHeading from "./SubMenu.vue";
 import iconManager from "@/components/icon/iconManager";
 
-let name = "heading";
+const name = "heading";
 export default {
   id: name,
   icon: name,

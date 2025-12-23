@@ -1,4 +1,4 @@
-let name = "underline";
+const name = "underline";
 export default {
   id: name,
   icon: name,
