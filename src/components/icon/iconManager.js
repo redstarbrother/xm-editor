@@ -21,6 +21,10 @@ import {
   Table2,
   SquircleDashed,
   Highlighter,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  AlignJustify,
 } from "lucide-vue-next";
 
 const iconMap = {
@@ -55,6 +59,12 @@ const iconMap = {
   horizontalRule: Minus,
 
   highlight: Highlighter,
+
+  textAlign: AlignLeft,
+  alignLeft: AlignLeft,
+  alignCenter: AlignCenter,
+  alignRight: AlignRight,
+  alignJustify: AlignJustify,
 };
 
 const getIconComponent = (name) => {
