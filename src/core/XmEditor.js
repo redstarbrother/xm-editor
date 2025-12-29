@@ -1,7 +1,7 @@
 import { Editor } from "@tiptap/core";
 import { createEditorProxy } from "./proxyEditor";
 import { mountVueEditor } from "./mountVueEditor";
-import ExtensionUtil from "@/utils/extentionUtil";
+import ExtensionUtil from "@/utils/extensionUtil";
 
 export class XmEditor {
   constructor(options) {

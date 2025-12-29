@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, markRaw } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import IconItem from "@/components/icon/IconItem.vue";
 import IconManager from "@/components/icon/iconManager";
@@ -38,11 +38,11 @@ const fixedItems = computed(() => {
   props.extensions.forEach(extension => {
     // 检查 extension 是否有 fixed 配置
     if (extension.options?.fixed) {
-      let item = extension.options.fixed;
+      let item = { ...extension.options.fixed };
       // 如果没有 id，使用 extension.name 作为 id
       if (!item.id) item.id = extension.name;
       // 获取图标组件
-      item.iconCom = IconManager.getIconComponent(item.icon);
+      item.iconCom = markRaw(IconManager.getIconComponent(item.icon));
       items.push(item);
     }
   })

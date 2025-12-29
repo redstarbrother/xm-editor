@@ -5,7 +5,7 @@
     borderRadius: props.config.showBorder ? '5px' : 'none',
   }">
     <BubbleMenu v-if="props.config.bubbleMenuEnabled && isEditorReady" :editor="props.editor"
-      :should-show="shouldShowBubbleMenu" :tippy-options="{ duration: 100, moveTransition: 'transform 0.2s ease-out' }">
+      :should-show="shouldShowBubbleMenu" :options="{ duration: 100, moveTransition: 'transform 0.2s ease-out' }">
       <MenuBubble :editor="props.editor" :extensions="bubbleMenuExtensions" />
     </BubbleMenu>
     <MenuFixed v-if="props.config.fixedMenuEnabled && isEditorReady" :editor="props.editor"
@@ -29,7 +29,7 @@ import { EditorContent } from "@tiptap/vue-3";
 import MenuFixed from "@/components/menus/fixed/MenuFixed.vue";
 import MenuBubble from "@/components/menus/bubble/MenuBubble.vue";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
-import ExtensionUtil from "@/utils/extentionUtil";
+import ExtensionUtil from "@/utils/extensionUtil";
 import { loadCodeTheme } from "@/utils/themeLoader";
 import "@/styles/editor.css";
 import "@/styles/base.css";
