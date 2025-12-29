@@ -2,8 +2,8 @@
   <div class="menu-fixed" ref="containerRef">
     <div class="menu-item" v-for="item in fixedItems" :key="item.id">
       <div v-if="item.component" class="menu-item-wrapper">
-        <icon-item :icon="item.iconCom" :active="activeStates[item.id]" :stroke-width="fixMenuIconConfig.strokeWidth"
-          :size="fixMenuIconConfig.size" @click="clickIcon(item)" />
+        <icon-item :icon="item.iconCom" :active="activeStates[item.id] || activeMenuId === item.id"
+          :stroke-width="fixMenuIconConfig.strokeWidth" :size="fixMenuIconConfig.size" @click="clickIcon(item)" />
         <transition name="fade">
           <component :is="item.component" v-if="activeMenuId === item.id" v-bind="item.componentProps" :editor="editor"
             @close="activeMenuId = null" />
