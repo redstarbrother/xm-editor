@@ -10,6 +10,7 @@ export { default as Bold } from "./marks/bold/bold";
 export { default as Italic } from "./marks/italic/italic";
 export { default as Strike } from "./marks/strike/strike";
 export { default as Underline } from "./marks/underline/underline";
+export { default as Highlight } from "./marks/highlight/highlight";
 
 // default dependencies
 import Document from '@tiptap/extension-document'

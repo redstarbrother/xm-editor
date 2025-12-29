@@ -207,6 +207,13 @@ ul[data-type="taskList"] input[type="checkbox"] {
   border-bottom-right-radius: 4px;
 }
 
+.ProseMirror mark {
+  margin: 0 0.1em;
+  padding: 0.1em 0.2em;
+  border-radius: 0.3em;
+  line-height: 1.4;
+}
+
 .popover-area {
   display: flex;
   flex-direction: column;

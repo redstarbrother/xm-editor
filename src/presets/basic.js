@@ -30,6 +30,7 @@ const Basic = {
       Extensions.Image,
       Extensions.Table,
       Extensions.Emoji,
+      Extensions.Highlight,
     ],
 
     // 内部事件触发间隔，单位 ms

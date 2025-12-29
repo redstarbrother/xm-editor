@@ -20,6 +20,7 @@ import {
   CheckSquare,
   Table2,
   SquircleDashed,
+  Highlighter,
 } from "lucide-vue-next";
 
 const iconMap = {
@@ -52,6 +53,8 @@ const iconMap = {
   emptyStatus: SquircleDashed,
 
   horizontalRule: Minus,
+
+  highlight: Highlighter,
 };
 
 const getIconComponent = (name) => {
