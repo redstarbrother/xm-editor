@@ -5,7 +5,7 @@ export default {
   id: name,
   icon: name,
   label: "图片",
-  priority: 100,
+  type: 'node',
   isActive: (editor) => editor.isActive(name),
   action: (editor) => {},
   component: SubMenuImage,

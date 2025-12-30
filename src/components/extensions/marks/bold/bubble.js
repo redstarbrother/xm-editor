@@ -3,7 +3,7 @@ export default {
   id: name,
   icon: name,
   label: "加粗",
-  priority: 100,
+  type: 'mark',
   isActive: (editor) => editor.isActive(name),
   action: (editor) => editor.chain().focus().toggleBold().run(),
   shouldShow: (editor) =>

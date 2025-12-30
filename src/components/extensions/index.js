@@ -5,6 +5,7 @@ export { default as HorizontalRule } from "./nodes/horizontalRule/horizontalRule
 export { default as CodeBlock } from "./nodes/codeBlock/codeBlock";
 export { default as Image } from "./nodes/image/image";
 export { default as Table } from "./nodes/table/table";
+export { default as Segmentation } from "./functionality/segmentation/segmentation";
 export { default as Emoji } from "./nodes/emoji/emoji";
 export { default as Bold } from "./marks/bold/bold";
 export { default as Italic } from "./marks/italic/italic";
@@ -21,7 +22,7 @@ import HardBreak from '@tiptap/extension-hard-break'
 import { Placeholder, Dropcursor, Gapcursor, TrailingNode, UndoRedo } from '@tiptap/extensions'
 
 // 全局快捷键（优先级要求，需要放在最前面引入）
-import GlobalTab from './commands/shortcutKeys/globalTab'
+import GlobalTab from './functionality/shortcutKeys/globalTab'
 
 
 const NecessaryExtensions = [GlobalTab, Document, Paragraph, Text, HardBreak, Dropcursor, Gapcursor, TrailingNode, UndoRedo, Placeholder];

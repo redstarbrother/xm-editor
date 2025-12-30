@@ -6,7 +6,7 @@ export default {
   id: name,
   icon: name,
   label: "列表",
-  priority: 80,
+  type: 'node',
   isActive: (editor) =>
     editor.isActive("taskList") ||
     editor.isActive("bulletList") ||

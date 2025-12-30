@@ -6,7 +6,7 @@ export default {
   id: name,
   icon: name,
   label: "文本对齐",
-  priority: 100,
+  type: 'mark',
   isActive: (editor) => editor.isActive(name),
   shouldShow: (editor) =>
     !editor.state.selection.empty && editor.can().toggleTextAlign("left"),

@@ -6,7 +6,7 @@ export default {
   id: name,
   icon: name,
   label: "标题",
-  priority: 100,
+  type: 'node',
   isActive: (editor) => editor.isActive(name),
   shouldShow: (editor) =>
     !editor.state.selection.empty && editor.can().toggleHeading,

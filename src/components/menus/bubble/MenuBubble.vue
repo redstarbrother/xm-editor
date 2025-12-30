@@ -1,7 +1,8 @@
 <template>
   <div class="menu-bubble">
     <div class="menu-item" v-for="item in bubbleItems" :key="item.id">
-      <icon-item :icon="item.iconCom" :active="activeStates[item.id]" :stroke-width="bubbleMenuIconConfig.strokeWidth"
+      <div v-if="item.type === 'separator'" class="menu-separator"></div>
+      <icon-item v-else :icon="item.iconCom" :active="activeStates[item.id]" :stroke-width="bubbleMenuIconConfig.strokeWidth"
         :size="bubbleMenuIconConfig.size" @click="clickIcon(item.id)"></icon-item>
     </div>
   </div>
@@ -35,12 +36,13 @@ const bubbleItems = computed(() => {
     if (extension.options?.bubble) {
       let item = extension.options.bubble;
       if (!item.id) item.id = extension.name;
-      item.iconCom = IconManager.getIconComponent(item.icon);
+      if (item.icon) {
+        item.iconCom = IconManager.getIconComponent(item.icon);
+      }
       bubbleAction[item.id] = item.action;
       items.push(item);
     }
   })
-  items.sort((a, b) => (b.priority || 0) - (a.priority || 0));
   return items;
 });
 
@@ -83,6 +85,14 @@ const clickIcon = (id) => {
     font-size: 12px;
     color: #333;
   }
+}
+
+.menu-separator {
+  width: 1px;
+  height: 16px;
+  background-color: #e0e0e0;
+  margin: 0 2px;
+  align-self: center;
 }
 
 .is-active {

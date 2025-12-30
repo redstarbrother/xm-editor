@@ -1,7 +1,8 @@
 <template>
   <div class="menu-fixed" ref="containerRef">
     <div class="menu-item" v-for="item in fixedItems" :key="item.id">
-      <div v-if="item.component" class="menu-item-wrapper">
+      <div v-if="item.type === 'separator'" class="menu-separator"></div>
+      <div v-else-if="item.component" class="menu-item-wrapper">
         <icon-item :icon="item.iconCom" :active="activeStates[item.id] || activeMenuId === item.id"
           :stroke-width="fixMenuIconConfig.strokeWidth" :size="fixMenuIconConfig.size" @click="clickIcon(item)" />
         <transition name="fade">
@@ -42,13 +43,12 @@ const fixedItems = computed(() => {
       // 如果没有 id，使用 extension.name 作为 id
       if (!item.id) item.id = extension.name;
       // 获取图标组件
-      item.iconCom = markRaw(IconManager.getIconComponent(item.icon));
+      if (item.icon) {
+        item.iconCom = markRaw(IconManager.getIconComponent(item.icon));
+      }
       items.push(item);
     }
   })
-  // 按优先级排序
-  items.sort((a, b) => (b.priority || 0) - (a.priority || 0));
-  console.log(items);
   return items;
 });
 
@@ -98,6 +98,20 @@ const fixMenuIconConfig = {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.menu-separator {
+  width: 1px;
+  height: 18px;
+  background-color: #e0e0e0;
+  margin: 0 4px;
+}
+
+.menu-separator {
+  width: 1px;
+  height: 18px;
+  background-color: #e0e0e0;
+  margin: 0 4px;
 }
 
 .menu-item-wrapper {

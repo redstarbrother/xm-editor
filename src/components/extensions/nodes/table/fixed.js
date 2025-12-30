@@ -5,7 +5,7 @@ export default {
   id: name,
   icon: name,
   label: "表格",
-  priority: 100,
+  type: 'node',
   isActive: (editor) => editor.isActive(name),
   component: SubMenu,
   shouldShow: (editor) => editor.can().insertTable(),

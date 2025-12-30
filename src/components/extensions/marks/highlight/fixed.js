@@ -5,7 +5,7 @@ export default {
   id: name,
   icon: name,
   label: "高亮",
-  priority: 100,
+  type: 'mark',
   isActive: (editor) => editor.isActive(name),
   shouldShow: (editor) =>
     !editor.state.selection.empty && editor.can().toggleHighlight,

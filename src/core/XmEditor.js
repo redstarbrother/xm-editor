@@ -7,13 +7,9 @@ export class XmEditor {
   constructor(options) {
     this.options = options;
 
-    // 如果配置中包含 name 字段，说明是预置配置，需要提取默认配置
-    if (options.config.name) {
-      options.config = options.config.defaultConfig;
-    }
-
     // 生成 Tiptap 原生 Editor 配置
     const editorOption = this.generateEditorOptions(options.config);
+
     // 生成用户自定义配置
     const customConfig = this.generateCustomConfig(options.config);
 
@@ -37,13 +33,40 @@ export class XmEditor {
   }
 
   generateEditorOptions = (config) => {
-    // 生成extensions
+    // 菜单配置
     const menuConfig = {
       fixedMenuEnabled: config.fixedMenuEnabled,
       bubbleMenuEnabled: config.bubbleMenuEnabled,
       slashMenuEnabled: config.slashMenuEnabled,
     };
-    const extensions = ExtensionUtil.resolveExtensions(menuConfig, config.extensions);
+    const extensions = ExtensionUtil.resolveExtensions(
+      menuConfig,
+      config.extensions
+    );
+
+    // placeholder 处理
+    if (config.placeholder || config.placeholder !== "") {
+      extensions.forEach((ext, index) => {
+        if (ext.name === "placeholder") {
+          console.log("placeholder 扩展:", ext);
+          console.log(config.placeholder);
+          
+          
+          // 确保 placeholder 是字符串类型
+          if (typeof config.placeholder !== "string") {
+            console.warn(
+              "Warning: placeholder must be a string. Received:",
+              config.placeholder
+            );
+            return;
+          }
+          
+          extensions[index] = ext.configure({
+            placeholder: config.placeholder,
+          });
+        }
+      });
+    }
     const {
       content,
       placeholder,
