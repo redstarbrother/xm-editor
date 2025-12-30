@@ -46,6 +46,7 @@ export class XmEditor {
     const extensions = ExtensionUtil.resolveExtensions(menuConfig, config.extensions);
     const {
       content,
+      placeholder,
       editable,
       autofocus,
       onUpdate,
@@ -57,6 +58,7 @@ export class XmEditor {
     return {
       content,
       extensions,
+      placeholder,
       editable,
       autofocus,
       onUpdate: () => onUpdate?.(),

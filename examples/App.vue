@@ -41,7 +41,7 @@ const tabs = [
   { id: 'custom', label: '自定义卡片' },
 ]
 
-const currentTab = ref('comment')
+const currentTab = ref('basic')
 const charCount = ref(0)
 let editor = null
 
@@ -53,7 +53,6 @@ const onUpdate = () => {
 }
 
 const getEditorConfig = (type) => {
-  let backgroundColorOnFocus = "#f5f7fa"
   let height = '400px'
   const commonExtensions = [
     Extensions.Image.configure({
@@ -75,22 +74,23 @@ const getEditorConfig = (type) => {
       return Presets.Basic.configure({
         extensions: commonExtensions,
         onUpdate,
+        autofocus: true,
         height,
       })
     case 'notion':
       return Presets.NotionLike.configure({
         extensions: commonExtensions,
-        placeholder: "输入 '/' 唤起命令菜单...",
         onUpdate,
+        placeholder: "输入 '/' 唤起命令菜单...",
+        autofocus: true,
         height,
-        backgroundColorOnFocus
       })
     case 'comment':
       return Presets.Comment.configure({
         extensions: commonExtensions,
         onUpdate,
+        autofocus: true,
         height: '300px',
-        backgroundColorOnFocus
       })
     case 'custom':
       return Presets.Basic.configure({
@@ -137,7 +137,7 @@ onMounted(() => {
 <style scoped>
 .app-container {
   min-height: 100vh;
-  background-color: #f5f7fa;
+  background-color: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: #333;
 }
@@ -149,7 +149,7 @@ onMounted(() => {
   padding: 0 40px;
   height: 64px;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -188,32 +188,33 @@ onMounted(() => {
 .tabs {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 4px;
   margin-bottom: 30px;
-  background: #eee;
+  background: #f1f5f9;
   padding: 4px;
-  border-radius: 8px;
+  border-radius: 999px;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
+  border: 1px solid #f1f5f9;
 }
 
 .tab-item {
   padding: 8px 24px;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 999px;
   font-weight: 500;
-  color: #666;
+  color: #64748b;
   transition: all 0.2s;
 }
 
 .tab-item:hover {
-  color: #333;
+  color: #334155;
 }
 
 .tab-item.active {
   background: #fff;
-  color: #3b82f6;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  color: #0f172a;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 </style>
