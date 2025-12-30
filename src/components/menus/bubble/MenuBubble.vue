@@ -2,8 +2,9 @@
   <div class="menu-bubble">
     <div class="menu-item" v-for="item in bubbleItems" :key="item.id">
       <div v-if="item.type === 'separator'" class="menu-separator"></div>
-      <icon-item v-else :icon="item.iconCom" :active="activeStates[item.id]" :stroke-width="bubbleMenuIconConfig.strokeWidth"
-        :size="bubbleMenuIconConfig.size" @click="clickIcon(item.id)"></icon-item>
+      <icon-item v-else-if="item.type === 'mark' || item.type === 'node'" :icon="item.iconCom" :active="activeStates[item.id]"
+        :stroke-width="bubbleMenuIconConfig.strokeWidth" :size="bubbleMenuIconConfig.size"
+        @click="clickIcon(item.id)"></icon-item>
     </div>
   </div>
 </template>
@@ -34,7 +35,7 @@ const bubbleItems = computed(() => {
   let items = [];
   props.extensions.forEach(extension => {
     if (extension.options?.bubble) {
-      let item = extension.options.bubble;
+      let item = { ...extension.options.bubble };
       if (!item.id) item.id = extension.name;
       if (item.icon) {
         item.iconCom = IconManager.getIconComponent(item.icon);
@@ -43,7 +44,26 @@ const bubbleItems = computed(() => {
       items.push(item);
     }
   })
-  return items;
+  // 分隔符特殊处理
+  items.forEach((item, index) => {
+    if (item.type === 'separator') {
+      // 第一个和最后一个分隔符特殊处理, 隐藏
+      if (index === 0 || index === items.length - 1) {
+        item.type = 'hidden';
+        return;
+      }
+      // 两边不是mark或node时, 隐藏分隔符
+      const prev = items[index - 1];
+      const next = items[index + 1];
+      if (
+        (prev.type !== 'mark' && prev.type !== 'node') ||
+        (next.type !== 'mark' && next.type !== 'node')
+      ) {
+        item.type = 'hidden';
+      }
+    }
+  })
+  return items.filter(item => item.type !== 'hidden');
 });
 
 const activeStates = useMenuActiveState(props.editor, bubbleItems);
