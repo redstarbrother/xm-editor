@@ -61,8 +61,6 @@ const handleUpdate = () => {
 onMounted(() => {
   bubbleMenuExtensions.value = ExtensionUtil.filterBubbleMenuExtensions(extensions);
   fixMenuExtensions.value = ExtensionUtil.filterFixedMenuExtensions(extensions);
-  console.log("bubbleMenuExtensions", bubbleMenuExtensions.value);
-  console.log("fixMenuExtensions", fixMenuExtensions.value);
 })
 
 // 监听编辑器事件

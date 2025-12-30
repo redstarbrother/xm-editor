@@ -56,8 +56,6 @@ const activeStates = useMenuActiveState(props.editor, fixedItems);
 
 // 点击图标时触发
 const clickIcon = (item) => {
-  console.log("item: ", item);
-
   if (activeMenuId.value === item.id) {
     // 点击已激活的图标，关闭菜单
     activeMenuId.value = null;

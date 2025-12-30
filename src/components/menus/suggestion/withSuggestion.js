@@ -1,5 +1,4 @@
 export function withSuggestion(extension, suggestionConfig) {
-  console.log("withSuggestion:", extension, suggestionConfig);
   
   if (!extension.__suggestions) {
     extension.__suggestions = [];

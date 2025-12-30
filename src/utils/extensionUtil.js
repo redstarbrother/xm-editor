@@ -5,8 +5,6 @@ import { createSuggestion } from "@/components/menus/suggestion/suggestionFactor
 const resolveExtensions = (menuConfig, extensions) => {
   const suggestionExtensions = [];
 
-  console.log("extensions:", extensions);
-  
   // 判断是否开启slash menu
   if (menuConfig.slashMenuEnabled) {
     const slashItems = collectSlashItems(extensions);
@@ -17,7 +15,6 @@ const resolveExtensions = (menuConfig, extensions) => {
   extensions.forEach((ext) => {
     if (ext.__suggestions) {
       ext.__suggestions.forEach((config) => {
-        console.log("suggestion config:", config);
         suggestionExtensions.push(createSuggestion(config));
       });
     }

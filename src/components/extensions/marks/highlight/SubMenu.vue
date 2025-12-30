@@ -56,8 +56,6 @@ const isCustomColor = computed(() => {
 });
 
 const setColor = (color) => {
-    console.log("color", color);
-
     props.editor.chain().focus().toggleHighlight({ color }).run();
     // 选中预设颜色后关闭菜单
     emit('close');

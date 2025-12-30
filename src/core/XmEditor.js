@@ -48,9 +48,6 @@ export class XmEditor {
     if (config.placeholder || config.placeholder !== "") {
       extensions.forEach((ext, index) => {
         if (ext.name === "placeholder") {
-          console.log("placeholder 扩展:", ext);
-          console.log(config.placeholder);
-          
           
           // 确保 placeholder 是字符串类型
           if (typeof config.placeholder !== "string") {

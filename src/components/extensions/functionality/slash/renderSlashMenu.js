@@ -9,7 +9,6 @@ export default function renderSlashMenu() {
     onStart: (props) => {
       try {
         positionStyle = generatePositionStyle(props.clientRect());
-        console.log("props.items: ", props.items);
         props.positionStyle = positionStyle;
 
         component = new VueRenderer(SlashMenu, {
