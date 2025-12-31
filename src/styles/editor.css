@@ -80,12 +80,20 @@
   margin: 0.5em 0; */
 }
 
+.ProseMirror pre {
+  font-size: 14px;
+  background: none;
+  padding: 110;
+  border-radius: 0;
+}
+
 /* 行内代码 */
 .ProseMirror code {
   background: #f1f1f1;
   padding: 0.2em 0.4em;
   border-radius: 10px;
   font-family: monospace;
+  font-size: 14px;
 }
 
 /* 列表样式优化 */

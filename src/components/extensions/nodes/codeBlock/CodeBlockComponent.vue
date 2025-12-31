@@ -82,7 +82,6 @@ const selectedLanguage = computed({
 }
 
 .tiptap .hljs {
-  font-size: 1.2em;
   display: block;
   min-height: 1.5em;
 }
