@@ -29,7 +29,6 @@ import { EditorContent } from "@tiptap/vue-3";
 import MenuFixed from "@/components/menus/fixed/MenuFixed.vue";
 import MenuBubble from "@/components/menus/bubble/MenuBubble.vue";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
-import ExtensionUtil from "@/utils/extensionUtil";
 import { loadCodeTheme } from "@/utils/themeLoader";
 import "@/styles/editor.css";
 import "@/styles/base.css";
@@ -39,13 +38,16 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  extensionManager: {
+    type: Object,
+    required: true,
+  },
   config: {
     type: Object,
     default: () => ({}),
   },
 });
 
-const extensions = props.editor.extensionManager.extensions;
 const bubbleMenuExtensions = ref([]);
 const fixMenuExtensions = ref([]);
 
@@ -59,8 +61,10 @@ const handleUpdate = () => {
 
 // 初始化菜单extension
 onMounted(() => {
-  bubbleMenuExtensions.value = ExtensionUtil.filterBubbleMenuExtensions(extensions);
-  fixMenuExtensions.value = ExtensionUtil.filterFixedMenuExtensions(extensions);
+  if (props.extensionManager) {
+    bubbleMenuExtensions.value = props.extensionManager.getBubbleMenuItems();
+    fixMenuExtensions.value = props.extensionManager.getFixedMenuItems();
+  }
 })
 
 // 监听编辑器事件

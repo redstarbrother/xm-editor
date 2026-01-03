@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, markRaw } from "vue";
 import IconItem from "@/components/icon/IconItem.vue";
 import IconManager from "@/components/icon/iconManager";
 import { useMenuActiveState } from "@/composables/useEditorMenu";
@@ -32,18 +32,25 @@ let bubbleAction = {}
 // 生成气泡菜单列表（随 props.editor / props.extensions 变更而更新）
 const bubbleItems = computed(() => {
   bubbleAction = {}
-  let items = [];
-  props.extensions.forEach(extension => {
-    if (extension.options?.bubble) {
-      let item = { ...extension.options.bubble };
-      if (!item.id) item.id = extension.name;
-      if (item.icon) {
-        item.iconCom = IconManager.getIconComponent(item.icon);
+  let items = props.extensions.map(item => {
+    const newItem = { ...item };
+    if (!newItem.id) newItem.id = newItem.name;
+    
+    if (newItem.icon) {
+      if (typeof newItem.icon === 'string') {
+        newItem.iconCom = markRaw(IconManager.getIconComponent(newItem.icon));
+      } else {
+        newItem.iconCom = markRaw(newItem.icon);
       }
-      bubbleAction[item.id] = item.action;
-      items.push(item);
     }
-  })
+    
+    if (newItem.action) {
+      bubbleAction[newItem.id] = newItem.action;
+    }
+    
+    return newItem;
+  });
+
   // 分隔符特殊处理
   items.forEach((item, index) => {
     if (item.type === 'separator') {
@@ -69,7 +76,7 @@ const bubbleItems = computed(() => {
 const activeStates = useMenuActiveState(props.editor, bubbleItems);
 
 const clickIcon = (id) => {
-  bubbleAction[id]?.(props.editor);
+  bubbleAction[id]?.({ editor: props.editor });
 }
 </script>
 

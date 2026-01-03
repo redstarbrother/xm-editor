@@ -35,21 +35,19 @@ const containerRef = ref(null);
 
 // 生成固定菜单列表（随 props.editor / props.extensions 变更而更新）
 const fixedItems = computed(() => {
-  let items = [];
-  props.extensions.forEach(extension => {
-    // 检查 extension 是否有 fixed 配置
-    if (extension.options?.fixed) {
-      let item = { ...extension.options.fixed };
-      // 如果没有 id，使用 extension.name 作为 id
-      if (!item.id) item.id = extension.name;
-      // 获取图标组件
-      if (item.icon) {
-        item.iconCom = markRaw(IconManager.getIconComponent(item.icon));
+  return props.extensions.map(item => {
+    const newItem = { ...item };
+    if (!newItem.id) newItem.id = newItem.name;
+    
+    if (newItem.icon) {
+      if (typeof newItem.icon === 'string') {
+        newItem.iconCom = markRaw(IconManager.getIconComponent(newItem.icon));
+      } else {
+        newItem.iconCom = markRaw(newItem.icon);
       }
-      items.push(item);
     }
-  })
-  return items;
+    return newItem;
+  });
 });
 
 const activeStates = useMenuActiveState(props.editor, fixedItems);
@@ -65,7 +63,7 @@ const clickIcon = (item) => {
       activeMenuId.value = item.id;
     } else {
       // 点击非组件图标，执行操作后关闭菜单
-      item.action?.(props.editor);
+      item.action?.({ editor: props.editor });
       activeMenuId.value = null;
     }
   }

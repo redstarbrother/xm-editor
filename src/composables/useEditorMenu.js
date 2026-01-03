@@ -18,7 +18,7 @@ export function useMenuActiveState(editor, items) {
 
     list.forEach((item) => {
       if (item.id && typeof item.isActive === "function") {
-        states[item.id] = item.isActive(editor);
+        states[item.id] = item.isActive({ editor });
       }
     });
     activeStates.value = states;

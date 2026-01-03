@@ -2,6 +2,7 @@ import { Editor } from "@tiptap/core";
 import { createEditorProxy } from "./proxyEditor";
 import { mountVueEditor } from "./mountVueEditor";
 import ExtensionUtil from "@/utils/extensionUtil";
+import { ExtensionManager } from "./ExtensionManager";
 
 export class XmEditor {
   constructor(options) {
@@ -16,14 +17,18 @@ export class XmEditor {
     // 1. 初始化 Tiptap 原生 Editor
     this.editor = new Editor(editorOption);
 
-    // 2. 创建代理对象（对外暴露）
+    // 2. 创建 ExtensionManager (适配新 UI 架构)
+    this.extensionManager = new ExtensionManager(editorOption.extensions, options.config);
+
+    // 3. 创建代理对象（对外暴露）
     this.proxy = createEditorProxy(this.editor);
 
-    // 3. 挂载 Vue 渲染层
+    // 4. 挂载 Vue 渲染层
     this.app = mountVueEditor({
       el: options.el,
       props: {
         editor: this.editor,
+        extensionManager: this.extensionManager,
         config: customConfig,
       },
     });
