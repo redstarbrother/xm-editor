@@ -36,6 +36,8 @@ const Basic = {
       Extensions.Emoji,
       Extensions.Highlight,
       Extensions.TextAlign,
+      Extensions.FixedMenu,
+      Extensions.BubbleMenu,
     ],
 
     // 内部事件触发间隔，单位 ms

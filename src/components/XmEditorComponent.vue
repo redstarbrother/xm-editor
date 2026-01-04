@@ -6,9 +6,9 @@
   }">
     <BubbleMenu v-if="props.config.bubbleMenuEnabled && isEditorReady" :editor="props.editor"
       :should-show="shouldShowBubbleMenu" :options="{ duration: 100, moveTransition: 'transform 0.2s ease-out' }">
-      <MenuBubble :editor="props.editor" :extensions="bubbleMenuExtensions" />
+      <component :is="MenuBubble" v-if="MenuBubble" :editor="props.editor" :extensions="bubbleMenuExtensions" />
     </BubbleMenu>
-    <MenuFixed v-if="props.config.fixedMenuEnabled && isEditorReady" :editor="props.editor"
+    <component :is="MenuFixed" v-if="props.config.fixedMenuEnabled && isEditorReady && MenuFixed" :editor="props.editor"
       :extensions="fixMenuExtensions" />
     <editor-content class="editor-content" :editor="props.editor" :style="{
       '--editor-focus-bg': props.config.backgroundColorOnFocus,
@@ -26,8 +26,6 @@ import {
   triggerRef,
 } from "vue";
 import { EditorContent } from "@tiptap/vue-3";
-import MenuFixed from "@/components/menus/fixed/MenuFixed.vue";
-import MenuBubble from "@/components/menus/bubble/MenuBubble.vue";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
 import { loadCodeTheme } from "@/utils/themeLoader";
 import "@/styles/editor.css";
@@ -50,6 +48,8 @@ const props = defineProps({
 
 const bubbleMenuExtensions = ref([]);
 const fixMenuExtensions = ref([]);
+const MenuFixed = shallowRef(null);
+const MenuBubble = shallowRef(null);
 
 // Create a shallowRef for the editor to handle reactivity
 const editorRef = shallowRef(props.editor);
@@ -64,6 +64,10 @@ onMounted(() => {
   if (props.extensionManager) {
     bubbleMenuExtensions.value = props.extensionManager.getBubbleMenuItems();
     fixMenuExtensions.value = props.extensionManager.getFixedMenuItems();
+    
+    // 动态加载菜单组件
+    MenuFixed.value = props.extensionManager.getComponent('fixed-menu');
+    MenuBubble.value = props.extensionManager.getComponent('bubble-menu');
   }
 })
 

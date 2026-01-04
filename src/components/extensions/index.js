@@ -1,18 +1,21 @@
-export { default as Heading } from "./nodes/heading/heading";
-export { default as List } from "./nodes/list/list";
-export { default as Blockquote } from "./nodes/blockquote/blockquote";
-export { default as HorizontalRule } from "./nodes/horizontalRule/horizontalRule";
-export { default as CodeBlock } from "./nodes/codeBlock/codeBlock";
-export { default as Image } from "./nodes/image/image";
-export { default as Table } from "./nodes/table/table";
-export { default as Segmentation } from "./functionality/segmentation/segmentation";
-export { default as Emoji } from "./nodes/emoji/emoji";
-export { default as Bold } from "./marks/bold/bold";
-export { default as Italic } from "./marks/italic/italic";
-export { default as Strike } from "./marks/strike/strike";
-export { default as Underline } from "./marks/underline/underline";
-export { default as Highlight } from "./marks/highlight/highlight";
-export { default as TextAlign } from "./marks/textAlign/textAlign";
+export { default as Heading } from "../../extensions/Heading/index";
+export { default as List } from "../../extensions/List/index";
+export { default as Blockquote } from "../../extensions/Blockquote/index";
+export { default as HorizontalRule } from "../../extensions/HorizontalRule/index";
+export { default as CodeBlock } from "../../extensions/CodeBlock/index";
+export { default as Image } from "../../extensions/Image/index";
+export { default as Table } from "../../extensions/Table/index";
+export { default as Segmentation } from "../../extensions/Segmentation/index";
+// export { default as Emoji } from "./nodes/emoji/emoji"; // 尚未迁移
+export { default as Bold } from "../../extensions/Bold/index";
+export { default as Italic } from "../../extensions/Italic/index";
+export { default as Strike } from "../../extensions/Strike/index";
+export { default as Underline } from "../../extensions/Underline/index";
+export { default as Highlight } from "../../extensions/Highlight/index";
+export { default as TextAlign } from "../../extensions/TextAlign/index";
+
+export { default as FixedMenu } from "../../extensions/FixedMenu/index";
+export { default as BubbleMenu } from "../../extensions/BubbleMenu/index";
 
 // default dependencies
 import Document from '@tiptap/extension-document'

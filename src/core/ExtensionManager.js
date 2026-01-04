@@ -55,14 +55,20 @@ export class ExtensionManager {
       this.manifests.push({
         name: name,
         ...manifest,
-        // Store reference to extension if needed?
+        component: item.component // Store component if available
       })
     })
   }
 
   getTiptapExtensions() {
-    return this.extensions
+    return this.extensions.filter(ext => ext !== null) // Filter out null extensions (UI-only)
   }
+
+  getComponent(name) {
+    const manifest = this.manifests.find(m => m.name === name)
+    return manifest ? manifest.component : null
+  }
+
 
   getFixedMenuItems() {
     return this.manifests
