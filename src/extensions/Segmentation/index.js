@@ -1,9 +1,10 @@
 import SegmentationExtension from './SegmentationExtension'
 
 export default {
+  name: 'segmentation',
+  type: 'separator',
   extension: SegmentationExtension,
   manifest: {
-    name: 'segmentation',
     fixedMenu: {
       id: 'segmentation',
       type: 'separator',

@@ -10,10 +10,6 @@
             @close="activeMenuId = null" />
         </transition>
       </div>
-      <div v-else>
-        <icon-item :icon="item.iconCom" :active="activeStates[item.id]" :stroke-width="fixMenuIconConfig.strokeWidth"
-          :size="fixMenuIconConfig.size" @click="clickIcon(item)" />
-      </div>
     </div>
   </div>
 </template>

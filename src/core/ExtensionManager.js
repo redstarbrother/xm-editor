@@ -6,6 +6,7 @@ export class ExtensionManager {
     this.editorConfig = editorConfig
     this.extensions = []
     this.manifests = []
+    this.menuItems = []
     
     this.init()
   }
@@ -17,33 +18,21 @@ export class ExtensionManager {
       let extension = null
       let manifest = null
 
-      if (item.extension) {
-        // 自定义扩展
+      if (item && typeof item === 'object' && 'extension' in item) {
+        // Wrapper structure
         extension = item.extension
         manifest = item.manifest || {}
-      } else if (item instanceof Extension || (item.name && item.type)) {
-        // 原生 Tiptap 扩展实例或类
+      } else {
+        // Direct extension structure
         extension = item
         manifest = {}
-
-        // Try to extract legacy options from extension instance
-        if (extension.options) {
-          if (extension.options.fixed) {
-            manifest.fixedMenu = extension.options.fixed
-          }
-          if (extension.options.bubble) {
-            manifest.bubbleMenu = extension.options.bubble
-          }
-        }
-      } else {
-        console.warn('Invalid extension format:', item)
-        return
       }
 
       // Allow user config to override extension config
       // Key: manifest.name or extension.name
-      const name = manifest.name || extension.name
-      if (name && this.editorConfig[name]) {
+      const name = manifest.name || (extension ? extension.name : null)
+      
+      if (name && this.editorConfig[name] && extension) {
         if (typeof extension.configure === 'function') {
           extension = extension.configure(this.editorConfig[name])
         }
@@ -55,7 +44,6 @@ export class ExtensionManager {
       this.manifests.push({
         name: name,
         ...manifest,
-        component: item.component // Store component if available
       })
     })
   }

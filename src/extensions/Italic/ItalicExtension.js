@@ -1,3 +1,5 @@
 import { Italic } from '@tiptap/extension-italic'
 
-export default Italic
+const ItalicExtension = Italic.extend({
+})
+export default ItalicExtension

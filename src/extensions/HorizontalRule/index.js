@@ -2,10 +2,10 @@ import HorizontalRuleExtension from './HorizontalRuleExtension'
 import { fixedMenu, slashMenu } from './menu'
 
 export default {
+  name: 'horizontalRule',
+  type: 'node',
   extension: HorizontalRuleExtension,
   manifest: {
-    name: 'horizontalRule',
-    title: 'Horizontal Rule',
     fixedMenu,
     slashMenu
   }

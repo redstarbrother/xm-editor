@@ -2,10 +2,10 @@ import UnderlineExtension from './UnderlineExtension'
 import { fixedMenu, bubbleMenu } from './menu'
 
 export default {
+  name: 'underline',
+  type: 'mark',
   extension: UnderlineExtension,
   manifest: {
-    name: 'underline',
-    title: 'Underline',
     fixedMenu,
     bubbleMenu
   }

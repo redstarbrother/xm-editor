@@ -1,3 +1,5 @@
 import { Bold } from '@tiptap/extension-bold'
 
-export default Bold
+const BoldExtension = Bold.extend({
+})
+export default BoldExtension

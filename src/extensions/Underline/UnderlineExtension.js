@@ -1,3 +1,6 @@
 import TiptapUnderline from '@tiptap/extension-underline'
 
-export default TiptapUnderline;
+const UnderlineExtension = TiptapUnderline.extend({
+})
+
+export default UnderlineExtension;

@@ -1,3 +1,6 @@
 import TiptapStrike from '@tiptap/extension-strike'
 
-export default TiptapStrike;
+const StrikeExtension = TiptapStrike.extend({
+})
+
+export default StrikeExtension;
