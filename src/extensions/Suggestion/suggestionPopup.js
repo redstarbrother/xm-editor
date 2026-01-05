@@ -1,6 +1,6 @@
 // suggestion/suggestionPopup.js
 import tippy from "tippy.js";
-import SuggestionMenu from "./SuggestionMenu.vue";
+import SuggestionMenu from "./components/SuggestionMenu.vue";
 import { createApp, h, reactive } from "vue";
 
 export function createSuggestionPopup({ editor, clientRect, items, command }) {

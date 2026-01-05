@@ -1,10 +1,15 @@
-export const slashSuggestionConfig = {
+export const suggestionConfig = {
   char: "/",
 
   items: function ({ query, editor }) {
     const slashExtension = editor.extensionManager.extensions.find(
       (ext) => ext.name === "slash-command"
     );
+
+    if (!slashExtension) {
+      return [];
+    }
+
     const itemList = slashExtension.options.items;
 
     // 确保 items 是数组

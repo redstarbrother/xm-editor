@@ -1,4 +1,4 @@
-export const emojiSuggestionConfig = {
+export const suggestionConfig = {
   char: ":",
 
   items: ({ editor, query }) => {

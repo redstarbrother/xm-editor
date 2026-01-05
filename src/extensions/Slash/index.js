@@ -1,7 +1,11 @@
-import SlashCommandExtension from './SlashCommandExtension'
+import SlashExtension from './SlashExtension'
+import { suggestionConfig } from './suggestion'
 
 export default {
-  name: 'slash-command',
-  type: 'node',
-  extension: SlashCommandExtension,
+  name: 'slash',
+  type: 'menu',
+  extension: SlashExtension,
+  manifest: {
+    suggestion: suggestionConfig
+  }
 }

@@ -1,97 +1,124 @@
-import { Extension } from '@tiptap/core'
+import * as Suggestion from "@/extensions/Suggestion/Suggestion";
 
 export class ExtensionManager {
   constructor(extensions = [], editorConfig = {}) {
-    this.rawExtensions = extensions
-    this.editorConfig = editorConfig
-    this.extensions = []
-    this.manifests = []
-    this.menuItems = []
-    
-    this.init()
+    this.rawExtensions = extensions;
+    this.editorConfig = editorConfig;
+    this.extensions = [];
+    this.manifests = [];
+    // 存放组件（比如fixed菜单）
+    this.components = [];
+
+    this.init();
   }
 
   init() {
-    this.rawExtensions.forEach(item => {
-      // Handle both new structure (export default { extension, manifest }) 
-      // and legacy/simple structure (export default Extension)
-      let extension = null
-      let manifest = null
-
-      if (item && typeof item === 'object' && 'extension' in item) {
-        // Wrapper structure
-        extension = item.extension
-        manifest = item.manifest || {}
-      } else {
-        // Direct extension structure
-        extension = item
-        manifest = {}
+    let slashExtension = null;
+    this.rawExtensions.forEach((item) => {
+      // 收集扩展
+      if (item.extension) {
+        this.extensions.push(item.extension);
       }
 
-      // Allow user config to override extension config
-      // Key: manifest.name or extension.name
-      const name = manifest.name || (extension ? extension.name : null)
-      
-      if (name && this.editorConfig[name] && extension) {
-        if (typeof extension.configure === 'function') {
-          extension = extension.configure(this.editorConfig[name])
+      // 收集扩展的manifest配置
+      if (item.manifest) {
+        this.manifests.push({
+          key: item.name,
+          value: item.manifest || {},
+        });
+      }
+
+      // 收集组件
+      if (item.component) {
+        this.components.push({
+          name: item.name,
+          component: item.component,
+        });
+      }
+
+      // 获取Slash扩展
+      if (item.name === "slash") {
+        slashExtension = item.extension;
+      }
+    });
+
+    // 初始化Slash扩展
+    this.initSlashExtension(slashExtension);
+
+    // 初始化Suggestion扩展
+    let suggestionExtension = this.initSuggestionExtension();
+    this.extensions.push(...suggestionExtension);
+  }
+
+  // 初始化Slash扩展
+  initSlashExtension(slashExtension) {
+    if (slashExtension) {
+      let slashItems = [];
+      this.manifests.forEach((manifest) => {
+        // 获取manifest的slash配置
+        let manifestValue = manifest.value || {};
+        if (manifestValue.slash) {
+          slashItems.push(manifestValue.slash);
         }
-      }
+      });
+      slashExtension.options.items = slashItems;
+    }
+  }
 
-      this.extensions.push(extension)
-      
-      // Enhance manifest with defaults if needed
-      this.manifests.push({
-        name: name,
-        ...manifest,
-      })
-    })
+  // 初始化Suggestion扩展
+  initSuggestionExtension() {
+    let suggestionExtension = [];
+    let suggestionConfigItems = [];
+    this.manifests.forEach((manifest) => {
+      // 获取manifest的suggestion配置
+      let manifestValue = manifest.value || {};
+      if (manifestValue.suggestion) {
+        suggestionConfigItems.push(manifestValue.suggestion);
+      }
+    });
+    suggestionConfigItems?.forEach((item) => {
+      suggestionExtension.push(Suggestion.createSuggestion(item));
+    });
+    return suggestionExtension;
   }
 
   getTiptapExtensions() {
-    return this.extensions.filter(ext => ext !== null) // Filter out null extensions (UI-only)
+    return this.extensions.filter((ext) => ext !== null); // Filter out null extensions (UI-only)
   }
-
-  getComponent(name) {
-    const manifest = this.manifests.find(m => m.name === name)
-    return manifest ? manifest.component : null
-  }
-
 
   getFixedMenuItems() {
     return this.manifests
-      .filter(m => m.fixedMenu)
-      .map(m => ({
+      .filter((m) => m.fixedMenu)
+      .map((m) => ({
         ...m.fixedMenu,
         name: m.name, // Ensure name is available
-        title: m.title // Ensure title is available
-      }))
-      .sort((a, b) => (a.order || 999) - (b.order || 999))
+        title: m.title, // Ensure title is available
+      }));
   }
 
   getBubbleMenuItems() {
     return this.manifests
-      .filter(m => m.bubbleMenu)
-      .map(m => ({
+      .filter((m) => m.bubbleMenu)
+      .map((m) => ({
         ...m.bubbleMenu,
-        name: m.name
-      }))
-      .sort((a, b) => (a.order || 999) - (b.order || 999))
+        name: m.name,
+      }));
   }
 
   getSlashMenuItems() {
     return this.manifests
-      .filter(m => m.slashMenu)
-      .map(m => ({
+      .filter((m) => m.slashMenu)
+      .map((m) => ({
         ...m.slashMenu,
-        name: m.name
-      }))
-      // Slash menu often grouped or just flat list. 
-      // Sorting might be relevant.
+        name: m.name,
+      }));
   }
-  
-  // Helper to find specific extension config/manifest
+
   getExtension(name) {
-    return this.extensions.find(ext => ext.name === name)
+    return this.extensions.find((ext) => ext.name === name);
+  }
+
+  getComponent(name) {
+    return this.components.find((comp) => comp.name === name);
   }
 }

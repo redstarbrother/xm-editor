@@ -4,12 +4,11 @@
     border: props.config.showBorder ? '1px solid #d1d5da' : 'none',
     borderRadius: props.config.showBorder ? '5px' : 'none',
   }">
-    <BubbleMenu v-if="props.config.bubbleMenuEnabled && isEditorReady" :editor="props.editor"
+    <BubbleMenu v-if="bubbleReady" :editor="props.editor"
       :should-show="shouldShowBubbleMenu" :options="{ duration: 100, moveTransition: 'transform 0.2s ease-out' }">
-      <component :is="MenuBubble" v-if="MenuBubble" :editor="props.editor" :extensions="bubbleMenuExtensions" />
+      <component :is="MenuBubble" :editor="props.editor" :extensions="bubbleMenuExtensions" />
     </BubbleMenu>
-    <component :is="MenuFixed" v-if="props.config.fixedMenuEnabled && isEditorReady && MenuFixed" :editor="props.editor"
-      :extensions="fixMenuExtensions" />
+    <component :is="MenuFixed" v-if="fixedReady" :editor="props.editor" :extensions="fixedMenuExtensions" />
     <editor-content class="editor-content" :editor="props.editor" :style="{
       '--editor-focus-bg': props.config.backgroundColorOnFocus,
     }" />
@@ -47,7 +46,7 @@ const props = defineProps({
 });
 
 const bubbleMenuExtensions = ref([]);
-const fixMenuExtensions = ref([]);
+const fixedMenuExtensions = ref([]);
 const MenuFixed = shallowRef(null);
 const MenuBubble = shallowRef(null);
 
@@ -59,11 +58,20 @@ const handleUpdate = () => {
   triggerRef(editorRef);
 };
 
+
+const bubbleReady = computed(() => {
+  return props.config.bubbleMenuEnabled && isEditorReady && MenuBubble.value;
+})
+
+const fixedReady = computed(() => {
+  return props.config.fixedMenuEnabled && isEditorReady && MenuFixed.value;
+})
+
 // 初始化菜单extension
 onMounted(() => {
   if (props.extensionManager) {
     bubbleMenuExtensions.value = props.extensionManager.getBubbleMenuItems();
-    fixMenuExtensions.value = props.extensionManager.getFixedMenuItems();
+    fixedMenuExtensions.value = props.extensionManager.getFixedMenuItems();
     
     // 动态加载菜单组件
     MenuFixed.value = props.extensionManager.getComponent('fixed-menu');

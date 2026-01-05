@@ -16,8 +16,10 @@ import Strike from './Strike'
 import Table from './Table'
 import TextAlign from './TextAlign'
 import Underline from './Underline'
+import FixedMenu from './FixedMenu'
+import BubbleMenu from './BubbleMenu'
 
-export default [
+export default {
   Base,
   Blockquote,
   Bold,
@@ -36,4 +38,6 @@ export default [
   Table,
   TextAlign,
   Underline,
-]
+  FixedMenu,
+  BubbleMenu,
+}

@@ -1,8 +1,6 @@
 import TtEmoji, { gitHubEmojis } from "@tiptap/extension-emoji";
-import { withSuggestion } from "@/components/menus/suggestion/withSuggestion";
-import { emojiSuggestionConfig } from "./utils";
 
-const EmojiExtension = withSuggestion(TtEmoji.extend({
+const EmojiExtension = TtEmoji.extend({
   addOptions() {
     return {
       ...this.parent?.(),
@@ -10,6 +8,6 @@ const EmojiExtension = withSuggestion(TtEmoji.extend({
       enableEmoticons: true,
     };
   },
-}), emojiSuggestionConfig);
+});
 
 export default EmojiExtension;

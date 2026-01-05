@@ -1,10 +1,11 @@
 import EmojiExtension from './EmojiExtension'
+import { suggestionConfig } from './suggestion'
 
 export default {
   name: 'emoji',
   type: 'node',
   extension: EmojiExtension,
   manifest: {
-    // No menu items for now, as it's triggered by colon
+    suggestion: suggestionConfig
   }
 }

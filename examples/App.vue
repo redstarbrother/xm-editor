@@ -73,35 +73,63 @@ const getEditorConfig = (type) => {
     case 'basic':
       return Presets.Basic.configure({
         extensions: commonExtensions,
-        onUpdate,
-        autofocus: true,
-        height,
+        events: {
+          onUpdate,
+        },
+        editorOption: {
+          autofocus: true,
+        },
+        style: {
+          height,
+        },
       })
     case 'notion':
       return Presets.NotionLike.configure({
         extensions: commonExtensions,
-        onUpdate,
-        placeholder: "输入 '/' 唤起命令菜单...",
-        autofocus: true,
-        height,
+        events: {
+          onUpdate,
+        },
+        editorOption: {
+          placeholder: "输入 '/' 唤起命令菜单...",
+          autofocus: true,
+        },
+        style: {
+          height,
+        },
       })
     case 'comment':
       return Presets.Comment.configure({
         extensions: commonExtensions,
-        onUpdate,
-        autofocus: true,
-        height: '300px',
+        events: {
+          onUpdate,
+        },
+        editorOption: {
+          autofocus: true,
+        },
+        style: {
+          height: '300px',
+        },
       })
     case 'custom':
       return Presets.Basic.configure({
         extensions: commonExtensions,
-        theme: 'dark', // Assuming theme support or just a placeholder for diff config
-        height: '300px',
-        placeholder: "这是一个自定义配置的编辑器...",
-        onUpdate,
+        style: {
+          theme: 'dark', // Assuming theme support or just a placeholder for diff config
+          height: '300px',
+        },
+        editorOption: {
+          placeholder: "这是一个自定义配置的编辑器...",
+        },
+        events: {
+          onUpdate,
+        },
       })
     default:
-      return Presets.Basic.configure({ onUpdate })
+      return Presets.Basic.configure({
+        events: {
+          onUpdate,
+        },
+      })
   }
 }
 

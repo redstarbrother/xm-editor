@@ -1,119 +1,94 @@
-import { Editor } from "@tiptap/core";
-import { createEditorProxy } from "./proxyEditor";
-import { mountVueEditor } from "./mountVueEditor";
-import ExtensionUtil from "@/utils/extensionUtil";
-import { ExtensionManager } from "./ExtensionManager";
+import { Editor as TiptapEditor } from '@tiptap/core'
+import { ExtensionManager } from './ExtensionManager'
+import { mountVueEditor } from './mountVueEditor'
+import { createEditorProxy } from './proxyEditor'
 
 export class XmEditor {
-  constructor(options) {
-    this.options = options;
+  constructor(options = {}) {
+    this.options = options
+    this.element = options.el
+    this.config = options.config || {}
+    
+    // Get content from the new nested structure
+    const editorOption = this.config.editorOption || {}
+    this.initialContent = editorOption.content || ''
+    
+    // 1. Initialize Extension Manager
+    // We expect options.extensions to be passed, or we default to empty/default list
+    // In the new architecture, extensions might be imported and passed here
+    this.extensionManager = new ExtensionManager(
+      options.extensions || this.config.extensions || [], 
+      this.config
+    )
 
-    // 生成 Tiptap 原生 Editor 配置
-    const editorOption = this.generateEditorOptions(options.config);
+    // 2. Initialize Tiptap Editor
+    this.tiptapEditor = this.initTiptapEditor()
 
-    // 生成用户自定义配置
-    const customConfig = this.generateCustomConfig(options.config);
+    // 3. Mount Vue UI (Menus, Bubble, etc.)
+    // We pass the editor instance and the extension manager so UI can query menus
+    this.vueApp = this.mountUI()
 
-    // 1. 初始化 Tiptap 原生 Editor
-    this.editor = new Editor(editorOption);
+    // 4. Create Proxy (Optional, for backward compatibility or API simplification)
+    this.proxy = createEditorProxy(this.tiptapEditor)
 
-    // 2. 创建 ExtensionManager (适配新 UI 架构)
-    this.extensionManager = new ExtensionManager(editorOption.extensions, options.config);
-
-    // 3. 创建代理对象（对外暴露）
-    this.proxy = createEditorProxy(this.editor);
-
-    // 4. 挂载 Vue 渲染层
-    this.app = mountVueEditor({
-      el: options.el,
-      props: {
-        editor: this.editor,
-        extensionManager: this.extensionManager,
-        config: customConfig,
-      },
-    });
-
-    // 返回 Proxy 对象
-    return this.proxy;
+    return this.proxy
   }
 
-  generateEditorOptions = (config) => {
-    // 菜单配置
-    const menuConfig = {
-      fixedMenuEnabled: config.fixedMenuEnabled,
-      bubbleMenuEnabled: config.bubbleMenuEnabled,
-      slashMenuEnabled: config.slashMenuEnabled,
-    };
-    const extensions = ExtensionUtil.resolveExtensions(
-      menuConfig,
-      config.extensions
-    );
+  initTiptapEditor() {
+    const extensions = this.extensionManager.getTiptapExtensions()
+    const editorOption = this.config.editorOption || {}
+    const events = this.config.events || {}
+    
+    // Handle placeholder specifically if it's a top-level config but needs to be in an extension
+    // Or rely on ExtensionManager's generic config if passed correctly.
+    // For now, we follow Tiptap's standard instantiation.
 
-    // placeholder 处理
-    if (config.placeholder || config.placeholder !== "") {
-      extensions.forEach((ext, index) => {
-        if (ext.name === "placeholder") {
-          
-          // 确保 placeholder 是字符串类型
-          if (typeof config.placeholder !== "string") {
-            console.warn(
-              "Warning: placeholder must be a string. Received:",
-              config.placeholder
-            );
-            return;
-          }
-          
-          extensions[index] = ext.configure({
-            placeholder: config.placeholder,
-          });
-        }
-      });
+    return new TiptapEditor({
+      element: null, // We might mount Tiptap inside the Vue component or handle it here. 
+                     // Existing XmEditor mounted Vue which took 'editor' as prop.
+                     // The Vue component likely renders <editor-content>.
+                     // So we don't pass 'element' here directly if Vue handles the DOM.
+                     // Wait, XmEditor passed 'el' to mountVueEditor.
+      extensions: extensions,
+      content: this.initialContent,
+      editable: editorOption.editable !== false,
+      autofocus: editorOption.autofocus,
+      onUpdate: ({ editor }) => {
+        events.onUpdate?.({ editor })
+      },
+      onFocus: ({ editor, event }) => {
+        events.onFocus?.({ editor, event })
+      },
+      onBlur: ({ editor, event }) => {
+        events.onBlur?.({ editor, event })
+      },
+      onCreate: ({ editor }) => {
+        events.onInit?.({ editor })
+      },
+      onDestroy: () => {
+        events.onDestroy?.()
+      }
+    })
+  }
+
+  mountUI() {
+    if (!this.element) {
+      console.warn('No element provided to mount editor UI')
+      return null
     }
-    const {
-      content,
-      placeholder,
-      editable,
-      autofocus,
-      onUpdate,
-      onFocus,
-      onBlur,
-      onInit,
-      onDestroy,
-    } = config;
-    return {
-      content,
-      extensions,
-      placeholder,
-      editable,
-      autofocus,
-      onUpdate: () => onUpdate?.(),
-      onFocus: () => onFocus?.(),
-      onBlur: () => onBlur?.(),
-      onCreate: () => onInit?.(),
-      onDestroy: () => onDestroy?.(),
-    };
-  };
 
-  generateCustomConfig = (config) => {
-    const {
-      height,
-      theme,
-      customClass,
-      backgroundColorOnFocus,
-      showBorder,
-      fixedMenuEnabled,
-      bubbleMenuEnabled,
-      slashMenuEnabled,
-    } = config;
-    return {
-      height,
-      theme,
-      customClass,
-      backgroundColorOnFocus,
-      showBorder,
-      fixedMenuEnabled,
-      bubbleMenuEnabled,
-      slashMenuEnabled,
-    };
-  };
+    return mountVueEditor({
+      el: this.element,
+      props: {
+        editor: this.tiptapEditor,
+        extensionManager: this.extensionManager, // Pass manager to UI
+        config: this.config
+      }
+    })
+  }
+
+  destroy() {
+    this.tiptapEditor.destroy()
+    // Unmount Vue app if needed (mountVueEditor returns vm, usually handled by Vue)
+  }
 }
