@@ -40,6 +40,7 @@ const Basic = {
       Extensions.Segmentation,
       Extensions.HorizontalRule,
       Extensions.Segmentation,
+      Extensions.Code,
       Extensions.CodeBlock,
       Extensions.Image,
       Extensions.Table,

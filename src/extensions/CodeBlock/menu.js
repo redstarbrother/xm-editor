@@ -1,7 +1,7 @@
-import { Code } from 'lucide-vue-next';
+import { FileCode } from 'lucide-vue-next';
 
 export const fixedMenu = {
-  icon: Code,
+  icon: FileCode,
   order: 100,
   label: "代码块",
   action: ({ editor }) => editor.chain().focus().toggleCodeBlock().run(),
@@ -11,7 +11,7 @@ export const fixedMenu = {
 export const slashMenu = {
   id: "codeBlock",
   label: "代码块",
-  icon: Code,
+  icon: FileCode,
   action: ({ editor, range }) => {
     editor.chain().focus().deleteRange(range).setCodeBlock().run();
   },

@@ -14,6 +14,7 @@ import ShortcutKey from './ShortcutKeys'
 import Slash from './SlashMenu'
 import Strike from './Strike'
 import Table from './Table'
+import Code from './Code'
 import TextAlign from './TextAlign'
 import Underline from './Underline'
 import FixedMenu from './FixedMenu'
@@ -32,6 +33,7 @@ export default {
   Image,
   Italic,
   List,
+  Code,
   Segmentation,
   ShortcutKey,
   Slash,
