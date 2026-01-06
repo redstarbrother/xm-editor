@@ -1,6 +1,6 @@
 import { defineExtension } from '@/utils/extensionUtil'
 import ImageExtension from './ImageExtension'
-import { fixedMenu, slashMenu } from './menu'
+import { fixedMenu } from './menu'
 
 export default defineExtension({
   name: 'image',
@@ -8,6 +8,6 @@ export default defineExtension({
   extension: ImageExtension,
   manifest: {
     fixedMenu,
-    slashMenu
+    // slashMenu
   }
 })

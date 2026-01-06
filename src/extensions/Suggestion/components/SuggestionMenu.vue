@@ -1,8 +1,8 @@
 <template>
-  <div class="xm-suggestion-menu">
+  <div class="xm-suggestion-menu" ref="menuRef">
     <div v-for="(item, index) in props.items" :key="index" :class="['item', { active: index === selectedIndex }]"
       @mousedown.prevent="selectItem(item)">
-      <component v-if="item.iconType === 'svg'" :is="item.icon" :stroke-width="iconConfigSlashMenu.strokeWidth"
+      <component v-if="item.icon" :is="item.icon" :stroke-width="iconConfigSlashMenu.strokeWidth"
         :size="iconConfigSlashMenu.size" :class="['icon', index === selectedIndex ? 'icon-active' : '']" />
       <span v-else class="item-icon">{{ item.icon }}</span>
       <span class="item-label">{{ item.label }}</span>
@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { ref, watch, defineProps, defineExpose } from 'vue';
+import { ref, watch, defineProps, defineExpose, nextTick } from 'vue';
 
 const props = defineProps({
   items: {
@@ -25,23 +25,45 @@ const props = defineProps({
 });
 
 const selectedIndex = ref(0);
+const menuRef = ref(null);
 
 const iconConfigSlashMenu = {
   strokeWidth: 2,
   size: 20,
 }
 
+// 滚动到选中项
+const scrollToSelected = () => {
+  const menu = menuRef.value;
+  if (!menu) return;
+
+  const element = menu.children[selectedIndex.value];
+  if (element) {
+    element.scrollIntoView({ block: 'nearest' });
+  }
+};
+
 watch(
   () => props.items,
   () => {
     selectedIndex.value = 0;
+    nextTick(() => {
+      scrollToSelected();
+    });
   }
 );
+
+watch(selectedIndex, () => {
+  nextTick(() => {
+    scrollToSelected();
+  });
+});
 
 const selectItem = (item) => {
   props.command(item);
 };
 
+// 处理键盘事件
 const onKeyDown = (event) => {
   const { key } = event;
   const length = props.items.length;
@@ -50,20 +72,20 @@ const onKeyDown = (event) => {
 
   if (key === 'ArrowDown') {
     selectedIndex.value = (selectedIndex.value + 1) % length;
-    return true; // 消费事件
+    return true;
   }
 
   if (key === 'ArrowUp') {
     selectedIndex.value = (selectedIndex.value - 1 + length) % length;
-    return true; // 消费事件
+    return true;
   }
 
   if (key === 'Enter') {
     selectItem(props.items[selectedIndex.value]);
-    return true; // 消费事件
+    return true;
   }
 
-  return false; // 不消费事件
+  return false;
 };
 
 defineExpose({

@@ -13,7 +13,6 @@ export const suggestionConfig = {
 
     const itemList = slashExtension.options.items;
 
-    console.log("itemList: ", itemList);
     // 确保 items 是数组
     if (!Array.isArray(itemList)) {
       console.log("items is not an array:", itemList);
@@ -26,6 +25,6 @@ export const suggestionConfig = {
   },
 
   command: ({ editor, range, props }) => {
-    props.command({ editor, range });
+    props.action({ editor, range });
   },
 };

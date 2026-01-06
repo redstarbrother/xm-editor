@@ -12,7 +12,7 @@
 <script setup>
 import { computed, markRaw } from "vue";
 import IconItem from "@/ui/components/IconItem.vue";
-import { useMenuActiveState } from "@/composables/useEditorMenu";
+import { useMenuActiveState } from "@/hooks/useEditorMenu";
 
 const props = defineProps({
   editor: Object,

@@ -46,8 +46,7 @@ export class ExtensionManager {
     this.initSlashExtension(slashExtension);
 
     // 初始化Suggestion扩展
-    let suggestionExtension = this.initSuggestionExtension();
-    this.extensions.push(...suggestionExtension);
+    this.extensions.push(...this.initSuggestionExtension());
   }
 
   // 初始化Slash扩展
@@ -58,15 +57,25 @@ export class ExtensionManager {
       this.manifests.forEach((manifest) => {
         // 获取manifest的slash配置
         let manifestValue = manifest.value || {};
-        console.log("manifestValue: ", manifestValue);
-        
         if (manifestValue.slashMenu) {
-          slashItems.push(manifestValue.slashMenu);
+          if (Array.isArray(manifestValue.slashMenu)) {
+            slashItems.push(...manifestValue.slashMenu);
+          } else {
+            slashItems.push(manifestValue.slashMenu);
+          }
         }
       });
       console.log("slashItems: ", slashItems);
       
-      slashExtension.options.items = slashItems;
+      // 使用 configure 配置扩展，并替换列表中的引用
+      const configuredExtension = slashExtension.configure({
+        items: slashItems,
+      });
+
+      const index = this.extensions.indexOf(slashExtension);
+      if (index !== -1) {
+        this.extensions[index] = configuredExtension;
+      }
     }
   }
 

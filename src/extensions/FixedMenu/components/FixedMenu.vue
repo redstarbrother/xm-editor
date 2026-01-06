@@ -18,7 +18,7 @@
 import { computed, ref, markRaw } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import IconItem from "@/ui/components/IconItem.vue";
-import { useMenuActiveState } from "@/composables/useEditorMenu";
+import { useMenuActiveState } from "@/hooks/useEditorMenu";
 
 const props = defineProps({
   editor: Object,
