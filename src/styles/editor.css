@@ -152,6 +152,17 @@ ul[data-type="taskList"] input[type="checkbox"] {
   margin: 0;
 }
 
+/* 任务列表已完成样式 */
+ul[data-type="taskList"] li[data-checked="true"] {
+  color: #adb5bd; /* 灰色文本 */
+}
+
+ul[data-type="taskList"] li[data-checked="true"] > div {
+  text-decoration: line-through; /* 删除线 */
+  text-decoration-thickness: 1px;
+  opacity: 0.8;
+}
+
 /* 表格样式 */
 .ProseMirror table {
   border-collapse: separate;
