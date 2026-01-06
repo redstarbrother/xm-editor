@@ -1,5 +1,14 @@
 /* src/assets/editor.css */
 
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --gray-1: #e5e7eb; /* border */
+  --gray-2: #e5e7eb; /* selected background */
+  --gray-3: #f3f4f6; /* hover background */
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
 /* Tiptap 编辑器核心容器样式 */
 .ProseMirror {
   outline: none; /* 去掉点击时的蓝色边框 */

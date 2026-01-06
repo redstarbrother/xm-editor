@@ -26,7 +26,6 @@ import { EditorContent } from "@tiptap/vue-3";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
 import { loadCodeTheme } from "@/utils/themeLoader";
 import "@/styles/editor.css";
-import "@/styles/base.css";
 
 const props = defineProps({
   editor: {
