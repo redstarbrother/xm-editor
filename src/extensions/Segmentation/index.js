@@ -1,6 +1,7 @@
+import { defineExtension } from '@/utils/extensionUtil'
 import SegmentationExtension from './SegmentationExtension'
 
-export default {
+export default defineExtension({
   name: 'segmentation',
   type: 'separator',
   extension: SegmentationExtension,
@@ -14,4 +15,4 @@ export default {
       type: 'separator',
     },
   },
-}
+})

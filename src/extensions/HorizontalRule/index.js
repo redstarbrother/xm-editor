@@ -1,7 +1,8 @@
+import { defineExtension } from '@/utils/extensionUtil'
 import HorizontalRuleExtension from './HorizontalRuleExtension'
 import { fixedMenu, slashMenu } from './menu'
 
-export default {
+export default defineExtension({
   name: 'horizontalRule',
   type: 'node',
   extension: HorizontalRuleExtension,
@@ -9,4 +10,4 @@ export default {
     fixedMenu,
     slashMenu
   }
-}
+})

@@ -27,11 +27,13 @@ const Comment = {
      * 扩展插件
      */
     extensions: [
+      Extensions.Base,
       Extensions.Bold,
       Extensions.Italic,
       Extensions.List,
       Extensions.Image,
       Extensions.Emoji,
+      Extensions.FixedMenu,
     ],
 
     style: {

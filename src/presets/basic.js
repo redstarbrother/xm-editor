@@ -28,6 +28,7 @@ const Basic = {
      * 扩展插件
      */
     extensions: [
+      Extensions.Base,
       Extensions.Heading,
       Extensions.Bold,
       Extensions.Italic,

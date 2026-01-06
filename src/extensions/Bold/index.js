@@ -1,7 +1,8 @@
+import { defineExtension } from '@/utils/extensionUtil'
 import BoldExtension from './BoldExtension'
 import { fixedMenu, bubbleMenu } from './menu'
 
-export default {
+export default defineExtension({
   name: 'bold',
   type: 'mark',
   extension: BoldExtension,
@@ -9,4 +10,4 @@ export default {
     fixedMenu,
     bubbleMenu
   }
-}
+})

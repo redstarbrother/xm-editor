@@ -1,7 +1,8 @@
+import { defineExtension } from '@/utils/extensionUtil'
 import UnderlineExtension from './UnderlineExtension'
 import { fixedMenu, bubbleMenu } from './menu'
 
-export default {
+export default defineExtension({
   name: 'underline',
   type: 'mark',
   extension: UnderlineExtension,
@@ -9,4 +10,4 @@ export default {
     fixedMenu,
     bubbleMenu
   }
-}
+})

@@ -83,34 +83,33 @@ export class ExtensionManager {
   }
 
   getTiptapExtensions() {
-    return this.extensions.filter((ext) => ext !== null); // Filter out null extensions (UI-only)
+    return this.extensions.filter((ext) => ext !== null && ext.name !== 'segmentation'); // Filter out null extensions (UI-only)
   }
 
   getFixedMenuItems() {
     return this.manifests
-      .filter((m) => m.fixedMenu)
+      .filter((m) => m.value.fixedMenu)
       .map((m) => ({
-        ...m.fixedMenu,
-        name: m.name, // Ensure name is available
-        title: m.title, // Ensure title is available
+        ...m.value.fixedMenu,
+        name: m.key,
       }));
   }
 
   getBubbleMenuItems() {
     return this.manifests
-      .filter((m) => m.bubbleMenu)
+      .filter((m) => m.value.bubbleMenu)
       .map((m) => ({
-        ...m.bubbleMenu,
-        name: m.name,
+        ...m.value.bubbleMenu,
+        name: m.key,
       }));
   }
 
   getSlashMenuItems() {
     return this.manifests
-      .filter((m) => m.slashMenu)
+      .filter((m) => m.value.slashMenu)
       .map((m) => ({
-        ...m.slashMenu,
-        name: m.name,
+        ...m.value.slashMenu,
+        name: m.key,
       }));
   }
 
@@ -119,6 +118,7 @@ export class ExtensionManager {
   }
 
   getComponent(name) {
-    return this.components.find((comp) => comp.name === name);
+    const comp = this.components.find((comp) => comp.name === name);
+    return comp ? comp.component : null;
   }
 }

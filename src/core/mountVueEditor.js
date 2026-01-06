@@ -1,4 +1,4 @@
-import { createApp, h } from 'vue'
+import { createApp } from 'vue'
 import VueEditor from '@/components/XmEditorComponent.vue'
 
 export function mountVueEditor({ el, props }) {

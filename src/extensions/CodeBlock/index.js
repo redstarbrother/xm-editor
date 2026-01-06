@@ -1,7 +1,8 @@
+import { defineExtension } from '@/utils/extensionUtil'
 import CodeBlockExtension from './CodeBlockExtension'
 import { fixedMenu, slashMenu } from './menu'
 
-export default {
+export default defineExtension({
   name: 'codeBlock',
   type: 'node',
   extension: CodeBlockExtension,
@@ -9,4 +10,4 @@ export default {
     fixedMenu,
     slashMenu
   }
-}
+})

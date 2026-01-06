@@ -1,7 +1,8 @@
+import { defineExtension } from '@/utils/extensionUtil'
 import StrikeExtension from './StrikeExtension'
 import { fixedMenu, bubbleMenu } from './menu'
 
-export default {
+export default defineExtension({
   name: 'strike',
   type: 'mark',
   extension: StrikeExtension,
@@ -9,4 +10,4 @@ export default {
     fixedMenu,
     bubbleMenu
   }
-}
+})

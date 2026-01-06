@@ -2,7 +2,7 @@
   <div class="menu-fixed" ref="containerRef">
     <div class="menu-item" v-for="item in fixedItems" :key="item.id">
       <div v-if="item.type === 'separator'" class="menu-separator"></div>
-      <div v-else-if="item.component" class="menu-item-wrapper">
+      <div v-else-if="item.iconCom" class="menu-item-wrapper">
         <icon-item :icon="item.iconCom" :active="activeStates[item.id] || activeMenuId === item.id"
           :stroke-width="fixMenuIconConfig.strokeWidth" :size="fixMenuIconConfig.size" @click="clickIcon(item)" />
         <transition name="fade">
@@ -17,8 +17,7 @@
 <script setup>
 import { computed, ref, markRaw } from "vue";
 import { onClickOutside } from "@vueuse/core";
-import IconItem from "@/components/icon/IconItem.vue";
-import IconManager from "@/components/icon/iconManager";
+import IconItem from "@/ui/components/IconItem.vue";
 import { useMenuActiveState } from "@/composables/useEditorMenu";
 
 const props = defineProps({
@@ -31,19 +30,16 @@ const containerRef = ref(null);
 
 // 生成固定菜单列表（随 props.editor / props.extensions 变更而更新）
 const fixedItems = computed(() => {
-  return props.extensions.map(item => {
-    const newItem = { ...item };
-    if (!newItem.id) newItem.id = newItem.name;
-    
-    if (newItem.icon) {
-      if (typeof newItem.icon === 'string') {
-        newItem.iconCom = markRaw(IconManager.getIconComponent(newItem.icon));
-      } else {
-        newItem.iconCom = markRaw(newItem.icon);
+  return props.extensions
+    .map((item) => {
+      const newItem = { ...item };
+      if (!newItem.id) newItem.id = newItem.name;
+
+      if (newItem.icon) {
+          newItem.iconCom = markRaw(newItem.icon);
       }
-    }
-    return newItem;
-  });
+      return newItem;
+    });
 });
 
 const activeStates = useMenuActiveState(props.editor, fixedItems);

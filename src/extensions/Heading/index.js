@@ -1,7 +1,8 @@
+import { defineExtension } from '@/utils/extensionUtil'
 import HeadingExtension from './HeadingExtension'
 import { fixedMenu, slashMenu } from './menu'
 
-export default {
+export default defineExtension({
   name: 'heading',
   type: 'node',
   extension: HeadingExtension,
@@ -9,4 +10,4 @@ export default {
     fixedMenu,
     slashMenu
   }
-}
+})

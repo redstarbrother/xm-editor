@@ -1,9 +1,10 @@
 import { Editor as TiptapEditor } from '@tiptap/core'
+import { markRaw } from 'vue'
 import { ExtensionManager } from './ExtensionManager'
 import { mountVueEditor } from './mountVueEditor'
 import { createEditorProxy } from './proxyEditor'
 
-export class XmEditor {
+export default class XmEditor {
   constructor(options = {}) {
     this.options = options
     this.element = options.el
@@ -36,19 +37,12 @@ export class XmEditor {
 
   initTiptapEditor() {
     const extensions = this.extensionManager.getTiptapExtensions()
+    console.log(extensions);
+    
     const editorOption = this.config.editorOption || {}
     const events = this.config.events || {}
-    
-    // Handle placeholder specifically if it's a top-level config but needs to be in an extension
-    // Or rely on ExtensionManager's generic config if passed correctly.
-    // For now, we follow Tiptap's standard instantiation.
 
     return new TiptapEditor({
-      element: null, // We might mount Tiptap inside the Vue component or handle it here. 
-                     // Existing XmEditor mounted Vue which took 'editor' as prop.
-                     // The Vue component likely renders <editor-content>.
-                     // So we don't pass 'element' here directly if Vue handles the DOM.
-                     // Wait, XmEditor passed 'el' to mountVueEditor.
       extensions: extensions,
       content: this.initialContent,
       editable: editorOption.editable !== false,

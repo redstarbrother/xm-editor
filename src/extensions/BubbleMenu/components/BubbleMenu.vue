@@ -2,17 +2,28 @@
   <div class="menu-bubble">
     <div class="menu-item" v-for="item in bubbleItems" :key="item.id">
       <div v-if="item.type === 'separator'" class="menu-separator"></div>
-      <icon-item v-else-if="item.type === 'mark' || item.type === 'node'" :icon="item.iconCom" :active="activeStates[item.id]"
+      <icon-item v-else-if="item.type !== 'hidden'" :icon="item.iconCom" :active="activeStates[item.id]"
         :stroke-width="bubbleMenuIconConfig.strokeWidth" :size="bubbleMenuIconConfig.size"
         @click="clickIcon(item.id)"></icon-item>
+      <!-- <icon-item v-else-if="item.iconCom" :icon="item.iconCom"
+        :active="activeStates[item.id] || activeMenuId === item.id" :stroke-width="fixMenuIconConfig.strokeWidth"
+        :size="fixMenuIconConfig.size" @click="clickIcon(item)" /> -->
+
+      <!-- <div v-if="item.type === 'separator'" class="menu-separator"></div>
+      <div v-else-if="item.iconCom" class="menu-item-wrapper">
+
+        <transition name="fade">
+          <component :is="item.component" v-if="activeMenuId === item.id" v-bind="item.componentProps" :editor="editor"
+            @close="activeMenuId = null" />
+        </transition>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script setup>
 import { computed, markRaw } from "vue";
-import IconItem from "@/components/icon/IconItem.vue";
-import IconManager from "@/components/icon/iconManager";
+import IconItem from "@/ui/components/IconItem.vue";
 import { useMenuActiveState } from "@/composables/useEditorMenu";
 
 const props = defineProps({
@@ -29,39 +40,35 @@ const bubbleMenuIconConfig = {
 // 存储所有气泡菜单的 action 函数
 let bubbleAction = {}
 
-// 生成气泡菜单列表（随 props.editor / props.extensions 变更而更新）
 const bubbleItems = computed(() => {
-  bubbleAction = {}
-  let items = props.extensions.map(item => {
-    const newItem = { ...item };
-    if (!newItem.id) newItem.id = newItem.name;
-    
-    if (newItem.icon) {
-      if (typeof newItem.icon === 'string') {
-        newItem.iconCom = markRaw(IconManager.getIconComponent(newItem.icon));
-      } else {
+  let itemArr = props.extensions
+    .map((item) => {
+      const newItem = { ...item };
+      if (!newItem.id) newItem.id = newItem.name;
+
+      if (newItem.icon) {
         newItem.iconCom = markRaw(newItem.icon);
       }
-    }
-    
-    if (newItem.action) {
-      bubbleAction[newItem.id] = newItem.action;
-    }
-    
-    return newItem;
-  });
+
+      if (newItem.action) {
+        bubbleAction[newItem.id] = newItem.action;
+      }
+      console.log(newItem);
+
+      return newItem;
+    });
 
   // 分隔符特殊处理
-  items.forEach((item, index) => {
+  itemArr.forEach((item, index) => {
     if (item.type === 'separator') {
       // 第一个和最后一个分隔符特殊处理, 隐藏
-      if (index === 0 || index === items.length - 1) {
+      if (index === 0 || index === itemArr.length - 1) {
         item.type = 'hidden';
         return;
       }
       // 两边不是mark或node时, 隐藏分隔符
-      const prev = items[index - 1];
-      const next = items[index + 1];
+      const prev = itemArr[index - 1];
+      const next = itemArr[index + 1];
       if (
         (prev.type !== 'mark' && prev.type !== 'node') ||
         (next.type !== 'mark' && next.type !== 'node')
@@ -70,8 +77,48 @@ const bubbleItems = computed(() => {
       }
     }
   })
-  return items.filter(item => item.type !== 'hidden');
+  return itemArr;
 });
+
+// 生成气泡菜单列表（随 props.editor / props.extensions 变更而更新）
+// const bubbleItems = computed(() => {
+//   bubbleAction = {}
+//   let items = props.extensions.map(item => {
+//     const newItem = { ...item };
+//     if (!newItem.id) newItem.id = newItem.name;
+
+//     if (newItem.icon) {
+//         newItem.iconCom = markRaw(newItem.icon);
+//     }
+
+//     if (newItem.action) {
+//       bubbleAction[newItem.id] = newItem.action;
+//     }
+
+//     return newItem;
+//   });
+
+//   // 分隔符特殊处理
+//   items.forEach((item, index) => {
+//     if (item.type === 'separator') {
+//       // 第一个和最后一个分隔符特殊处理, 隐藏
+//       if (index === 0 || index === items.length - 1) {
+//         item.type = 'hidden';
+//         return;
+//       }
+//       // 两边不是mark或node时, 隐藏分隔符
+//       const prev = items[index - 1];
+//       const next = items[index + 1];
+//       if (
+//         (prev.type !== 'mark' && prev.type !== 'node') ||
+//         (next.type !== 'mark' && next.type !== 'node')
+//       ) {
+//         item.type = 'hidden';
+//       }
+//     }
+//   })
+//   return items.filter(item => item.type !== 'hidden');
+// });
 
 const activeStates = useMenuActiveState(props.editor, bubbleItems);
 

@@ -1,7 +1,8 @@
+import { defineExtension } from '@/utils/extensionUtil'
 import BlockquoteExtension from './BlockquoteExtension'
 import { fixedMenu, slashMenu } from './menu'
 
-export default {
+export default defineExtension({
   name: 'blockquote',
   type: 'node',
   extension: BlockquoteExtension,
@@ -9,4 +10,4 @@ export default {
     fixedMenu,
     slashMenu
   }
-}
+})

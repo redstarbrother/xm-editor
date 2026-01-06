@@ -1,16 +1,17 @@
 <template>
   <div class="xm-editor-root" :style="{
-    height: props.config.height,
-    border: props.config.showBorder ? '1px solid #d1d5da' : 'none',
-    borderRadius: props.config.showBorder ? '5px' : 'none',
+    height: props.config.style?.height,
+    border: props.config.style?.showBorder ? '1px solid #d1d5da' : 'none',
+    borderRadius: props.config.style?.showBorder ? '5px' : 'none',
   }">
     <BubbleMenu v-if="bubbleReady" :editor="props.editor"
       :should-show="shouldShowBubbleMenu" :options="{ duration: 100, moveTransition: 'transform 0.2s ease-out' }">
       <component :is="MenuBubble" :editor="props.editor" :extensions="bubbleMenuExtensions" />
     </BubbleMenu>
     <component :is="MenuFixed" v-if="fixedReady" :editor="props.editor" :extensions="fixedMenuExtensions" />
+    <div v-if="!props.editor">Editor prop is missing!</div>
     <editor-content class="editor-content" :editor="props.editor" :style="{
-      '--editor-focus-bg': props.config.backgroundColorOnFocus,
+      '--editor-focus-bg': props.config.style?.backgroundColorOnFocus,
     }" />
   </div>
 </template>
@@ -20,7 +21,6 @@ import {
   computed,
   onMounted,
   onUnmounted,
-  ref,
   shallowRef,
   triggerRef,
 } from "vue";
@@ -45,13 +45,17 @@ const props = defineProps({
   },
 });
 
-const bubbleMenuExtensions = ref([]);
-const fixedMenuExtensions = ref([]);
+console.log('XmEditorComponent setup. Editor:', props.editor);
+
+const bubbleMenuExtensions = shallowRef([]);
+const fixedMenuExtensions = shallowRef([]);
 const MenuFixed = shallowRef(null);
 const MenuBubble = shallowRef(null);
 
 // Create a shallowRef for the editor to handle reactivity
 const editorRef = shallowRef(props.editor);
+
+const isEditorReady = computed(() => !!props.editor);
 
 // 监听编辑器事件，触发更新
 const handleUpdate = () => {
@@ -60,15 +64,23 @@ const handleUpdate = () => {
 
 
 const bubbleReady = computed(() => {
-  return props.config.bubbleMenuEnabled && isEditorReady && MenuBubble.value;
+  return props.config.editorOption?.bubbleMenuEnabled && isEditorReady.value && MenuBubble.value;
 })
 
 const fixedReady = computed(() => {
-  return props.config.fixedMenuEnabled && isEditorReady && MenuFixed.value;
+  return props.config.editorOption?.fixedMenuEnabled && isEditorReady.value && MenuFixed.value;
 })
 
 // 初始化菜单extension
 onMounted(() => {
+  console.log('XmEditorComponent mounted');
+  if (props.editor) {
+    console.log('Editor instance:', props.editor);
+    console.log('Editor isDestroyed:', props.editor.isDestroyed);
+    console.log('Editor view:', props.editor.view);
+    console.log('Editor element:', props.editor.options.element);
+  }
+
   if (props.extensionManager) {
     bubbleMenuExtensions.value = props.extensionManager.getBubbleMenuItems();
     fixedMenuExtensions.value = props.extensionManager.getFixedMenuItems();
@@ -127,8 +139,6 @@ const codeTheme = [
 ]
 
 loadCodeTheme(codeTheme[5])
-
-const isEditorReady = computed(() => !!props.editor);
 
 </script>
 
