@@ -7,11 +7,13 @@ export const suggestionConfig = {
     );
 
     if (!slashExtension) {
+      console.log("slashExtension not found");
       return [];
     }
 
     const itemList = slashExtension.options.items;
 
+    console.log("itemList: ", itemList);
     // 确保 items 是数组
     if (!Array.isArray(itemList)) {
       console.log("items is not an array:", itemList);

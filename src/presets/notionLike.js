@@ -42,6 +42,7 @@ const NotionLike = {
       Extensions.Image,
       Extensions.Table,
       Extensions.Emoji,
+      Extensions.BubbleMenu,
     ],
 
     style: {

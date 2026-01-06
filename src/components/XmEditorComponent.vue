@@ -20,9 +20,7 @@
 import {
   computed,
   onMounted,
-  onUnmounted,
   shallowRef,
-  triggerRef,
 } from "vue";
 import { EditorContent } from "@tiptap/vue-3";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
@@ -52,60 +50,27 @@ const fixedMenuExtensions = shallowRef([]);
 const MenuFixed = shallowRef(null);
 const MenuBubble = shallowRef(null);
 
-// Create a shallowRef for the editor to handle reactivity
-const editorRef = shallowRef(props.editor);
-
 const isEditorReady = computed(() => !!props.editor);
 
-// 监听编辑器事件，触发更新
-const handleUpdate = () => {
-  triggerRef(editorRef);
-};
-
-
+// 监听bubble菜单就绪状态
 const bubbleReady = computed(() => {
   return props.config.editorOption?.bubbleMenuEnabled && isEditorReady.value && MenuBubble.value;
 })
 
+// 监听fixed菜单就绪状态
 const fixedReady = computed(() => {
   return props.config.editorOption?.fixedMenuEnabled && isEditorReady.value && MenuFixed.value;
 })
 
 // 初始化菜单extension
 onMounted(() => {
-  console.log('XmEditorComponent mounted');
-  if (props.editor) {
-    console.log('Editor instance:', props.editor);
-    console.log('Editor isDestroyed:', props.editor.isDestroyed);
-    console.log('Editor view:', props.editor.view);
-    console.log('Editor element:', props.editor.options.element);
-  }
-
   if (props.extensionManager) {
     bubbleMenuExtensions.value = props.extensionManager.getBubbleMenuItems();
     fixedMenuExtensions.value = props.extensionManager.getFixedMenuItems();
-    
+
     // 动态加载菜单组件
     MenuFixed.value = props.extensionManager.getComponent('fixed-menu');
     MenuBubble.value = props.extensionManager.getComponent('bubble-menu');
-  }
-})
-
-// 监听编辑器事件
-onMounted(() => {
-  props.editor.on('transaction', handleUpdate);
-  props.editor.on('selectionUpdate', handleUpdate);
-  props.editor.on('focus', handleUpdate);
-  props.editor.on('blur', handleUpdate);
-})
-
-// 组件卸载时，移除事件监听
-onUnmounted(() => {
-  if (props.editor) {
-    props.editor.off('transaction', handleUpdate);
-    props.editor.off('selectionUpdate', handleUpdate);
-    props.editor.off('focus', handleUpdate);
-    props.editor.off('blur', handleUpdate);
   }
 })
 

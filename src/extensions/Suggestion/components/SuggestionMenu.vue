@@ -12,7 +12,6 @@
 
 <script setup>
 import { ref, watch, defineProps, defineExpose } from 'vue';
-import { iconConfigSlashMenu } from "@/components/setting/iconMap";
 
 const props = defineProps({
   items: {
@@ -26,6 +25,11 @@ const props = defineProps({
 });
 
 const selectedIndex = ref(0);
+
+const iconConfigSlashMenu = {
+  strokeWidth: 2,
+  size: 20,
+}
 
 watch(
   () => props.items,

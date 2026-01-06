@@ -49,6 +49,7 @@ const Basic = {
       Extensions.TextAlign,
       Extensions.FixedMenu,
       Extensions.BubbleMenu,
+      Extensions.SlashMenu,
     ],
 
     style: {

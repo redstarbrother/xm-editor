@@ -11,13 +11,14 @@ import Italic from './Italic'
 import List from './List'
 import Segmentation from './Segmentation'
 import ShortcutKeys from './ShortcutKeys'
-import Slash from './Slash'
+import Slash from './SlashMenu'
 import Strike from './Strike'
 import Table from './Table'
 import TextAlign from './TextAlign'
 import Underline from './Underline'
 import FixedMenu from './FixedMenu'
 import BubbleMenu from './BubbleMenu'
+import SlashMenu from './SlashMenu'
 
 export default {
   Base,
@@ -40,4 +41,5 @@ export default {
   Underline,
   FixedMenu,
   BubbleMenu,
+  SlashMenu,
 }

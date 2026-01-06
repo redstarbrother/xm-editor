@@ -5,18 +5,6 @@
       <icon-item v-else-if="item.type !== 'hidden'" :icon="item.iconCom" :active="activeStates[item.id]"
         :stroke-width="bubbleMenuIconConfig.strokeWidth" :size="bubbleMenuIconConfig.size"
         @click="clickIcon(item.id)"></icon-item>
-      <!-- <icon-item v-else-if="item.iconCom" :icon="item.iconCom"
-        :active="activeStates[item.id] || activeMenuId === item.id" :stroke-width="fixMenuIconConfig.strokeWidth"
-        :size="fixMenuIconConfig.size" @click="clickIcon(item)" /> -->
-
-      <!-- <div v-if="item.type === 'separator'" class="menu-separator"></div>
-      <div v-else-if="item.iconCom" class="menu-item-wrapper">
-
-        <transition name="fade">
-          <component :is="item.component" v-if="activeMenuId === item.id" v-bind="item.componentProps" :editor="editor"
-            @close="activeMenuId = null" />
-        </transition>
-      </div> -->
     </div>
   </div>
 </template>
