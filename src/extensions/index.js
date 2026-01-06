@@ -10,7 +10,7 @@ import Image from './Image'
 import Italic from './Italic'
 import List from './List'
 import Segmentation from './Segmentation'
-import ShortcutKeys from './ShortcutKeys'
+import ShortcutKey from './ShortcutKeys'
 import Slash from './SlashMenu'
 import Strike from './Strike'
 import Table from './Table'
@@ -33,7 +33,7 @@ export default {
   Italic,
   List,
   Segmentation,
-  ShortcutKeys,
+  ShortcutKey,
   Slash,
   Strike,
   Table,

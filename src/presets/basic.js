@@ -47,6 +47,7 @@ const Basic = {
       Extensions.Emoji,
       Extensions.Highlight,
       Extensions.TextAlign,
+      Extensions.ShortcutKey,
       Extensions.FixedMenu,
       Extensions.BubbleMenu,
       Extensions.SlashMenu,

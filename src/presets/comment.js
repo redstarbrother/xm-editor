@@ -1,5 +1,5 @@
-import Extensions from "@/extensions"
-import { mergePresetConfig } from "@/utils/presetUtil"
+import Extensions from "@/extensions";
+import { mergePresetConfig } from "@/utils/presetUtil";
 
 const Comment = {
   name: "Comment",
@@ -33,6 +33,7 @@ const Comment = {
       Extensions.List,
       Extensions.Image,
       Extensions.Emoji,
+      Extensions.ShortcutKey,
       Extensions.FixedMenu,
     ],
 
@@ -52,16 +53,16 @@ const Comment = {
       /**
        * 生命周期钩子
        */
-      onInit: () => { },
-      onDestroy: () => { },
-      onFocus: () => { },
-      onBlur: () => { },
-      onUpdate: () => { },
+      onInit: () => {},
+      onDestroy: () => {},
+      onFocus: () => {},
+      onBlur: () => {},
+      onUpdate: () => {},
     },
   },
   configure(userConfig = {}) {
     return mergePresetConfig(this.defaultConfig, userConfig);
   },
-}
+};
 
 export default Comment;

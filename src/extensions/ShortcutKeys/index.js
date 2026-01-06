@@ -1,8 +1,8 @@
 import { defineExtension } from '@/utils/extensionUtil'
-import GlobalTabExtension from './GlobalTabExtension'
+import ShortcutKeyExtension from './ShortcutKeyExtension'
 
 export default defineExtension({
-  name: 'globalTab',
-  type: 'shortcut',
-  extension: GlobalTabExtension,
+  name: 'shortcutKey',
+  type: 'functionality',
+  extension: ShortcutKeyExtension,
 })

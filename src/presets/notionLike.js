@@ -1,6 +1,5 @@
-import Extensions from "@/extensions"
-import { mergePresetConfig } from "@/utils/presetUtil"
-
+import Extensions from "@/extensions";
+import { mergePresetConfig } from "@/utils/presetUtil";
 
 const NotionLike = {
   name: "NotionLike",
@@ -42,6 +41,7 @@ const NotionLike = {
       Extensions.Image,
       Extensions.Table,
       Extensions.Emoji,
+      Extensions.ShortcutKey,
       Extensions.BubbleMenu,
     ],
 
@@ -61,17 +61,16 @@ const NotionLike = {
       /**
        * 生命周期钩子
        */
-      onInit: () => { },
-      onDestroy: () => { },
-      onFocus: () => { },
-      onBlur: () => { },
-      onUpdate: () => { },
+      onInit: () => {},
+      onDestroy: () => {},
+      onFocus: () => {},
+      onBlur: () => {},
+      onUpdate: () => {},
     },
   },
   configure(userConfig = {}) {
     return mergePresetConfig(this.defaultConfig, userConfig);
   },
 };
-
 
 export default NotionLike;
