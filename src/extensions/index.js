@@ -17,6 +17,7 @@ import Table from './Table'
 import Code from './Code'
 import TextAlign from './TextAlign'
 import Underline from './Underline'
+import Placeholder from './Placeholder'
 import FixedMenu from './FixedMenu'
 import BubbleMenu from './BubbleMenu'
 import SlashMenu from './SlashMenu'
@@ -41,6 +42,7 @@ export default {
   Table,
   TextAlign,
   Underline,
+  Placeholder,
   FixedMenu,
   BubbleMenu,
   SlashMenu,

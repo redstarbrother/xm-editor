@@ -25,14 +25,19 @@
           {{ tab.label }}
         </div>
       </div>
-      <div id="xm-editor"></div>
+      <div class="editor-wrapper">
+        <component :is="currentEditorComponent" />
+      </div>
     </main>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref, nextTick } from 'vue'
-import { XmEditor, Extensions, Presets } from '../src/index'
+import { ref, computed } from 'vue'
+import BasicEditor from './components/BasicEditor.vue'
+import NotionEditor from './components/NotionEditor.vue'
+import CommentEditor from './components/CommentEditor.vue'
+import CustomEditor from './components/CustomEditor.vue'
 
 const tabs = [
   { id: 'basic', label: '常规编辑器' },
@@ -42,124 +47,20 @@ const tabs = [
 ]
 
 const currentTab = ref('basic')
-const charCount = ref(0)
-let editor = null
 
-const onUpdate = () => {
-  if (editor) {
-    const text = editor.getText();
-    charCount.value = text.length;
+const currentEditorComponent = computed(() => {
+  switch (currentTab.value) {
+    case 'basic': return BasicEditor
+    case 'notion': return NotionEditor
+    case 'comment': return CommentEditor
+    case 'custom': return CustomEditor
+    default: return BasicEditor
   }
-}
-
-const getEditorConfig = (type) => {
-  let height = '400px'
-  const commonExtensions = [
-    Extensions.Image.configure({
-      uploadHandler: (file) => {
-        // Mock upload
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve({
-              url: URL.createObjectURL(file)
-            })
-          }, 1000)
-        })
-      }
-    })
-  ]
-
-  switch (type) {
-    case 'basic':
-      return Presets.Basic.configure({
-        extensions: commonExtensions,
-        events: {
-          onUpdate,
-        },
-        editorOption: {
-          autofocus: true,
-        },
-        style: {
-          height,
-        },
-      })
-    case 'notion':
-      return Presets.NotionLike.configure({
-        extensions: commonExtensions,
-        events: {
-          onUpdate,
-        },
-        editorOption: {
-          placeholder: "输入 '/' 唤起命令菜单...",
-          autofocus: true,
-        },
-        style: {
-          height,
-        },
-      })
-    case 'comment':
-      return Presets.Comment.configure({
-        extensions: commonExtensions,
-        events: {
-          onUpdate,
-        },
-        editorOption: {
-          autofocus: true,
-        },
-        style: {
-          height: '300px',
-        },
-      })
-    case 'custom':
-      return Presets.Basic.configure({
-        extensions: commonExtensions,
-        style: {
-          theme: 'dark', // Assuming theme support or just a placeholder for diff config
-          height: '300px',
-        },
-        editorOption: {
-          placeholder: "这是一个自定义配置的编辑器...",
-        },
-        events: {
-          onUpdate,
-        },
-      })
-    default:
-      return Presets.Basic.configure({
-        events: {
-          onUpdate,
-        },
-      })
-  }
-}
-
-const initEditor = (type) => {
-  if (editor) {
-    editor.destroy()
-    editor = null
-  }
-
-  // Clear the container content just in case, though destroy should handle it
-  // const el = document.getElementById('xm-editor')
-  // if (el) el.innerHTML = ''
-
-  const config = getEditorConfig(type)
-
-  editor = new XmEditor({
-    el: '#xm-editor',
-    config,
-  })
-}
-
-const switchTab = async (id) => {
-  currentTab.value = id
-  await nextTick()
-  initEditor(id)
-}
-
-onMounted(() => {
-  initEditor(currentTab.value)
 })
+
+const switchTab = (id) => {
+  currentTab.value = id
+}
 </script>
 
 <style scoped>

@@ -33,6 +33,7 @@ const Comment = {
       Extensions.List,
       Extensions.Image,
       Extensions.Emoji,
+      Extensions.Placeholder,
       Extensions.ShortcutKey,
       Extensions.FixedMenu,
     ],
@@ -41,12 +42,7 @@ const Comment = {
       /**
        * 外观与布局
        */
-      height: "200px",
-      theme: "light",
       customClass: "comment-editor",
-      // 选中时背景颜色
-      backgroundColorOnFocus: "#ffffff",
-      showBorder: true,
     },
 
     events: {

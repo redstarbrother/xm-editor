@@ -13,7 +13,6 @@ export class ExtensionManager {
   }
 
   init() {
-    let slashExtension = null;
     this.rawExtensions.forEach((item) => {
       // 收集扩展
       if (item.extension) {
@@ -35,23 +34,39 @@ export class ExtensionManager {
           component: item.component,
         });
       }
-
-      // 获取Slash扩展
-      if (item.name === "slash") {
-        slashExtension = item.extension;
-      }
     });
 
+    // 初始化Placeholder扩展
+    this.initPlaceholderExtension();
+
     // 初始化Slash扩展
-    this.initSlashExtension(slashExtension);
+    this.initSlashExtension();
 
     // 初始化Suggestion扩展
-    this.extensions.push(...this.initSuggestionExtension());
+    this.initSuggestionExtension();
+  }
+
+  // 初始化placeholder扩展
+  initPlaceholderExtension() {
+    if (this.editorConfig.editorOption.placeholder) {
+      let placeholderExtension = this.extensions.find((ext) => ext.name === "placeholder");
+      if (placeholderExtension) {
+        // 使用 configure 配置扩展，并替换列表中的引用
+        const configuredExtension = placeholderExtension.configure({
+          placeholder: this.editorConfig.editorOption.placeholder,
+        });
+
+        const index = this.extensions.indexOf(placeholderExtension);
+        if (index !== -1) {
+          this.extensions[index] = configuredExtension;
+        }
+      }
+    }
   }
 
   // 初始化Slash扩展
-  initSlashExtension(slashExtension) {
-    console.log("slashExtension: ", slashExtension);
+  initSlashExtension() {
+    let slashExtension = this.extensions.find((ext) => ext.name === "slash");
     if (slashExtension) {
       let slashItems = [];
       this.manifests.forEach((manifest) => {
@@ -65,7 +80,6 @@ export class ExtensionManager {
           }
         }
       });
-      console.log("slashItems: ", slashItems);
       
       // 使用 configure 配置扩展，并替换列表中的引用
       const configuredExtension = slashExtension.configure({
@@ -90,16 +104,12 @@ export class ExtensionManager {
         suggestionConfigItems.push(manifestValue.suggestion);
       }
     });
-    console.log("this.manifests: ", this.manifests);
-    
-    console.log("suggestionConfigItems: ", suggestionConfigItems);
     
     suggestionConfigItems?.forEach((item) => {
       suggestionExtension.push(Suggestion.createSuggestion(item));
     });
-    console.log("suggestionExtension: ", suggestionExtension);
     
-    return suggestionExtension;
+    this.extensions.push(...suggestionExtension);
   }
 
   getTiptapExtensions() {

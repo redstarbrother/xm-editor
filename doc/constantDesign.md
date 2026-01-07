@@ -35,19 +35,7 @@ export default {
     debounce: {
       type: Number,
       default: 300,
-    },
-    fixedMenuEnabled: {
-      type: Boolean,
-      default: true,
-    },
-    bubbleMenuEnabled: {
-      type: Boolean,
-      default: true,
-    },
-    slashMenuEnabled: {
-      type: Boolean,
-      default: true,
-    },
+    }
   },
 
   /**
@@ -62,27 +50,9 @@ export default {
    * 样式配置
    */
   style: {
-    height: {
-      type: [String, Number],
-      default: "300px",
-    },
-    theme: {
-      type: String,
-      default: "light", // 'light' | 'dark'
-    },
     customClass: {
       type: String,
       default: "",
-    },
-    // 选中时背景颜色
-    backgroundColorOnFocus: {
-      type: String,
-      // default: "#FFF",
-      default: "#FAFBFC",
-    },
-    showBorder: {
-      type: Boolean,
-      default: true,
     },
   },
 

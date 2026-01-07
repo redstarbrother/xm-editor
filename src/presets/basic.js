@@ -16,12 +16,6 @@ const Basic = {
       autofocus: false,
       // 内部事件触发间隔，单位 ms
       debounce: 300,
-      /**
-       * 工具栏与扩展
-       */
-      fixedMenuEnabled: true,
-      bubbleMenuEnabled: true,
-      slashMenuEnabled: true,
     },
 
     /**
@@ -49,6 +43,7 @@ const Basic = {
       Extensions.Highlight,
       Extensions.TextAlign,
       Extensions.ShortcutKey,
+      Extensions.Placeholder,
       Extensions.FixedMenu,
       Extensions.BubbleMenu,
       Extensions.SlashMenu,
@@ -58,12 +53,7 @@ const Basic = {
       /**
        * 外观与布局
        */
-      height: "100%",
-      theme: "light",
       customClass: "",
-      // 选中时背景颜色
-      backgroundColorOnFocus: "#ffffff",
-      showBorder: true,
     },
 
     events: {

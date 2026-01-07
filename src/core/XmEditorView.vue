@@ -1,18 +1,12 @@
 <template>
-  <div class="xm-editor-root" :style="{
-    height: props.config.style?.height,
-    border: props.config.style?.showBorder ? '1px solid #d1d5da' : 'none',
-    borderRadius: props.config.style?.showBorder ? '5px' : 'none',
-  }">
-    <BubbleMenu v-if="bubbleReady" :editor="props.editor"
-      :should-show="shouldShowBubbleMenu" :options="{ duration: 100, moveTransition: 'transform 0.2s ease-out' }">
+  <div class="xm-editor-root" :class="props.config.style?.customClass">
+    <BubbleMenu v-if="bubbleReady" :editor="props.editor" :should-show="shouldShowBubbleMenu"
+      :options="{ duration: 100, moveTransition: 'transform 0.2s ease-out' }">
       <component :is="MenuBubble" :editor="props.editor" :extensions="bubbleMenuExtensions" />
     </BubbleMenu>
     <component :is="MenuFixed" v-if="fixedReady" :editor="props.editor" :extensions="fixedMenuExtensions" />
     <div v-if="!props.editor">Editor prop is missing!</div>
-    <editor-content class="editor-content" :editor="props.editor" :style="{
-      '--editor-focus-bg': props.config.style?.backgroundColorOnFocus,
-    }" />
+    <editor-content class="editor-content" :editor="props.editor" />
   </div>
 </template>
 
@@ -25,7 +19,6 @@ import {
 import { EditorContent } from "@tiptap/vue-3";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
 import { loadCodeTheme } from "@/utils/themeLoader";
-import "@/styles/editor.css";
 
 const props = defineProps({
   editor: {
@@ -42,8 +35,6 @@ const props = defineProps({
   },
 });
 
-console.log('XmEditorComponent setup. Editor:', props.editor);
-
 const bubbleMenuExtensions = shallowRef([]);
 const fixedMenuExtensions = shallowRef([]);
 const MenuFixed = shallowRef(null);
@@ -53,12 +44,12 @@ const isEditorReady = computed(() => !!props.editor);
 
 // 监听bubble菜单就绪状态
 const bubbleReady = computed(() => {
-  return props.config.editorOption?.bubbleMenuEnabled && isEditorReady.value && MenuBubble.value;
+  return isEditorReady.value && MenuBubble.value;
 })
 
 // 监听fixed菜单就绪状态
 const fixedReady = computed(() => {
-  return props.config.editorOption?.fixedMenuEnabled && isEditorReady.value && MenuFixed.value;
+  return isEditorReady.value && MenuFixed.value;
 })
 
 // 初始化菜单extension
@@ -104,6 +95,7 @@ const codeTheme = [
 
 loadCodeTheme(codeTheme[5])
 
+
 </script>
 
 <style lang="scss">
@@ -111,6 +103,10 @@ loadCodeTheme(codeTheme[5])
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
 }
 
 .editor-content {

@@ -3,7 +3,7 @@ import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
 import Text from '@tiptap/extension-text'
 import HardBreak from '@tiptap/extension-hard-break'
-import { Placeholder, Dropcursor, Gapcursor, TrailingNode, UndoRedo } from '@tiptap/extensions'
+import { Dropcursor, Gapcursor, TrailingNode, UndoRedo } from '@tiptap/extensions'
 
 const BaseExtension = Extension.create({
   name: 'base',
@@ -17,9 +17,6 @@ const BaseExtension = Extension.create({
       Gapcursor,
       TrailingNode,
       UndoRedo,
-      Placeholder.configure({
-        placeholder: '输入内容...',
-      }),
     ]
   },
 })

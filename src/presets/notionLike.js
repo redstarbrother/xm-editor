@@ -12,16 +12,10 @@ const NotionLike = {
       editable: true,
       contentType: "json",
       content: "",
-      placeholder: "",
       autofocus: false,
+      placeholder: 'Write something …',
       // 内部事件触发间隔，单位 ms
       debounce: 300,
-      /**
-       * 工具栏与扩展
-       */
-      fixedMenuEnabled: false,
-      bubbleMenuEnabled: true,
-      slashMenuEnabled: true,
     },
 
     /**
@@ -34,6 +28,7 @@ const NotionLike = {
       Extensions.Italic,
       Extensions.Strike,
       Extensions.Underline,
+      Extensions.Placeholder,
       Extensions.List,
       Extensions.Blockquote,
       Extensions.HorizontalRule,
@@ -43,18 +38,14 @@ const NotionLike = {
       Extensions.Emoji,
       Extensions.ShortcutKey,
       Extensions.BubbleMenu,
+      Extensions.SlashMenu,
     ],
 
     style: {
       /**
        * 外观与布局
        */
-      height: "100%",
-      theme: "light",
       customClass: "",
-      // 选中时背景颜色
-      backgroundColorOnFocus: "#ffffff",
-      showBorder: false,
     },
 
     events: {
