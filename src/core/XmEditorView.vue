@@ -110,6 +110,7 @@ loadCodeTheme(codeTheme[5])
 }
 
 .editor-content {
+  min-width: 300px;
   flex: 1;
   overflow: auto;
   line-height: 1.4;
