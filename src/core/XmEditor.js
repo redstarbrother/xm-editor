@@ -37,7 +37,6 @@ export default class XmEditor {
 
   initTiptapEditor() {
     const extensions = this.extensionManager.getTiptapExtensions();
-    console.log(extensions);
 
     const editorOption = this.config.editorOption || {};
     const events = this.config.events || {};

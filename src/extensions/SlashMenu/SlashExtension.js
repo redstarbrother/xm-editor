@@ -1,7 +1,7 @@
 import { Extension } from "@tiptap/core";
 
 const SlashExtension = Extension.create({
-  name: "slash-command",
+  name: "slash-menu",
   addOptions() {
     return {
       ...this.parent?.(),

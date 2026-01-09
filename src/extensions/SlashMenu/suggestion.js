@@ -3,7 +3,7 @@ export const suggestionConfig = {
 
   items: function ({ query, editor }) {
     const slashExtension = editor.extensionManager.extensions.find(
-      (ext) => ext.name === "slash-command"
+      (ext) => ext.name === "slash-menu"
     );
 
     if (!slashExtension) {

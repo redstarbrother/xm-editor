@@ -66,7 +66,8 @@ export class ExtensionManager {
 
   // 初始化Slash扩展
   initSlashExtension() {
-    let slashExtension = this.extensions.find((ext) => ext.name === "slash");
+    let slashExtension = this.extensions.find((ext) => ext.name === "slash-menu");
+    console.log("slashExtension", slashExtension);
     if (slashExtension) {
       let slashItems = [];
       this.manifests.forEach((manifest) => {
@@ -80,6 +81,9 @@ export class ExtensionManager {
           }
         }
       });
+      console.log("slashItems", slashItems);
+      console.log("this.extensions", this.extensions);
+      
       
       // 使用 configure 配置扩展，并替换列表中的引用
       const configuredExtension = slashExtension.configure({
