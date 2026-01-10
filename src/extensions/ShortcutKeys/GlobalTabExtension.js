@@ -12,6 +12,12 @@ const GlobalTabExtension = Extension.create({
   addKeyboardShortcuts() {
     return {
       Tab: ({ editor }) => {
+        // 如果在列表（listItem 或 taskItem）中，交由列表插件处理缩进
+        // 如果在表格中，交由表格插件处理
+        if (editor.isActive('listItem') || editor.isActive('taskItem') || editor.isActive('table')) {
+          return false
+        }
+
         const indent = ' '.repeat(this.options.indent)
 
         editor
@@ -26,6 +32,12 @@ const GlobalTabExtension = Extension.create({
       },
 
       'Shift-Tab': ({ editor }) => {
+        // 如果在列表（listItem 或 taskItem）中，交由列表插件处理反缩进
+        // 如果在表格中，交由表格插件处理
+        if (editor.isActive('listItem') || editor.isActive('taskItem') || editor.isActive('table')) {
+          return false
+        }
+
         const indent = ' '.repeat(this.options.indent)
 
         const { selection } = editor.state
