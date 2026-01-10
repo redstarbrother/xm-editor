@@ -3,8 +3,9 @@
     <!-- Collapsible Config Panel -->
     <div class="config-sidebar" :class="{ 'is-expanded': isExpanded }">
       <!-- Toggle Button -->
-      <div class="sidebar-toggle" @click="toggleSidebar" title="Toggle Configuration">
-        <Settings :size="24" />
+      <div class="sidebar-toggle" @click="toggleSidebar" :title="isExpanded ? 'Collapse Configuration' : 'Expand Configuration'">
+        <ChevronsLeft v-if="isExpanded" :size="24" />
+        <Settings v-else :size="24" />
       </div>
 
       <!-- Panel Content -->
@@ -97,7 +98,7 @@
 
 <script setup>
 import { onMounted, onBeforeUnmount, ref, reactive } from 'vue'
-import { Settings, Check, Copy } from 'lucide-vue-next'
+import { Settings, Check, Copy, ChevronsLeft } from 'lucide-vue-next'
 import { XmEditor, Extensions, Presets } from '../../src/index'
 // import '../../src/styles/editor.css'
 
@@ -271,8 +272,8 @@ onBeforeUnmount(() => {
 .config-sidebar {
   position: fixed;
   left: 0;
-  top: 0;
-  bottom: 0;
+  top: 15vh;
+  height: 70vh;
   width: 340px; /* Slightly wider for extensions grid */
   background: white;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
@@ -280,6 +281,7 @@ onBeforeUnmount(() => {
   transform: translateX(-340px);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
+  border-radius: 0 8px 8px 0;
 }
 
 .config-sidebar.is-expanded {
@@ -290,10 +292,12 @@ onBeforeUnmount(() => {
 .sidebar-toggle {
   position: absolute;
   right: -48px;
-  top: 20px;
+  top: 10px;
   width: 48px;
   height: 48px;
   background: white;
+  /* border: 1px solid #e5e7eb; */
+  border-left: 0;
   border-radius: 0 8px 8px 0;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
   display: flex;
@@ -326,7 +330,6 @@ onBeforeUnmount(() => {
   margin: 0;
   font-size: 18px;
   font-weight: 600;
-  color: #111827;
 }
 
 .scroll-area {
@@ -351,7 +354,7 @@ onBeforeUnmount(() => {
 .panel-footer {
   padding: 16px 20px;
   border-top: 1px solid #e5e7eb;
-  background: #f9fafb;
+  /* background: #f9fafb; */
   display: flex;
   gap: 10px;
 }
