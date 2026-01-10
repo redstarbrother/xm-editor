@@ -1,5 +1,8 @@
 /* src/assets/editor.css */
 
+/* =========================================
+   1. 全局变量与基础设置
+   ========================================= */
 :root {
   --white: #ffffff;
   --black: #000000;
@@ -9,8 +12,33 @@
   --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Tiptap 编辑器核心容器样式 */
-.ProseMirror {
+/* =========================================
+   2. 滚动条样式
+   ========================================= */
+::-webkit-scrollbar {
+  width: 10px;    /* 垂直滚动条宽度 */
+  height: 10px;   /* 水平滚动条高度 */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #e4e3e3; /* 滑块颜色，柔和灰色 */
+  border-radius: 10px;       /* 滑块圆角 */
+  border: 2px solid #fff;    /* 滑块边框，增加一些对比度 */
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); /* 轻微的阴影效果 */
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(250, 251, 252);
+}
+
+::-webkit-scrollbar-button {
+  display: none; /* 隐藏滚动条按钮 */
+}
+
+/* =========================================
+   3. Tiptap 编辑器核心容器样式
+   ========================================= */
+.editor-content .ProseMirror {
   outline: none; /* 去掉点击时的蓝色边框 */
   padding: 1.5rem; /* 给编辑器内部留白，就像纸张的页边距 */
   min-height: 300px;
@@ -27,22 +55,18 @@
 
 .ProseMirror:focus {
   background-color: var(--editor-focus-bg, white);
-  /* 默认白色 */
 }
 
-.ProseMirror:focus td,
-.ProseMirror:focus th {
-  background-color: var(--editor-focus-bg, white);
-  /* 默认白色 */
-}
-
+/* =========================================
+   4. 基础排版 (标题、段落、文本装饰)
+   ========================================= */
 /* 段落默认样式 */
 .ProseMirror p {
   margin-top: 0;
   margin-bottom: 0.75em; /* 段落间距 */
 }
 
-/* 3. 标题层级优化 */
+/* 标题层级优化 */
 .ProseMirror h1, 
 .ProseMirror h2, 
 .ProseMirror h3 {
@@ -53,77 +77,53 @@
   margin-bottom: 0.8em;
 }
 
-.ProseMirror h1 { font-size: 1.8em; border-bottom: 2px solid #eaeaea; padding-bottom: 0.3em; }
-.ProseMirror h2 { font-size: 1.5em; }
-.ProseMirror h3 { font-size: 1.25em; }
-
-/* 列表样式优化 */
-.ProseMirror ul,
-.ProseMirror ol {
-  /* padding-left: 1em;
-  margin: 0.5em 0; */
-  padding-left: 1.5em;
-  margin-bottom: 1.25em;
+.editor-content h1 { 
+  font-size: 1.8em; 
+  border-bottom: 2px solid #eaeaea; 
+  padding-bottom: 0.3em; 
 }
 
-.ProseMirror li {
-  /* margin: 0; */
-  margin-bottom: 0.5em;
+.editor-content h2 { 
+  font-size: 1.5em; 
 }
 
-/* 引用块样式 */
-.ProseMirror blockquote {
-  margin: 0.5em 0;
-  padding-left: 1em;
-  border-left: 2px solid #ccc;
-  color: #666;
+.editor-content h3 { 
+  font-size: 1.25em; 
 }
 
-/* 代码块 */
-.ProseMirror pre {
-  /* background: #f6f6f6;
-  padding: 0.75em 1em;
-  border-radius: 10px;
-  font-family: monospace;
-  overflow-x: auto;
-  margin: 0.5em 0; */
+/* 高亮样式 */
+.editor-content mark {
+  margin: 0 0.1em;
+  padding: 0.1em 0.2em;
+  border-radius: 0.3em;
+  line-height: 1.4;
 }
 
-.ProseMirror pre {
-  font-size: 14px;
-  background: none;
-  padding: 110;
-  border-radius: 0;
+/* Placeholder 样式 */
+.editor-content p.is-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }
 
-/* 行内代码 */
-.ProseMirror code {
-  background: #f1f1f1;
-  padding: 0.2em 0.4em;
-  border-radius: 10px;
-  font-family: monospace;
-  font-size: 14px;
-}
-
-/* 列表样式优化 */
-.ProseMirror ul,
-.ProseMirror ol {
+/* =========================================
+   5. 列表样式 (无序、有序、任务列表)
+   ========================================= */
+.editor-content ul,
+.editor-content ol {
   padding-left: 1em;
   margin: 0.25em 0; /* 改小整体间距 */
 }
 
-.ProseMirror li {
+.editor-content li {
   margin: 0.1em 0; /* 更紧密的行间距 */
   line-height: 1.8; /* 紧凑但不拥挤 */
 }
 
-.ProseMirror li p {
+.editor-content li p {
   margin: 0;
-}
-
-/* 任务列表 */
-ul[data-type="taskList"] li {
-  margin: 0.1em 0; /* 任务列表也更紧凑 */
 }
 
 /* 任务列表容器 */
@@ -135,27 +135,17 @@ ul[data-type="taskList"] {
 ul[data-type="taskList"] li {
   display: flex;
   align-items: flex-start;
+  margin: 0.1em 0; /* 任务列表也更紧凑 */
 }
 
 ul[data-type="taskList"] li > label {
   display: flex;
   align-items: center;
-  gap: 0.3em;
-  /* 复选框和文字间距 */
+  gap: 0.3em; /* 复选框和文字间距 */
   margin: 0;
   margin-top: 0.5em;
 }
 
-/* 复选框内联显示 */
-
-/* Placeholder 样式 */
-.ProseMirror p.is-empty:first-child::before {
-  color: #adb5bd;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
-}
 ul[data-type="taskList"] input[type="checkbox"] {
   display: inline-block;
   margin: 0;
@@ -172,20 +162,49 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   opacity: 0.8;
 }
 
-/* 表格样式 */
-.ProseMirror table {
+/* =========================================
+   6. 引用与代码块
+   ========================================= */
+/* 引用块样式 */
+.editor-content blockquote {
+  margin: 0.5em 0;
+  padding-left: 1em;
+  border-left: 2px solid #ccc;
+  color: #666;
+}
+
+/* 代码块 */
+.editor-content pre {
+  font-size: 14px;
+  background: none;
+  padding: 0.75em 1em;
+  border-radius: 0;
+}
+
+/* 行内代码 */
+.editor-content code {
+  background: #f1f1f1;
+  padding: 0.2em 0.4em;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+/* =========================================
+   7. 表格样式
+   ========================================= */
+.editor-content table {
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
   table-layout: auto;
   margin: 8px 0;
   border-radius: 10px;
-  overflow: auto;
-  /* 这样圆角才会裁切单元格背景 */
+  overflow: auto; /* 这样圆角才会裁切单元格背景 */
 }
 
-.ProseMirror th,
-.ProseMirror td {
+.editor-content th,
+.editor-content td {
   border: 1px solid #ddd;
   padding: 6px 8px;
   vertical-align: top;
@@ -194,63 +213,59 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   min-width: 80px;
 }
 
-/* 表头样式 */
-.ProseMirror th {
+.editor-content th {
   background-color: #f9f9f9;
   font-weight: 600;
 }
 
-/* hover 高亮当前单元格 */
-.ProseMirror td:hover,
-.ProseMirror th:hover {
+.editor-content td:hover,
+.editor-content th:hover {
   background-color: #f3f9ff;
 }
 
-/* 选中单元格边框高亮 */
-.ProseMirror td.is-selected,
-.ProseMirror th.is-selected {
+.editor-content td.is-selected,
+.editor-content th.is-selected {
   outline: 2px solid #2684ff;
   outline-offset: -2px;
   background-color: #eaf3ff;
 }
 
-/* 禁用光标闪烁时的奇怪背景（可选） */
-.ProseMirror td:focus,
-.ProseMirror th:focus {
+.editor-content td:focus,
+.editor-content th:focus {
   background-color: inherit;
 }
 
-/* 防止文字挤在一起 */
-.ProseMirror table p {
+.editor-content table p {
   margin: 0;
 }
 
-/* 四个角的圆角处理 */
-.ProseMirror tr:first-child th:first-child,
-.ProseMirror tr:first-child td:first-child {
+.ProseMirror:focus td,
+.ProseMirror:focus th {
+  background-color: var(--editor-focus-bg, white);
+}
+
+/* 表格圆角处理 */
+.editor-content tr:first-child th:first-child,
+.editor-content tr:first-child td:first-child {
   border-top-left-radius: 4px;
 }
 
-.ProseMirror tr:first-child th:last-child,
-.ProseMirror tr:first-child td:last-child {
+.editor-content tr:first-child th:last-child,
+.editor-content tr:first-child td:last-child {
   border-top-right-radius: 4px;
 }
 
-.ProseMirror tr:last-child td:first-child {
+.editor-content tr:last-child td:first-child {
   border-bottom-left-radius: 4px;
 }
 
-.ProseMirror tr:last-child td:last-child {
+.editor-content tr:last-child td:last-child {
   border-bottom-right-radius: 4px;
 }
 
-.ProseMirror mark {
-  margin: 0 0.1em;
-  padding: 0.1em 0.2em;
-  border-radius: 0.3em;
-  line-height: 1.4;
-}
-
+/* =========================================
+   8. UI 组件 (Popover 等)
+   ========================================= */
 .popover-area {
   display: flex;
   flex-direction: column;
@@ -282,35 +297,4 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   margin-left: 4px;
   font-size: 12px;
   color: #333;
-}
-
-/* 设置滚动条宽度 */
-::-webkit-scrollbar {
-  width: 10px;
-  /* 垂直滚动条宽度 */
-  height: 10px;
-  /* 水平滚动条高度 */
-}
-
-/* 设置滚动条滑块的样式 */
-::-webkit-scrollbar-thumb {
-  background-color: #e4e3e3;
-  /* 滑块颜色，柔和灰色 */
-  border-radius: 10px;
-  /* 滑块圆角 */
-  border: 2px solid #fff;
-  /* 滑块边框，增加一些对比度 */
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  /* 轻微的阴影效果 */
-}
-
-/* 设置滚动条轨道的样式 */
-::-webkit-scrollbar-track {
-  background-color: rgb(250, 251, 252);
-}
-
-/* 设置滚动条按钮的样式（通常用于上下箭头） */
-::-webkit-scrollbar-button {
-  display: none;
-  /* 隐藏滚动条按钮 */
 }

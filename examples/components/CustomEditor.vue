@@ -99,7 +99,7 @@
 import { onMounted, onBeforeUnmount, ref, reactive } from 'vue'
 import { Settings, Check, Copy } from 'lucide-vue-next'
 import { XmEditor, Extensions, Presets } from '../../src/index'
-import '../../src/styles/editor.css'
+// import '../../src/styles/editor.css'
 
 const editorContainer = ref(null)
 let editor = null
