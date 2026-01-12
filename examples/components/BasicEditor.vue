@@ -5,7 +5,7 @@
 <script setup>
 import { onMounted, onBeforeUnmount } from 'vue'
 import { XmEditor, Extensions, Presets } from '../../src/index'
-import '@/styles/editor.css'
+import '@/styles/editor-notion.css'
 
 let editor = null
 
