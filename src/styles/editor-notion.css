@@ -13,6 +13,10 @@
     "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+.editor-content {
+  font-size: 16px;
+}
+
 /* Tiptap 编辑器核心容器样式 - Notion 风格 */
 .editor-content .ProseMirror {
   outline: none;
@@ -142,15 +146,34 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
 
 /* 代码块 */
 .editor-content .code-block {
-  background-color: #f9f8f7; 
-  padding: 1.5em;
-  border-radius: 3px;
+  background-color: #f9f8f7;
+  padding: 36px 22px 22px 22px; /* Adjusted padding: top is for header */
+  margin: 4px 0;
+  border-radius: 8px;
   font-family:
     SFMono-Regular, Menlo, Consolas, "PT Mono", "Liberation Mono", Courier,
     monospace;
   font-size: 85%;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.editor-content .code-block-content {
   overflow-x: auto;
-  margin: 0.5em 0;
+}
+
+.editor-content .code-block code {
+  padding: 0;
+  margin: 0;
+  background-color: #f9f8f7;
+  font-size: inherit;
+}
+
+.editor-content .hljs {
+  display: block;
+  min-height: 1.5em;
 }
 
 /* 行内代码 */
