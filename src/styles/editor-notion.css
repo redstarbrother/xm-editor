@@ -3,9 +3,12 @@
 
 :root {
   --notion-hr: #e6e5e3;
-  --notion-black: #2c2c2b; /* --c-texPri */
-  --notion-border: #e9e9e7; /* --c-tabDivCol */
-  --notion-bg-header: #f7f6f3; /* --cd-tabHeaRowColBac */
+  --notion-black: #2c2c2b;
+  /* --c-texPri */
+  --notion-border: #e9e9e7;
+  /* --c-tabDivCol */
+  --notion-bg-header: #f7f6f3;
+  /* --cd-tabHeaRowColBac */
   --notion-font-family:
     ui-sans-serif, -apple-system, BlinkMacSystemFont,
     "Segoe UI Variable Display", "Segoe UI", Helvetica, "PingFang SC",
@@ -26,9 +29,12 @@
   /* 字体与排版核心 */
   font-family: var(--notion-font-family);
   color: var(--notion-black);
-  font-size: 16px; /* Default readable size */
-  line-height: 1.5; /* Notion usually has 1.5 line height for body text */
-  text-align: left; /* Notion is usually left-aligned */
+  font-size: 16px;
+  /* Default readable size */
+  line-height: 1.5;
+  /* Notion usually has 1.5 line height for body text */
+  text-align: left;
+  /* Notion is usually left-aligned */
   overflow: auto;
 }
 
@@ -107,6 +113,30 @@
   margin: 1px 0;
 }
 
+/* 有序列表嵌套样式 */
+.editor-content ol {
+  list-style-type: decimal;
+}
+
+.editor-content ol ol {
+  list-style-type: lower-alpha;
+}
+
+.editor-content ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.editor-content ol ol ol ol {
+  list-style-type: decimal;
+}
+
+.editor-content ol ol ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.editor-content ol ol ol ol ol ol{
+  list-style-type: lower-roman;
+}
 /* 任务列表 */
 ul[data-type="taskList"] {
   list-style: none;
@@ -115,18 +145,65 @@ ul[data-type="taskList"] {
 
 ul[data-type="taskList"] li {
   display: flex;
-  align-items: flex-start;
-  margin: 0.2em 0;
+  align-items: center;
+  margin: 4px 0;
 }
 
-ul[data-type="taskList"] li > label {
-  margin-right: 0.5em;
+ul[data-type="taskList"] li>label {
+  flex: 0 0 auto;
+  margin-right: 8px;
   user-select: none;
 }
 
-ul[data-type="taskList"] li[data-checked="true"] > div {
+ul[data-type="taskList"] li>div {
+  flex: 1 1 auto;
+}
+
+/* 隐藏默认复选框并自定义样式 */
+ul[data-type="taskList"] input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  margin: 0;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #37352f;
+  /* Notion default border color */
+  border-radius: 2px;
+  /* Slight radius */
+  display: grid;
+  place-content: center;
+  transition: all 0.1s ease-in-out;
+}
+
+/* Hover effect */
+ul[data-type="taskList"] input[type="checkbox"]:hover {
+  background-color: rgba(55, 53, 47, 0.08);
+}
+
+/* Checked state: Blue background */
+ul[data-type="taskList"] li[data-checked="true"] input[type="checkbox"] {
+  background-color: #2383e2;
+  border-color: #2383e2;
+}
+
+/* Checkmark */
+ul[data-type="taskList"] li[data-checked="true"] input[type="checkbox"]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  transform-origin: center;
+}
+
+/* Checked text style */
+ul[data-type="taskList"] li[data-checked="true"]>div {
   text-decoration: line-through;
-  color: #aeb5bc;
+  color: #9b9a97;
+  /* Notion gray text */
+  text-decoration-thickness: 1px;
 }
 
 /* 引用块样式 */
@@ -147,7 +224,8 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
 /* 代码块 */
 .editor-content .code-block {
   background-color: #f9f8f7;
-  padding: 36px 22px 22px 22px; /* Adjusted padding: top is for header */
+  padding: 36px 22px 22px 22px;
+  /* Adjusted padding: top is for header */
   margin: 4px 0;
   border-radius: 8px;
   font-family:
@@ -184,7 +262,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   background: rgba(135, 131, 120, 0.15);
   color: #eb5757;
   padding: 0.2em 0.4em;
-  border-radius: 1px;
+  border-radius: 5px;
   font-size: 85%;
 }
 
@@ -200,7 +278,8 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   border-collapse: collapse;
   width: 100%;
   margin: 8px 0;
-  table-layout: fixed; /* Notion tables are often fixed layout */
+  table-layout: fixed;
+  /* Notion tables are often fixed layout */
 }
 
 .editor-content th,
@@ -208,12 +287,14 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   border: 1px solid var(--notion-border);
   padding: 7px 9px;
   vertical-align: top;
-  min-width: 120px; /* Extracted from th style */
+  min-width: 120px;
+  /* Extracted from th style */
 }
 
 .editor-content th {
   background-color: var(--notion-bg-header);
-  font-weight: 500; /* Extracted from th style */
+  font-weight: 500;
+  /* Extracted from th style */
   text-align: start;
 }
 

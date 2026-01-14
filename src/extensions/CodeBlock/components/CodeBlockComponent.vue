@@ -287,7 +287,6 @@ const selectedLanguage = computed({
 }
 
 .editor-content .language-search {
-  width: 100%;
   padding: 6px 10px;
   margin-bottom: 6px;
   border: 1px solid rgba(55, 53, 47, 0.16);
@@ -307,13 +306,13 @@ const selectedLanguage = computed({
 .editor-content .language-options {
   overflow-y: auto;
   flex: 1;
-  padding: 0;
+  padding: 5px;
 }
 
 .editor-content .language-option {
   padding: 6px 8px;
   margin: 0;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
   display: flex;
