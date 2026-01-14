@@ -8,6 +8,7 @@ import Highlight from './Highlight'
 import HorizontalRule from './HorizontalRule'
 import Image from './Image'
 import Italic from './Italic'
+import Link from './Link'
 import List from './List'
 import Segmentation from './Segmentation'
 import ShortcutKey from './ShortcutKeys'
@@ -33,6 +34,7 @@ export default {
   HorizontalRule,
   Image,
   Italic,
+  Link,
   List,
   Code,
   Segmentation,

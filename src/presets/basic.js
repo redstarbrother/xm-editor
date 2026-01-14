@@ -29,6 +29,7 @@ const Basic = {
       Extensions.Strike,
       Extensions.Underline,
       Extensions.Segmentation,
+      Extensions.Link,
       Extensions.List,
       Extensions.Blockquote,
       Extensions.Segmentation,

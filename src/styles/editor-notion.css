@@ -95,6 +95,17 @@
   background-clip: content-box;
 }
 
+/* 链接样式 */
+.editor-content a {
+  color: #9b9a97;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.is-ctrl-pressed a {
+  cursor: pointer;
+}
+
 /* 列表样式 */
 .editor-content ul,
 .editor-content ol {
