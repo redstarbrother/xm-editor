@@ -1,6 +1,6 @@
 {
   "name": "@putanut/xm-editor",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "type": "module",
   "main": "dist/xm-editor.umd.js",
   "module": "dist/xm-editor.es.js",
@@ -9,7 +9,8 @@
       "require": "./dist/xm-editor.umd.js",
       "import": "./dist/xm-editor.es.js"
     },
-    "./xm-editor.css": "./dist/xm-editor.css"
+    "./editor.css": "./dist/xm-editor.css",
+    "./editor-notion.css": "./dist/xm-editor-notion.css"
   },
   "files": [
     "dist",
