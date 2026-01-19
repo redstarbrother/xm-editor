@@ -2,7 +2,46 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path';
 import VueDevTools from 'vite-plugin-vue-devtools'
-import { viteStaticCopy } from 'vite-plugin-static-copy'
+import fs from 'fs';
+
+// 将组件内部的样式合并到 xm-editor.css、xm-editor-notion.css 中
+const mergeStylesPlugin = () => {
+  return {
+    name: 'merge-styles',
+    closeBundle: async () => {
+      const distDir = path.resolve(__dirname, 'dist');
+      const srcDir = path.resolve(__dirname, 'src/styles');
+      
+      // The generated component styles (configured via assetFileNames)
+      const componentsCssPath = path.resolve(distDir, 'components.css');
+      
+      if (fs.existsSync(componentsCssPath)) {
+        const componentsCss = fs.readFileSync(componentsCssPath, 'utf-8');
+        
+        // 1. Generate xm-editor.css (Base + Components)
+        const baseCssPath = path.resolve(srcDir, 'xm-editor.css');
+        if (fs.existsSync(baseCssPath)) {
+          const baseCss = fs.readFileSync(baseCssPath, 'utf-8');
+          fs.writeFileSync(path.resolve(distDir, 'xm-editor.css'), baseCss + '\n' + componentsCss);
+          console.log('Generated dist/xm-editor.css');
+        }
+        
+        // 2. Generate xm-editor-notion.css (Notion + Components)
+        const notionCssPath = path.resolve(srcDir, 'xm-editor-notion.css');
+        if (fs.existsSync(notionCssPath)) {
+          const notionCss = fs.readFileSync(notionCssPath, 'utf-8');
+          fs.writeFileSync(path.resolve(distDir, 'xm-editor-notion.css'), notionCss + '\n' + componentsCss);
+          console.log('Generated dist/xm-editor-notion.css');
+        }
+        
+        // Optional: Remove components.css if you don't want to expose it
+        // fs.unlinkSync(componentsCssPath);
+      } else {
+        console.warn('components.css not found in dist');
+      }
+    }
+  }
+}
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -19,20 +58,7 @@ export default defineConfig({
   plugins: [
     vue(),
     VueDevTools(),
-    viteStaticCopy({
-      targets: [
-        {
-          src: 'src/styles/editor.css',
-          dest: '.',
-          rename: 'xm-editor.css'
-        },
-        {
-          src: 'src/styles/editor-notion.css',
-          dest: '.',
-          rename: 'xm-editor-notion.css'
-        }
-      ]
-    })
+    mergeStylesPlugin()
   ],
   build: {
     lib: {
@@ -48,9 +74,8 @@ export default defineConfig({
         globals: {
           vue: 'Vue', // Vue 库应该作为全局变量暴露
         },
-        // 将 Vite 生成的 CSS 重命名为 style.css，避免与 copy 的 xm-editor.css 冲突
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'xm-editor.css') return 'style.css';
+          if (assetInfo.name.endsWith('.css')) return 'components.css';
           return assetInfo.name;
         },
       },
