@@ -5,7 +5,7 @@
 <script setup>
 import { onMounted, onBeforeUnmount } from 'vue'
 import { XmEditor, Extensions, Presets } from '../../src/index'
-// import '@/styles/editor.css'
+import '@/styles/editor-notion.css'
 
 let editor = null
 
@@ -32,9 +32,6 @@ onMounted(() => {
         placeholder: "输入 '/' 唤起命令菜单...",
         autofocus: true,
       },
-      style: {
-        customClass: 'xm-editor-notion',
-      },
     })
   })
 })
@@ -46,9 +43,3 @@ onBeforeUnmount(() => {
   }
 })
 </script>
-
-<style >
-.xm-editor-notion {
-  border: 0;
-}
-</style>

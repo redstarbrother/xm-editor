@@ -1,8 +1,8 @@
 import { defineExtension } from '@/utils/extensionUtil'
-import PlaceholderExtension from './PlacehorderExtension'
+import PlaceholderExtension from './PlaceholderExtension'
 
 export default defineExtension({
   name: 'placeholder',
-  type: 'funtionality',
+  type: 'functionality',
   extension: PlaceholderExtension,
 })

@@ -16,6 +16,10 @@
     "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+.xm-editor-root {
+  border: 0;
+}
+
 .editor-content {
   font-size: 16px;
 }
@@ -311,4 +315,13 @@ ul[data-type="taskList"] li[data-checked="true"]>div {
 
 .editor-content td {
   background-color: #fff;
+}
+
+/* Placeholder 样式 */
+.editor-content p.is-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }
