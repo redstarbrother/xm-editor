@@ -42,7 +42,7 @@ import BasicEditor from './components/BasicEditor.vue'
 import NotionEditor from './components/NotionEditor.vue'
 import CommentEditor from './components/CommentEditor.vue'
 import CustomEditor from './components/CustomEditor.vue'
-import '@/styles/xm-editor-notion.css'
+import '@/styles/xm-editor-feishu.css'
 
 const tabs = [
   { id: 'basic', label: '常规编辑器' },
