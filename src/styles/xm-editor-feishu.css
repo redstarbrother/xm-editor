@@ -132,9 +132,13 @@
 
 /* 链接样式 */
 .editor-content a {
-  color: #9b9a97;
+  color: #336df4;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.editor-content a:hover {
   text-decoration: underline;
-  text-underline-offset: 2px;
 }
 
 .is-ctrl-pressed a {
@@ -232,7 +236,7 @@ ul[data-type="taskList"] li > label {
   flex: 0 0 auto;
   margin-right: 8px;
   user-select: none;
-  margin-top: 7px;
+  margin-top: 6px;
 }
 
 ul[data-type="taskList"] li > div {
@@ -243,15 +247,13 @@ ul[data-type="taskList"] li > div {
 ul[data-type="taskList"] input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
-  background-color: transparent;
+  background-color: #fff;
   margin: 0;
   cursor: pointer;
   width: 16px;
   height: 16px;
-  border: 1px solid #37352f;
-  /* feishu default border color */
-  border-radius: 2px;
-  /* Slight radius */
+  border: 1px solid var(--feishu-black);
+  border-radius: 4px;
   display: grid;
   place-content: center;
   transition: all 0.1s ease-in-out;
@@ -259,13 +261,14 @@ ul[data-type="taskList"] input[type="checkbox"] {
 
 /* Hover effect */
 ul[data-type="taskList"] input[type="checkbox"]:hover {
-  background-color: rgba(55, 53, 47, 0.08);
+  background-color: #eff0f1;
+  border-color: #8f959e;
 }
 
 /* Checked state: Blue background */
 ul[data-type="taskList"] li[data-checked="true"] input[type="checkbox"] {
-  background-color: var(--feishu-blue);
-  border-color: var(--feishu-blue);
+  background-color: #fff;
+  border-color: var(--feishu-black);
 }
 
 /* Checkmark */
@@ -275,7 +278,7 @@ ul[data-type="taskList"]
   content: "";
   width: 10px;
   height: 10px;
-  background-color: white;
+  background-color: #3370ff;
   clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
   transform-origin: center;
 }
@@ -283,18 +286,17 @@ ul[data-type="taskList"]
 /* Checked text style */
 ul[data-type="taskList"] li[data-checked="true"] > div {
   text-decoration: line-through;
-  color: #9b9a97;
-  /* feishu gray text */
-  text-decoration-thickness: 1px;
+  color: #8f959e;
+  text-decoration-thickness: 2px;
 }
 
 /* 引用块样式 */
 .editor-content blockquote {
-  border-left: 3px solid var(--feishu-black);
-  padding: 0 16px;
-  margin: 5px 0;
+  border-left: 3px solid #d0d3d6;
+  padding: 2px 14px;
+  margin: 8px 0;
   font-size: 1em;
-  color: var(--feishu-black);
+  color: #646a73;
   white-space: break-spaces;
   word-break: break-word;
 }
@@ -329,6 +331,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   margin: 0;
   background-color: #f9f8f7;
   font-size: inherit;
+  border: none;
 }
 
 .editor-content .hljs {
