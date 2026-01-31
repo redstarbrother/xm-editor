@@ -189,7 +189,7 @@
 }
 
 .editor-content li p {
-  margin: 1px 0;
+  margin: 8px 0;
 }
 
 /* 有序列表嵌套样式 */
@@ -293,7 +293,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
 /* 引用块样式 */
 .editor-content blockquote {
   border-left: 3px solid #d0d3d6;
-  padding: 2px 14px;
+  padding: 0px 14px;
   margin: 8px 0;
   font-size: 1em;
   color: #646a73;
@@ -302,7 +302,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
 }
 
 .editor-content blockquote p {
-  margin: 0;
+  margin: 8px 0;
 }
 
 /* 代码块 */
