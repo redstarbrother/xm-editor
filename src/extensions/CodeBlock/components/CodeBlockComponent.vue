@@ -42,8 +42,13 @@
         </button>
       </div>
     </div>
-    <div class="code-block-content">
-      <code class="hljs"><node-view-content /></code>
+    <div class="code-block-container">
+      <div class="code-block-gutter" contenteditable="false">
+        <div v-for="index in lineCount" :key="index" class="code-block-line-number">{{ index }}</div>
+      </div>
+      <div class="code-block-content">
+        <code class="hljs"><node-view-content /></code>
+      </div>
     </div>
   </node-view-wrapper>
 </template>
@@ -69,6 +74,11 @@ const searchInputRef = ref(null)
 const optionsListRef = ref(null)
 const dropdownRef = ref(null)
 const highlightedIndex = ref(0)
+
+const lineCount = computed(() => {
+  if (!props.node.textContent) return 1
+  return props.node.textContent.split('\n').length
+})
 
 const wrapperEl = computed(() => wrapperRef.value?.$el || wrapperRef.value)
 
@@ -362,5 +372,34 @@ const selectedLanguage = computed({
 .editor-content .code-block-copy .icon {
   width: 16px;
   height: 16px;
+}
+
+.editor-content .code-block-container {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  line-height: 1.6; /* Ensure consistent line height */
+}
+
+.editor-content .code-block-gutter {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding-right: 12px;
+  text-align: right;
+  color: #aeb5bc;
+  user-select: none;
+  min-width: 20px;
+}
+
+.editor-content .code-block-content {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.editor-content .code-block-content .hljs {
+  line-height: 1.6;
+  white-space: pre;
 }
 </style>
