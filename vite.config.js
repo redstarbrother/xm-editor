@@ -34,6 +34,14 @@ const mergeStylesPlugin = () => {
           console.log('Generated dist/xm-editor-notion.css');
         }
         
+        // 3. Generate xm-editor-feishu.css (Feishu + Components)
+        const feishuCssPath = path.resolve(srcDir, 'xm-editor-feishu.css');
+        if (fs.existsSync(feishuCssPath)) {
+          const feishuCss = fs.readFileSync(feishuCssPath, 'utf-8');
+          fs.writeFileSync(path.resolve(distDir, 'xm-editor-feishu.css'), feishuCss + '\n' + componentsCss);
+          console.log('Generated dist/xm-editor-feishu.css');
+        }
+        
         // Optional: Remove components.css if you don't want to expose it
         // fs.unlinkSync(componentsCssPath);
       } else {
