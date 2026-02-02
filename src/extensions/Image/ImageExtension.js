@@ -17,6 +17,9 @@ const ImageExtension = TiptapImage.extend({
   addOptions() {
     return {
       ...this.parent?.(),
+      HTMLAttributes: {
+        class: 'xm-image',
+      },
       /**
        * 用户必须传入的上传处理函数
        * @param file File对象

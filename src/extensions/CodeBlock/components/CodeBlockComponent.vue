@@ -1,5 +1,5 @@
 <template>
-  <node-view-wrapper class="code-block" :class="{ 'is-focused': props.selected }" ref="wrapperRef" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
+  <node-view-wrapper :class="[props.extension.options.HTMLAttributes?.class, { 'is-focused': props.selected }]" ref="wrapperRef" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
     <div class="code-block-actions" contenteditable="false" ref="actionsRef" :style="{ 
       ...actionsFloatingStyles, 
       right: 'auto', 

@@ -5,6 +5,9 @@ const TextAlignExtension = TiptapTextAlign.extend({
     return {
       ...this.parent?.(),
       types: ['heading', 'paragraph'],
+      HTMLAttributes: {
+        class: 'xm-text-align',
+      },
     }
   },
 })

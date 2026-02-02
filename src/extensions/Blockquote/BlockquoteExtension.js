@@ -1,7 +1,14 @@
 import TiptapBlockquote from '@tiptap/extension-blockquote'
 
 const BlockquoteExtension = TiptapBlockquote.extend({
-  // No custom options needed for now
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      HTMLAttributes: {
+        class: 'xm-blockquote',
+      },
+    }
+  },
 });
 
 export default BlockquoteExtension;

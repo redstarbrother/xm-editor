@@ -38,12 +38,8 @@
     "Noto Color Emoji";
 }
 
-.editor-content {
-  font-size: 16px;
-}
-
 /* Tiptap 编辑器核心容器样式 - feishu 风格 */
-.editor-content .ProseMirror {
+.ProseMirror {
   outline: none;
   padding: 1.5rem;
   min-height: 300px;
@@ -52,16 +48,12 @@
   font-family: var(--feishu-font-family);
   color: var(--feishu-black);
   font-size: 16px;
-  /* Default readable size */
-  /* line-height: 1.5; */
-  /* feishu usually has 1.5 line height for body text */
   text-align: left;
-  /* feishu is usually left-aligned */
   overflow: auto;
 }
 
 /* 段落样式 */
-.editor-content p {
+.xm-paragraph {
   white-space: break-spaces;
   word-break: break-word;
   caret-color: var(--feishu-black);
@@ -71,12 +63,7 @@
 }
 
 /* 标题样式 */
-.editor-content h1,
-.editor-content h2,
-.editor-content h3,
-.editor-content h4,
-.editor-content h5,
-.editor-content h6 {
+.xm-heading {
   font-family: var(--feishu-font-family);
   color: var(--feishu-black);
   font-weight: 600;
@@ -86,40 +73,40 @@
   margin-bottom: 8px;
 }
 
-.editor-content h1 {
+.xm-h1 {
   font-size: 1.625em;
   padding: 0 2px;
   margin-top: 26px;
   margin-bottom: 10px;
 }
 
-.editor-content h2 {
+.xm-h2 {
   font-size: 1.375em;
   padding: 0 2px;
   margin-top: 22px;
   margin-bottom: 8px;
 }
 
-.editor-content h3 {
+.xm-h3 {
   font-size: 1.25em;
   margin-top: 20px;
   margin-bottom: 8px;
 }
 
-.editor-content h4 {
+.xm-h4 {
   font-size: 1.125em;
 }
 
-.editor-content h5 {
+.xm-h5 {
   font-size: 1em;
 }
 
-.editor-content h6 {
+.xm-h6 {
   font-size: 1em;
 }
 
 /* 水平分割线 */
-.editor-content hr {
+.xm-horizontal-rule {
   border: none;
   height: 1px;
   background-color: var(--feishu-hr);
@@ -131,119 +118,120 @@
 }
 
 /* 链接样式 */
-.editor-content a {
+.xm-link {
   color: #336df4;
   text-decoration: none;
   cursor: pointer;
 }
 
-.editor-content a:hover {
+.xm-link:hover {
   text-decoration: underline;
 }
 
-.is-ctrl-pressed a {
+.is-ctrl-pressed .xm-link {
   cursor: pointer;
 }
 
 /* 列表样式 */
-.editor-content ul,
-.editor-content ol {
+.xm-bullet-list,
+.xm-ordered-list {
   padding-left: 1.75em;
   margin: 0;
 }
 
 /* 无序列表样式 */
-.editor-content ul {
+.xm-bullet-list {
   list-style-type: disc;
 }
 
-.editor-content ul ul {
+.xm-bullet-list .xm-bullet-list {
   list-style-type: circle;
 }
 
-.editor-content ul ul ul {
+.xm-bullet-list .xm-bullet-list .xm-bullet-list {
   list-style-type: square;
 }
 
-.editor-content ul ul ul ul {
+.xm-bullet-list .xm-bullet-list .xm-bullet-list .xm-bullet-list {
   list-style-type: disc;
 }
 
-.editor-content ul ul ul ul ul {
+.xm-bullet-list .xm-bullet-list .xm-bullet-list .xm-bullet-list .xm-bullet-list {
   list-style-type: circle;
 }
 
-.editor-content ul ul ul ul ul ul {
+.xm-bullet-list .xm-bullet-list .xm-bullet-list .xm-bullet-list .xm-bullet-list .xm-bullet-list {
   list-style-type: square;
 }
 
-.editor-content ul > li::marker {
+.xm-bullet-list > .xm-list-item::marker {
   color: var(--feishu-blue);
 }
 
-.editor-content li {
+.xm-list-item {
   white-space: break-spaces;
   word-break: break-word;
   caret-color: var(--feishu-black);
   text-align: start;
 }
 
-.editor-content li p {
+.xm-list-item .xm-paragraph {
   margin: 8px 0;
 }
 
 /* 有序列表嵌套样式 */
-.editor-content ol {
+.xm-ordered-list {
   list-style-type: decimal;
 }
 
-.editor-content ol li::marker {
+.xm-ordered-list .xm-list-item::marker {
   color: var(--feishu-blue);
 }
 
-.editor-content ol ol {
+.xm-ordered-list .xm-ordered-list {
   list-style-type: lower-alpha;
 }
 
-.editor-content ol ol ol {
+.xm-ordered-list .xm-ordered-list .xm-ordered-list {
   list-style-type: lower-roman;
 }
 
-.editor-content ol ol ol ol {
+.xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list {
   list-style-type: decimal;
 }
 
-.editor-content ol ol ol ol ol {
+.xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list {
   list-style-type: lower-alpha;
 }
 
-.editor-content ol ol ol ol ol ol {
+.xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list {
   list-style-type: lower-roman;
 }
+
 /* 任务列表 */
 ul[data-type="taskList"] {
   list-style: none;
   padding-left: 0;
 }
 
-ul[data-type="taskList"] li {
+ul[data-type="taskList"] .xm-task-item {
   display: flex;
   align-items: flex-start;
   margin: 8px 0;
 }
 
-ul[data-type="taskList"] li > label {
+ul[data-type="taskList"] .xm-task-item > label {
   flex: 0 0 auto;
   margin-right: 8px;
   user-select: none;
   margin-top: 5px;
 }
 
-ul[data-type="taskList"] li > div {
+ul[data-type="taskList"] .xm-task-item > div {
   flex: 1 1 auto;
 }
 
-ul[data-type="taskList"] li > div > p {
+ul[data-type="taskList"] .xm-task-item > div > .xm-paragraph {
   margin: 0;
 }
 
@@ -270,14 +258,14 @@ ul[data-type="taskList"] input[type="checkbox"]:hover {
 }
 
 /* Checked state: Blue background */
-ul[data-type="taskList"] li[data-checked="true"] input[type="checkbox"] {
+ul[data-type="taskList"] .xm-task-item[data-checked="true"] input[type="checkbox"] {
   background-color: #fff;
   border-color: var(--feishu-black);
 }
 
 /* Checkmark */
 ul[data-type="taskList"]
-  li[data-checked="true"]
+  .xm-task-item[data-checked="true"]
   input[type="checkbox"]::before {
   content: "";
   width: 10px;
@@ -288,14 +276,14 @@ ul[data-type="taskList"]
 }
 
 /* Checked text style */
-ul[data-type="taskList"] li[data-checked="true"] > div {
+ul[data-type="taskList"] .xm-task-item[data-checked="true"] > div {
   text-decoration: line-through;
   color: #8f959e;
   text-decoration-thickness: 2px;
 }
 
 /* 引用块样式 */
-.editor-content blockquote {
+.xm-blockquote {
   border-left: 3px solid #d0d3d6;
   padding: 0px 14px;
   margin: 8px 0;
@@ -305,12 +293,12 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   word-break: break-word;
 }
 
-.editor-content blockquote p {
+.xm-blockquote .xm-paragraph {
   margin: 8px 0;
 }
 
 /* 代码块 */
-.editor-content .code-block {
+.xm-code-block {
   background-color: #f9f8f7;
   padding: 24px;
   margin: 4px 0;
@@ -326,11 +314,11 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   box-sizing: border-box;
 }
 
-.editor-content .code-block-content {
+.xm-code-block .code-block-content {
   overflow-x: auto;
 }
 
-.editor-content .code-block code {
+.xm-code-block code {
   padding: 0;
   margin: 0;
   background-color: #f9f8f7;
@@ -338,13 +326,13 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   border: none;
 }
 
-.editor-content .hljs {
+.hljs {
   display: block;
   min-height: 1.5em;
 }
 
 /* 行内代码 */
-.editor-content code {
+.xm-code {
   font-family: "Source Code Pro", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", "Microsoft Yahei";
   background-color: #f5f6f7;
   padding: 0 2px;
@@ -353,7 +341,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   margin: 0 3px;
 }
 
-.editor-content pre code {
+pre code {
   background: none;
   color: inherit;
   padding: 0;
@@ -361,16 +349,15 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
 }
 
 /* 表格样式 */
-.editor-content table {
+.xm-table {
   border-collapse: collapse;
   width: 100%;
   margin: 8px 0;
   table-layout: fixed;
-  /* feishu tables are often fixed layout */
 }
 
-.editor-content th,
-.editor-content td {
+.xm-table th,
+.xm-table td {
   border: 1px solid var(--feishu-border);
   padding: 7px 9px;
   vertical-align: top;
@@ -378,19 +365,55 @@ ul[data-type="taskList"] li[data-checked="true"] > div {
   /* Extracted from th style */
 }
 
-.editor-content th {
+.xm-table th {
   background-color: var(--feishu-bg-header);
   font-weight: 500;
   /* Extracted from th style */
   text-align: start;
 }
 
-.editor-content td {
+.xm-table td {
   background-color: #fff;
 }
 
+/* 表格按钮基础样式 */
+.table-plus-btn {
+  width: 24px;
+  height: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s;
+}
+
+.table-plus-btn:hover {
+  background: #f1f5f9;
+  color: #2563eb;
+  transform: scale(1.1);
+}
+
+/* 针对行按钮和列按钮的微调 */
+.row-btn::before {
+  content: "";
+  position: absolute;
+  top: -10px; left: 0; right: 0; bottom: 0; /* 扩大热区 */
+}
+
+.col-btn::before {
+  content: "";
+  position: absolute;
+  left: -10px; top: 0; right: 0; bottom: 0; /* 扩大热区 */
+}
+
 /* Placeholder 样式 */
-.editor-content p.is-empty:first-child::before {
+.xm-paragraph.xm-placeholder:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);
   float: left;
