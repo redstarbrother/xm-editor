@@ -4,9 +4,9 @@ const CODE_THEME_ID = "xm-code-theme";
 
 export function loadCodeTheme(themeName) {
   return new Promise((resolve, reject) => {
-    // 🚨 关键修改：直接使用网站根目录绝对路径来引用public目录下的静态资源
-    // 这样打包后（资源在 dist/code-themes/）和开发时都能正确访问
-    const href = `/code-themes/${themeName}.css`; // 如果已经存在 <link> 标签，先移除
+
+    // 从互联网拉取 (CDN)
+    const href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/${themeName}.css`;
 
     const oldLink = document.getElementById(CODE_THEME_ID);
     if (oldLink) oldLink.remove(); // 创建新的 <link>
