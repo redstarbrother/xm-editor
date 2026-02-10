@@ -213,5 +213,4 @@ Presets.NotionLike.configure({
 
 ## **10. License**
 
-> 待补充
->
+[MIT](LICENSE) © 2024-present, XM Editor Contributors.
