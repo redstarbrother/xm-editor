@@ -1,94 +1,222 @@
-<div align="center">
-  <h1>XM Editor</h1>
-  <p>基于 Vue 3 与 Tiptap 的富文本编辑器，提供可组合扩展与多种预设风格。</p>
-</div>
+# **西木编辑器 (XmEditor)**
 
-## 特性
+> 一个基于 **Vue 3 + Tiptap** 的高度可扩展富文本编辑器，旨在为开发者提供类似 **Notion / 飞书** 的现代化编辑体验。
+> 
 
-- 基于 Tiptap 3 的编辑内核，支持丰富文本能力
-- 可插拔扩展机制，内置常用块/行内扩展与菜单系统
-- 预设配置开箱即用：Basic / NotionLike / Comment
-- 内置多套样式主题（默认、Notion 风格、飞书风格）
-- 支持代码高亮主题动态加载
+---
 
-## 安装
+## **1. 项目介绍**
+
+**XmEditor** 是一个专为 Vue 3 生态设计的富文本编辑器解决方案。它不是简单的 Tiptap 包装器，而是一套完整的 **编辑器构建套件**。
+
+它主要解决以下痛点：
+
+- **从零构建难**：Tiptap 虽然强大，但仅提供原子能力，构建一个功能完备的编辑器（菜单、快捷键、交互）成本较高。
+- **UI 适配繁琐**：内置精心设计的 Slash 菜单（命令菜单）、气泡菜单（Bubble Menu）和侧边栏菜单。
+- **扩展性与易用性的平衡**：既提供开箱即用的 Preset（预设），又保留对底层 Tiptap 扩展的完全控制能力。
+
+---
+
+## **2. 特性亮点 (Features)**
+
+- 🧩 **模块化扩展体系**：基于 Extension 的设计，功能按需加载
+- ⚡ **Slash 命令菜单**：输入 `/` 唤起命令菜单，快速插入内容
+- 🎈 **智能气泡菜单**：选中文字时自动浮现格式化工具栏
+- 📦 **多场景预设 (Presets)**：
+    - `NotionLike`（笔记）
+    - `Basic`（基础编辑）
+    - `Comment`（评论场景）
+- 🎨 **高度可定制 UI**：样式与逻辑分离，支持主题与 CSS 注入
+- ⌨️ **丰富快捷键**：支持 Markdown 风格快捷输入
+- 🖼️ **增强媒体支持**：图片上传钩子、代码块高亮等开箱即用
+
+---
+
+## **3. 技术栈**
+
+- **编辑器内核**：[Tiptap](https://tiptap.dev/)（基于 ProseMirror）
+- **前端框架**：[Vue 3](https://vuejs.org/)（Composition API）
+- **构建工具**：[Vite](https://vitejs.dev/)
+
+**设计理念**：
+
+- **Extension-First**：一切功能皆扩展
+- **Headless UI**：核心逻辑不绑定具体 UI 框架，但提供高质量默认实现
+
+---
+
+## **4. 安装方式**
+
+推荐使用包管理器安装：
 
 ```bash
+# npm
+npm install @putanut/xm-editor
+
+# pnpm
 pnpm add @putanut/xm-editor
+
+# yarn
+yarn add @putanut/xm-editor
 ```
 
-## 快速开始
+---
 
-引入样式文件并创建编辑器实例即可使用。推荐从预设开始，按需覆盖配置。
+## **5. 快速开始**
 
-```js
-import { XmEditor, Presets } from "@putanut/xm-editor";
-import "@putanut/xm-editor/xm-editor.css";
+下面是一个最小可运行示例，创建一个 **Notion 风格** 的编辑器：
 
-new XmEditor({
-  el: document.querySelector("#app"),
-  config: Presets.Basic.configure(),
-});
+```jsx
+<template>
+    <div class="xm-editor-container"></div>
+</template>
+
+<script setup>
+import { onMounted, onBeforeUnmount } from 'vue'
+import { XmEditor, Presets } from '@putanut/xm-editor'
+
+// 必须引入基础样式
+import '@putanut/xm-editor/xm-editor-notion.css'
+
+let editor = null
+
+onMounted(() => {
+    editor = new XmEditor({
+        el: document.querySelector('.xm-editor-container'),
+        config: Presets.NotionLike
+    });
+})
+
+onBeforeUnmount(() => {
+    editor?.destroy()
+    editor = null
+})
+</script>
+
+<style lang="scss" scoped></style>
 ```
 
-## 预设
+---
 
-预设为不同使用场景提供默认扩展组合与交互配置，适合快速接入。
+## **6. 编辑器扩展机制**
 
-可用预设：
+XmEditor 采用 **Extension 驱动架构**，所有功能均通过扩展实现。
 
-- Presets.Basic
-- Presets.NotionLike
-- Presets.Comment
+### **扩展包含的能力**
 
-## 扩展
+- **Schema**：节点 / 标记的数据结构
+- **Commands**：对外暴露的编辑命令
+- **Keyboard Shortcuts**：快捷键绑定
+- **Menu Config**：Slash 菜单或气泡菜单配置
 
-扩展是编辑器能力的核心组成，可自由组合以适配不同场景。内置扩展覆盖：
+### **启用并自定义扩展**
 
-- 标题、加粗/斜体/下划线/删除线
-- 列表、引用、水平分割线
-- 行内代码与代码块、表格、图片
-- 表情、文本对齐、快捷键
-- 固定菜单、气泡菜单与 Slash 菜单
+```jsx
+import { Extensions } from '@putanut/xm-editor'
 
-## 配置
-
-配置由三部分组成：
-
-- editorOption：内容与编辑行为（可编辑、占位符、自动聚焦、更新节流、代码主题等）
-- extensions：扩展列表，决定功能与菜单项
-- style：外观定制（自定义类名）
-- events：生命周期与内容更新回调（初始化、销毁、聚焦、失焦、更新）
-
-## API
-
-XmEditor 默认返回简化代理对象，常用方法包括：
-
-- getHTML / getJSON / getText 获取内容
-- setContent / clear 修改内容
-- focus / blur 控制焦点
-- destroy 销毁实例
-
-## 主题与样式
-
-内置样式文件：
-
-- @putanut/xm-editor/xm-editor.css
-- @putanut/xm-editor/xm-editor-notion.css
-- @putanut/xm-editor/xm-editor-feishu.css
-
-代码块主题通过 CDN 动态加载，可通过 editorOption.codeTheme 指定主题名称，例如 github.min 或 github-dark.min。
-
-## 开发
-
-```bash
-pnpm install
-pnpm dev
+const myExtensions = [
+  Extensions.Bold,
+  Extensions.Image.configure({
+    uploadHandler: (file) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            url: URL.createObjectURL(file)
+          })
+        }, 1000)
+      })
+    }
+  })
+]
 ```
 
-构建与预览：
+### 可选扩展列表
 
-```bash
-pnpm build
-pnpm preview
+- Base ： 基础编辑器能力（包含文档模型、段落、文本、历史记录、光标控制等）
+- Heading ： 标题（H1-H6）
+- Bold ： 字体加粗
+- Italic ： 斜体
+- Strike ： 删除线
+- Underline ： 下划线
+- HorizontalRule ： 水平分割线
+- Blockquote ： 引用块
+- Link ： 超链接
+- TextAlign ： 文本对齐（左、中、右、两端对齐）
+- Highlight ： 文本背景高亮
+- List ： 列表集合（无序列表、有序列表、任务列表）
+- Emoji ： 表情符号插入
+- Code ： 行内代码
+- CodeBlock ： 代码块（支持多语言高亮）
+- Image ： 图片插入与展示
+- Table ： 表格
+- Placeholder ： 空白内容占位提示
+- Segmentation ： 内容分段
+- FixedMenu ： 顶部固定菜单栏
+- BubbleMenu ： 气泡菜单（选中文字时浮现的工具栏）
+- SlashMenu ： 斜杠命令菜单（输入 / 唤起）
+- ShortcutKey ： 快捷键增强（如 Tab 键缩进处理）
+
+---
+
+## **7. UI / 样式定制**
+
+Xm Editor 坚持 **样式与逻辑解耦** 的原则。
+
+### **样式层级**
+
+1. **基础样式**：`xm-editor.css` 或 `xm-editor-notion.css`（必须引入其一）
+2. **主题样式**：通过 `customClass` 注入自定义 CSS
+
+### **自定义主题**
+
+```jsx
+Presets.NotionLike.configure({
+	editorOption: {
+		// 设置highlight.js高亮样式
+    codeTheme: 'xcode',
+  },
+  style: {
+    // 设置类名，实现自定义样式
+    customClass: 'my-custom-editor-theme',
+  },
+})
+
+.my-custom-editor-theme {
+  border: 0;
+}
 ```
+
+---
+
+## **8. 使用场景**
+
+- 📝 个人 / 团队笔记系统
+- 📄 文档与知识库系统
+- ✍️ 博客写作编辑器
+- 💬 富文本评论系统
+- 🏢 企业内部业务系统
+
+---
+
+## **9. 项目状态与规划**
+
+- 当前版本：**v0.0.11**
+- 阶段：**早期 · 活跃开发中**
+
+**规划方向**：
+
+- [ ]  实现撤销/重做 (Undo/Redo)
+- [ ]  开发目录大纲 (Table of Contents)
+- [ ]  开发块拖拽手柄 (Drag Handle)
+- [ ]  开发查找与替换 (Search & Replace)
+- [ ]  优化链接预览 (Link Card)
+- [ ]  增强表格功能（Table）
+- [ ]  国际化 (i18n) 支持
+- [ ]  示例与文档完善
+
+---
+
+## **10. License**
+
+> 待补充
+>
