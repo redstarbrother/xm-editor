@@ -1,9 +1,9 @@
 import * as Suggestion from "@/extensions/Suggestion/Suggestion";
 
 export class ExtensionManager {
-  constructor(extensions = [], editorConfig = {}) {
+  constructor(extensions = [], placeholder = "") {
     this.rawExtensions = extensions;
-    this.editorConfig = editorConfig;
+    this.placeholder = placeholder;
     this.extensions = [];
     this.manifests = [];
     // 存放组件（比如fixed菜单）
@@ -48,12 +48,12 @@ export class ExtensionManager {
 
   // 初始化placeholder扩展
   initPlaceholderExtension() {
-    if (this.editorConfig.editorOption.placeholder) {
+    if (this.placeholder) {
       let placeholderExtension = this.extensions.find((ext) => ext.name === "placeholder");
       if (placeholderExtension) {
         // 使用 configure 配置扩展，并替换列表中的引用
         const configuredExtension = placeholderExtension.configure({
-          placeholder: this.editorConfig.editorOption.placeholder,
+          placeholder: this.placeholder,
         });
 
         const index = this.extensions.indexOf(placeholderExtension);
