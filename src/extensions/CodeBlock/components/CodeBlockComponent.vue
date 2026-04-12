@@ -1,5 +1,5 @@
 <template>
-  <node-view-wrapper class="code-block" :class="{ 'is-focused': props.selected }" ref="wrapperRef" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
+  <node-view-wrapper :class="[props.extension.options.HTMLAttributes?.class, { 'is-focused': props.selected }]" ref="wrapperRef" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
     <div class="code-block-actions" contenteditable="false" ref="actionsRef" :style="{ 
       ...actionsFloatingStyles, 
       right: 'auto', 
@@ -42,8 +42,13 @@
         </button>
       </div>
     </div>
-    <div class="code-block-content">
-      <code class="hljs"><node-view-content /></code>
+    <div class="code-block-container">
+      <div class="code-block-gutter" contenteditable="false">
+        <div v-for="index in lineCount" :key="index" class="code-block-line-number">{{ index }}</div>
+      </div>
+      <div class="code-block-content">
+        <code class="hljs"><node-view-content /></code>
+      </div>
     </div>
   </node-view-wrapper>
 </template>
@@ -69,6 +74,11 @@ const searchInputRef = ref(null)
 const optionsListRef = ref(null)
 const dropdownRef = ref(null)
 const highlightedIndex = ref(0)
+
+const lineCount = computed(() => {
+  if (!props.node.textContent) return 1
+  return props.node.textContent.split('\n').length
+})
 
 const wrapperEl = computed(() => wrapperRef.value?.$el || wrapperRef.value)
 
@@ -182,17 +192,55 @@ onUnmounted(() => {
 // 复制代码到剪贴板
 const copyToClipboard = () => {
   const codeContent = props.node.textContent
-  navigator.clipboard
-    .writeText(codeContent)
-    .then(() => {
-      copied.value = true
-      setTimeout(() => {
-        copied.value = false
-      }, 2000)
-    })
-    .catch((err) => {
-      console.error('Failed to copy code: ', err)
-    })
+  
+  // 尝试使用 Clipboard API
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard
+      .writeText(codeContent)
+      .then(() => {
+        showCopiedFeedback()
+      })
+      .catch((err) => {
+        console.warn('Clipboard API failed, trying fallback:', err)
+        fallbackCopy(codeContent)
+      })
+  } else {
+    // 降级方案
+    fallbackCopy(codeContent)
+  }
+}
+
+const fallbackCopy = (text) => {
+  const textarea = document.createElement('textarea')
+  textarea.value = text
+  // 防止滚动到底部
+  textarea.style.position = 'fixed'
+  textarea.style.top = '0'
+  textarea.style.left = '0'
+  textarea.style.opacity = '0'
+  
+  document.body.appendChild(textarea)
+  textarea.select()
+  
+  try {
+    const successful = document.execCommand('copy')
+    if (successful) {
+      showCopiedFeedback()
+    } else {
+      console.error('Fallback copy failed')
+    }
+  } catch (err) {
+    console.error('Fallback copy error:', err)
+  } finally {
+    document.body.removeChild(textarea)
+  }
+}
+
+const showCopiedFeedback = () => {
+  copied.value = true
+  setTimeout(() => {
+    copied.value = false
+  }, 2000)
 }
 
 // 监控代码类型变化
@@ -362,5 +410,34 @@ const selectedLanguage = computed({
 .editor-content .code-block-copy .icon {
   width: 16px;
   height: 16px;
+}
+
+.editor-content .code-block-container {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  line-height: 1.6; /* Ensure consistent line height */
+}
+
+.editor-content .code-block-gutter {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding-right: 12px;
+  text-align: right;
+  color: #aeb5bc;
+  user-select: none;
+  min-width: 20px;
+}
+
+.editor-content .code-block-content {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.editor-content .code-block-content .hljs {
+  line-height: 1.6;
+  white-space: pre;
 }
 </style>

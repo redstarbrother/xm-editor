@@ -71,12 +71,14 @@ pnpm add vue
 
 三步创建一个类 Notion 风格的编辑器：
 
-```vue
+```jsx
 <template>
   <div class="editor-container"></div>
 </template>
 
 <script setup>
+import { onMounted, onBeforeUnmount } from 'vue'
+import { XmEditor, Presets } from '@putanut/xm-editor'
 import { onMounted, onBeforeUnmount } from 'vue'
 import { XmEditor, Presets } from '@putanut/xm-editor'
 
@@ -155,6 +157,8 @@ Presets.Comment.configure({
   },
 })
 ```
+
+---
 
 ## 🧱 扩展系统
 
@@ -271,6 +275,8 @@ Presets.NotionLike.configure({
   padding-bottom: 0.3em;
 }
 ```
+
+---
 
 ### 代码高亮主题
 

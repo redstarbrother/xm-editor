@@ -5,6 +5,9 @@ const HighlightExtension = TiptapHighlight.extend({
     return {
       ...this.parent?.(),
       multicolor: true,
+      HTMLAttributes: {
+        class: 'xm-highlight',
+      },
     };
   },
 });

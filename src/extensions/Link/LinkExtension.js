@@ -6,7 +6,10 @@ const LinkExtension = Link.extend({
     return {
       ...this.parent?.(),
       openOnClick: false,
-      autolink: false
+      autolink: false,
+      HTMLAttributes: {
+        class: 'xm-link',
+      },
     }
   },
   addProseMirrorPlugins() {

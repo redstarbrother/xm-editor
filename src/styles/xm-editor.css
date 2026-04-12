@@ -1,300 +1,355 @@
-/* src/assets/editor.css */
+/* src/styles/xm-editor.css */
+/* Based on styles extracted from default export */
 
-/* =========================================
-   1. 全局变量与基础设置
-   ========================================= */
 :root {
-  --white: #ffffff;
-  --black: #000000;
-  --gray-1: #e5e7eb; /* border */
-  --gray-2: #e5e7eb; /* selected background */
-  --gray-3: #f3f4f6; /* hover background */
-  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --default-hr: #e6e5e3;
+  --default-black: #2c2c2b;
+  /* --c-texPri */
+  --default-border: #e9e9e7;
+  /* --c-tabDivCol */
+  --default-bg-header: #f7f6f3;
+  /* --cd-tabHeaRowColBac */
+  --default-font-family:
+    ui-sans-serif, -apple-system, BlinkMacSystemFont,
+    "Segoe UI Variable Display", "Segoe UI", Helvetica, "PingFang SC",
+    "Microsoft YaHei", Helvetica, "Apple Color Emoji", Arial, sans-serif,
+    "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-/* =========================================
-   2. 滚动条样式
-   ========================================= */
-::-webkit-scrollbar {
-  width: 10px;    /* 垂直滚动条宽度 */
-  height: 10px;   /* 水平滚动条高度 */
-}
 
-::-webkit-scrollbar-thumb {
-  background-color: #e4e3e3; /* 滑块颜色，柔和灰色 */
-  border-radius: 10px;       /* 滑块圆角 */
-  border: 2px solid #fff;    /* 滑块边框，增加一些对比度 */
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); /* 轻微的阴影效果 */
-}
-
-::-webkit-scrollbar-track {
-  background-color: rgb(250, 251, 252);
-}
-
-::-webkit-scrollbar-button {
-  display: none; /* 隐藏滚动条按钮 */
-}
-
-/* =========================================
-   3. Tiptap 编辑器核心容器样式
-   ========================================= */
-.editor-content .ProseMirror {
-  outline: none; /* 去掉点击时的蓝色边框 */
-  padding: 1.5rem; /* 给编辑器内部留白，就像纸张的页边距 */
+/* Tiptap 编辑器核心容器样式 - default 风格 */
+.ProseMirror {
+  outline: none;
+  padding: 1.5rem;
   min-height: 300px;
-  
+
   /* 字体与排版核心 */
-  font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
-  color: #333333;       /* 柔和的深灰 */
-  font-size: 16px;      /* 适合阅读的字号 */
-  line-height: 1.8;     /* 关键：1.8倍行高让中文阅读更舒适 */
-  text-align: justify;  /* 两端对齐，让大段文字块更整齐 */
+  font-family: var(--default-font-family);
+  color: var(--default-black);
+  font-size: 16px;
+  /* Default readable size */
+  line-height: 1.5;
+  /* default usually has 1.5 line height for body text */
+  text-align: left;
+  /* default is usually left-aligned */
   overflow: auto;
-  transition: background-color 0.1s ease-in-out;
 }
 
-.ProseMirror:focus {
-  background-color: var(--editor-focus-bg, white);
+/* 段落样式 */
+.xm-paragraph {
+  white-space: break-spaces;
+  word-break: break-word;
+  caret-color: var(--default-black);
+  padding: 3px 2px;
+  margin: 1px 0;
 }
 
-/* =========================================
-   4. 基础排版 (标题、段落、文本装饰)
-   ========================================= */
-/* 段落默认样式 */
-.ProseMirror p {
-  margin-top: 0;
-  margin-bottom: 0.75em; /* 段落间距 */
-}
-
-/* 标题层级优化 */
-.ProseMirror h1, 
-.ProseMirror h2, 
-.ProseMirror h3 {
-  color: #1a202c; /* 标题颜色更深一点 */
-  font-weight: 700;
+/* 标题样式 */
+.xm-heading {
+  font-family: var(--default-font-family);
+  color: var(--default-black);
+  font-weight: 600;
   line-height: 1.3;
-  margin-top: 0.8em; /* 标题上方留白要大 */
-  margin-bottom: 0.8em;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-inline: 2px;
+  word-break: break-word;
 }
 
-.editor-content h1 { 
-  font-size: 1.8em; 
-  border-bottom: 2px solid #eaeaea; 
-  padding-bottom: 0.3em; 
+.xm-h1 {
+  font-size: 1.875em;
+  margin-top: 2rem;
+  margin-bottom: 4px;
 }
 
-.editor-content h2 { 
-  font-size: 1.5em; 
+.xm-h2 {
+  font-size: 1.5em;
+  margin-top: 1.4rem;
+  margin-bottom: 1px;
 }
 
-.editor-content h3 { 
-  font-size: 1.25em; 
+.xm-h3 {
+  font-size: 1.25em;
+  margin-top: 1rem;
+  margin-bottom: 1px;
 }
 
-/* 高亮样式 */
-.editor-content mark {
-  margin: 0 0.1em;
-  padding: 0.1em 0.2em;
-  border-radius: 0.3em;
-  line-height: 1.4;
+.xm-h4 {
+  font-size: 1em;
+}
+
+/* 水平分割线 */
+.xm-horizontal-rule {
+  border: none;
+  height: 1px;
+  background-color: var(--default-hr);
+  display: block;
+  margin: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  background-clip: content-box;
+}
+
+/* 链接样式 */
+.xm-link {
+  color: #9b9a97;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.is-ctrl-pressed .xm-link {
+  cursor: pointer;
+}
+
+/* 列表样式 */
+.xm-bullet-list,
+.xm-ordered-list {
+  padding-left: 1.75em;
+  margin: 0;
+}
+
+.xm-list-item {
+  white-space: break-spaces;
+  word-break: break-word;
+  caret-color: var(--default-black);
+  text-align: start;
+}
+
+.xm-list-item .xm-paragraph {
+  margin: 1px 0;
+}
+
+/* 有序列表嵌套样式 */
+.xm-ordered-list {
+  list-style-type: decimal;
+}
+
+.xm-ordered-list .xm-ordered-list {
+  list-style-type: lower-alpha;
+}
+
+.xm-ordered-list .xm-ordered-list .xm-ordered-list {
+  list-style-type: lower-roman;
+}
+
+.xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list {
+  list-style-type: decimal;
+}
+
+.xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list {
+  list-style-type: lower-alpha;
+}
+
+.xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list{
+  list-style-type: lower-roman;
+}
+/* 任务列表 */
+ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul[data-type="taskList"] .xm-task-item {
+  display: flex;
+  align-items: flex-start;
+  margin: 4px 0;
+}
+
+ul[data-type="taskList"] .xm-task-item>label {
+  flex: 0 0 auto;
+  margin-right: 8px;
+  user-select: none;
+  margin-top: 7px;
+}
+
+ul[data-type="taskList"] .xm-task-item>div {
+  flex: 1 1 auto;
+}
+
+/* 隐藏默认复选框并自定义样式 */
+ul[data-type="taskList"] input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  margin: 0;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #37352f;
+  /* default default border color */
+  border-radius: 2px;
+  /* Slight radius */
+  display: grid;
+  place-content: center;
+  transition: all 0.1s ease-in-out;
+}
+
+/* Hover effect */
+ul[data-type="taskList"] input[type="checkbox"]:hover {
+  background-color: rgba(55, 53, 47, 0.08);
+}
+
+/* Checked state: Blue background */
+ul[data-type="taskList"] .xm-task-item[data-checked="true"] input[type="checkbox"] {
+  background-color: #2383e2;
+  border-color: #2383e2;
+}
+
+/* Checkmark */
+ul[data-type="taskList"] .xm-task-item[data-checked="true"] input[type="checkbox"]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  transform-origin: center;
+}
+
+/* Checked text style */
+ul[data-type="taskList"] .xm-task-item[data-checked="true"]>div {
+  text-decoration: line-through;
+  color: #9b9a97;
+  /* default gray text */
+  text-decoration-thickness: 1px;
+}
+
+/* 引用块样式 */
+.xm-blockquote {
+  border-left: 3px solid #d0d3d6;
+  padding: 0px 14px;
+  margin: 8px 0;
+  font-size: 1em;
+  color: #646a73;
+  white-space: break-spaces;
+  word-break: break-word;
+}
+
+.xm-blockquote .xm-paragraph {
+  margin: 0;
+}
+
+/* 代码块 */
+.xm-code-block {
+  background-color: #f9f8f7;
+  padding: 36px 22px 22px 22px;
+  /* Adjusted padding: top is for header */
+  margin: 4px 0;
+  border-radius: 8px;
+  font-family:
+    SFMono-Regular, Menlo, Consolas, "PT Mono", "Liberation Mono", Courier,
+    monospace;
+  font-size: 85%;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.code-block-content {
+  overflow-x: auto;
+}
+
+.xm-code-block code {
+  padding: 0;
+  margin: 0;
+  background-color: #f9f8f7;
+  font-size: inherit;
+}
+
+.hljs {
+  display: block;
+  min-height: 1.5em;
+}
+
+/* 行内代码 */
+.xm-code {
+  font-family:
+    SFMono-Regular, Menlo, Consolas, "PT Mono", "Liberation Mono", Courier,
+    monospace;
+  background: rgba(135, 131, 120, 0.15);
+  color: #eb5757;
+  padding: 0.2em 0.4em;
+  border-radius: 5px;
+  font-size: 85%;
+}
+
+pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* 表格样式 */
+.xm-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 8px 0;
+  table-layout: fixed;
+  /* default tables are often fixed layout */
+}
+
+.xm-table th,
+.xm-table td {
+  border: 1px solid var(--default-border);
+  padding: 7px 9px;
+  vertical-align: top;
+  min-width: 120px;
+  /* Extracted from th style */
+}
+
+.xm-table th {
+  background-color: var(--default-bg-header);
+  font-weight: 500;
+  /* Extracted from th style */
+  text-align: start;
+}
+
+.xm-table td {
+  background-color: #fff;
+}
+
+/* 表格按钮基础样式 */
+.table-plus-btn {
+  width: 24px;
+  height: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s;
+}
+
+.table-plus-btn:hover {
+  background: #f1f5f9;
+  color: #2563eb;
+  transform: scale(1.1);
+}
+
+/* 针对行按钮和列按钮的微调 */
+.row-btn::before {
+  content: "";
+  position: absolute;
+  top: -10px; left: 0; right: 0; bottom: 0; /* 扩大热区 */
+}
+
+.col-btn::before {
+  content: "";
+  position: absolute;
+  left: -10px; top: 0; right: 0; bottom: 0; /* 扩大热区 */
 }
 
 /* Placeholder 样式 */
-.editor-content p.is-empty:first-child::before {
+.xm-paragraph.xm-placeholder:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);
   float: left;
   height: 0;
   pointer-events: none;
-}
-
-/* =========================================
-   5. 列表样式 (无序、有序、任务列表)
-   ========================================= */
-.editor-content ul,
-.editor-content ol {
-  padding-left: 1em;
-  margin: 0.25em 0; /* 改小整体间距 */
-}
-
-.editor-content li {
-  margin: 0.1em 0; /* 更紧密的行间距 */
-  line-height: 1.8; /* 紧凑但不拥挤 */
-}
-
-.editor-content li p {
-  margin: 0;
-}
-
-/* 任务列表容器 */
-ul[data-type="taskList"] {
-  list-style: none;
-  padding-left: 0px;
-}
-
-ul[data-type="taskList"] li {
-  display: flex;
-  align-items: flex-start;
-  margin: 0.1em 0; /* 任务列表也更紧凑 */
-}
-
-ul[data-type="taskList"] li > label {
-  display: flex;
-  align-items: center;
-  gap: 0.3em; /* 复选框和文字间距 */
-  margin: 0;
-  margin-top: 0.5em;
-}
-
-ul[data-type="taskList"] input[type="checkbox"] {
-  display: inline-block;
-  margin: 0;
-}
-
-/* 任务列表已完成样式 */
-ul[data-type="taskList"] li[data-checked="true"] {
-  color: #adb5bd; /* 灰色文本 */
-}
-
-ul[data-type="taskList"] li[data-checked="true"] > div {
-  text-decoration: line-through; /* 删除线 */
-  text-decoration-thickness: 1px;
-  opacity: 0.8;
-}
-
-/* =========================================
-   6. 引用与代码块
-   ========================================= */
-/* 引用块样式 */
-.editor-content blockquote {
-  margin: 0.5em 0;
-  padding-left: 1em;
-  border-left: 2px solid #ccc;
-  color: #666;
-}
-
-/* 代码块 */
-.editor-content pre {
-  font-size: 14px;
-  background: none;
-  padding: 0.75em 1em;
-  border-radius: 0;
-}
-
-/* 行内代码 */
-.editor-content code {
-  background: #f1f1f1;
-  padding: 0.2em 0.4em;
-  border-radius: 5px;
-  font-family: monospace;
-  font-size: 14px;
-}
-
-/* =========================================
-   7. 表格样式
-   ========================================= */
-.editor-content table {
-  border-collapse: separate;
-  border-spacing: 0;
-  width: 100%;
-  table-layout: auto;
-  margin: 8px 0;
-  border-radius: 10px;
-  overflow: auto; /* 这样圆角才会裁切单元格背景 */
-}
-
-.editor-content th,
-.editor-content td {
-  border: 1px solid #ddd;
-  padding: 6px 8px;
-  vertical-align: top;
-  background-color: #fff;
-  transition: background-color 0.15s ease;
-  min-width: 80px;
-}
-
-.editor-content th {
-  background-color: #f9f9f9;
-  font-weight: 600;
-}
-
-.editor-content td:hover,
-.editor-content th:hover {
-  background-color: #f3f9ff;
-}
-
-.editor-content td.is-selected,
-.editor-content th.is-selected {
-  outline: 2px solid #2684ff;
-  outline-offset: -2px;
-  background-color: #eaf3ff;
-}
-
-.editor-content td:focus,
-.editor-content th:focus {
-  background-color: inherit;
-}
-
-.editor-content table p {
-  margin: 0;
-}
-
-.ProseMirror:focus td,
-.ProseMirror:focus th {
-  background-color: var(--editor-focus-bg, white);
-}
-
-/* 表格圆角处理 */
-.editor-content tr:first-child th:first-child,
-.editor-content tr:first-child td:first-child {
-  border-top-left-radius: 4px;
-}
-
-.editor-content tr:first-child th:last-child,
-.editor-content tr:first-child td:last-child {
-  border-top-right-radius: 4px;
-}
-
-.editor-content tr:last-child td:first-child {
-  border-bottom-left-radius: 4px;
-}
-
-.editor-content tr:last-child td:last-child {
-  border-bottom-right-radius: 4px;
-}
-
-/* =========================================
-   8. UI 组件 (Popover 等)
-   ========================================= */
-.popover-area {
-  display: flex;
-  flex-direction: column;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 6px;
-  gap: 4px;
-  position: absolute;
-  z-index: 100;
-}
-
-.popover-menu-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.popover-menu-item:hover {
-  background-color: #f5f5f5;
-}
-
-.popover-menu-item span {
-  margin-left: 4px;
-  font-size: 12px;
-  color: #333;
 }

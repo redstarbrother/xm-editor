@@ -1,12 +1,17 @@
 import { TableKit as TiptapTable } from "@tiptap/extension-table";
-import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import { Plugin, PluginKey } from '@tiptap/pm/state'
-import TableView from "./components/TableView.vue";
 
 const TableExtension = TiptapTable.extend({
 
-  addNodeView() {
-    return VueNodeViewRenderer(TableView);
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      table: {
+        HTMLAttributes: {
+          class: 'xm-table', // 你的自定义 class
+        },
+      },
+    }
   },
 
   // ✨ 添加快捷键

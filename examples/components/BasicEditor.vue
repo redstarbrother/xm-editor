@@ -30,6 +30,7 @@ onMounted(() => {
       editorOption: {
         placeholder: "请输入内容...",
         autofocus: true,
+        codeTheme: 'xcode',
       },
       style: {
         customClass: 'xm-editor-basic',

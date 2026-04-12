@@ -6,6 +6,14 @@ import CodeBlockComponent from "./components/CodeBlockComponent.vue";
 const lowlight = createLowlight(all);
 
 const CodeBlockExtension = CodeBlockLowlight.extend({
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      HTMLAttributes: {
+        class: 'xm-code-block',
+      },
+    }
+  },
   addNodeView() {
     return VueNodeViewRenderer(CodeBlockComponent);
   },

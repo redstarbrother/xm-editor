@@ -71,29 +71,9 @@ const shouldShowBubbleMenu = ({ editor, state }) => {
   return !editor.isActive('codeBlock') && !editor.isActive('image');
 };
 
-const codeTheme = [
-  "atom-one-dark.min",
-  "atom-one-light.min",
-  "foundation.min",
-  "github-dark-dimmed.min",
-  "github-dark.min",
-  "github.min",
-  "googlecode.min",
-  "grayscale.min",
-  "hybrid.min",
-  "idea.min",
-  "monokai-sublime.min",
-  "monokai.min",
-  "night-owl.min",
-  "nord.min",
-  "pojoaque.min",
-  "tomorrow-night-blue.min",
-  "tomorrow-night-bright.min",
-  "vs.min",
-  "xcode.min"
-]
-
-loadCodeTheme(codeTheme[5])
+// 优先使用配置中的主题，否则默认使用 github.min
+const themeToLoad = props.config.editorOption?.codeTheme || "github.min"
+loadCodeTheme(themeToLoad)
 
 
 </script>

@@ -6,30 +6,32 @@ import XmEditorView from "@/core/XmEditorView.vue";
 
 export default class XmEditor {
   constructor(options = {}) {
-    this.options = options;
     this.element = options.el;
-    this.config = options.config || {};
+    // 根据name判断是否需要调用configure方法
+    if(options.config.name) {
+      this.config = options.config.configure() || {};
+    } else {
+      this.config = options.config || {};
+    }
 
-    // Get content from the new nested structure
     const editorOption = this.config.editorOption || {};
+    // 获取初始内容
     this.initialContent = editorOption.content || "";
 
-    // 1. Initialize Extension Manager
-    // We expect options.extensions to be passed, or we default to empty/default list
-    // In the new architecture, extensions might be imported and passed here
+    // 1. 初始化扩展管理器
     this.extensionManager = new ExtensionManager(
       options.extensions || this.config.extensions || [],
-      this.config
+      editorOption.placeholder || ""
     );
 
-    // 2. Initialize Tiptap Editor
+    // 2. 初始化 Tiptap 编辑器
     this.tiptapEditor = this.initTiptapEditor();
 
-    // 3. Mount Vue UI (Menus, Bubble, etc.)
+    // 3. 挂载 Vue UI (Menus, Bubble, etc.)
     // We pass the editor instance and the extension manager so UI can query menus
     this.vueApp = this.mountUI();
 
-    // 4. Create Proxy (Optional, for backward compatibility or API simplification)
+    // 4. 创建编辑器代理
     this.proxy = createEditorProxy(this.tiptapEditor);
 
     return this.proxy;

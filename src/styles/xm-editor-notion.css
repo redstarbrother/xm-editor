@@ -17,12 +17,8 @@
 }
 
 
-.editor-content {
-  font-size: 16px;
-}
-
 /* Tiptap 编辑器核心容器样式 - Notion 风格 */
-.editor-content .ProseMirror {
+.ProseMirror {
   outline: none;
   padding: 1.5rem;
   min-height: 300px;
@@ -40,7 +36,7 @@
 }
 
 /* 段落样式 */
-.editor-content p {
+.xm-paragraph {
   white-space: break-spaces;
   word-break: break-word;
   caret-color: var(--notion-black);
@@ -49,9 +45,7 @@
 }
 
 /* 标题样式 */
-.editor-content h1,
-.editor-content h2,
-.editor-content h3 {
+.xm-heading {
   font-family: var(--notion-font-family);
   color: var(--notion-black);
   font-weight: 600;
@@ -62,30 +56,30 @@
   word-break: break-word;
 }
 
-.editor-content h1 {
+.xm-h1 {
   font-size: 1.875em;
   margin-top: 2rem;
   margin-bottom: 4px;
 }
 
-.editor-content h2 {
+.xm-h2 {
   font-size: 1.5em;
   margin-top: 1.4rem;
   margin-bottom: 1px;
 }
 
-.editor-content h3 {
+.xm-h3 {
   font-size: 1.25em;
   margin-top: 1rem;
   margin-bottom: 1px;
 }
 
-.editor-content h4 {
+.xm-h4 {
   font-size: 1em;
 }
 
 /* 水平分割线 */
-.editor-content hr {
+.xm-horizontal-rule {
   border: none;
   height: 1px;
   background-color: var(--notion-hr);
@@ -97,56 +91,56 @@
 }
 
 /* 链接样式 */
-.editor-content a {
+.xm-link {
   color: #9b9a97;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-.is-ctrl-pressed a {
+.is-ctrl-pressed .xm-link {
   cursor: pointer;
 }
 
 /* 列表样式 */
-.editor-content ul,
-.editor-content ol {
+.xm-bullet-list,
+.xm-ordered-list {
   padding-left: 1.75em;
   margin: 0;
 }
 
-.editor-content li {
+.xm-list-item {
   white-space: break-spaces;
   word-break: break-word;
   caret-color: var(--notion-black);
   text-align: start;
 }
 
-.editor-content li p {
+.xm-list-item .xm-paragraph {
   margin: 1px 0;
 }
 
 /* 有序列表嵌套样式 */
-.editor-content ol {
+.xm-ordered-list {
   list-style-type: decimal;
 }
 
-.editor-content ol ol {
+.xm-ordered-list .xm-ordered-list {
   list-style-type: lower-alpha;
 }
 
-.editor-content ol ol ol {
+.xm-ordered-list .xm-ordered-list .xm-ordered-list {
   list-style-type: lower-roman;
 }
 
-.editor-content ol ol ol ol {
+.xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list {
   list-style-type: decimal;
 }
 
-.editor-content ol ol ol ol ol {
+.xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list {
   list-style-type: lower-alpha;
 }
 
-.editor-content ol ol ol ol ol ol{
+.xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list .xm-ordered-list{
   list-style-type: lower-roman;
 }
 /* 任务列表 */
@@ -155,20 +149,20 @@ ul[data-type="taskList"] {
   padding-left: 0;
 }
 
-ul[data-type="taskList"] li {
+ul[data-type="taskList"] .xm-task-item {
   display: flex;
   align-items: flex-start;
   margin: 4px 0;
 }
 
-ul[data-type="taskList"] li>label {
+ul[data-type="taskList"] .xm-task-item>label {
   flex: 0 0 auto;
   margin-right: 8px;
   user-select: none;
   margin-top: 7px;
 }
 
-ul[data-type="taskList"] li>div {
+ul[data-type="taskList"] .xm-task-item>div {
   flex: 1 1 auto;
 }
 
@@ -196,13 +190,13 @@ ul[data-type="taskList"] input[type="checkbox"]:hover {
 }
 
 /* Checked state: Blue background */
-ul[data-type="taskList"] li[data-checked="true"] input[type="checkbox"] {
+ul[data-type="taskList"] .xm-task-item[data-checked="true"] input[type="checkbox"] {
   background-color: #2383e2;
   border-color: #2383e2;
 }
 
 /* Checkmark */
-ul[data-type="taskList"] li[data-checked="true"] input[type="checkbox"]::before {
+ul[data-type="taskList"] .xm-task-item[data-checked="true"] input[type="checkbox"]::before {
   content: "";
   width: 10px;
   height: 10px;
@@ -212,7 +206,7 @@ ul[data-type="taskList"] li[data-checked="true"] input[type="checkbox"]::before 
 }
 
 /* Checked text style */
-ul[data-type="taskList"] li[data-checked="true"]>div {
+ul[data-type="taskList"] .xm-task-item[data-checked="true"]>div {
   text-decoration: line-through;
   color: #9b9a97;
   /* Notion gray text */
@@ -220,7 +214,7 @@ ul[data-type="taskList"] li[data-checked="true"]>div {
 }
 
 /* 引用块样式 */
-.editor-content blockquote {
+.xm-blockquote {
   border-left: 3px solid var(--notion-black);
   padding: 0 16px;
   margin: 5px 0;
@@ -230,12 +224,12 @@ ul[data-type="taskList"] li[data-checked="true"]>div {
   word-break: break-word;
 }
 
-.editor-content blockquote p {
+.xm-blockquote .xm-paragraph {
   margin: 0;
 }
 
 /* 代码块 */
-.editor-content .code-block {
+.xm-code-block {
   background-color: #f9f8f7;
   padding: 36px 22px 22px 22px;
   /* Adjusted padding: top is for header */
@@ -251,24 +245,24 @@ ul[data-type="taskList"] li[data-checked="true"]>div {
   box-sizing: border-box;
 }
 
-.editor-content .code-block-content {
+.code-block-content {
   overflow-x: auto;
 }
 
-.editor-content .code-block code {
+.xm-code-block code {
   padding: 0;
   margin: 0;
   background-color: #f9f8f7;
   font-size: inherit;
 }
 
-.editor-content .hljs {
+.hljs {
   display: block;
   min-height: 1.5em;
 }
 
 /* 行内代码 */
-.editor-content code {
+.xm-code {
   font-family:
     SFMono-Regular, Menlo, Consolas, "PT Mono", "Liberation Mono", Courier,
     monospace;
@@ -279,7 +273,7 @@ ul[data-type="taskList"] li[data-checked="true"]>div {
   font-size: 85%;
 }
 
-.editor-content pre code {
+pre code {
   background: none;
   color: inherit;
   padding: 0;
@@ -287,7 +281,7 @@ ul[data-type="taskList"] li[data-checked="true"]>div {
 }
 
 /* 表格样式 */
-.editor-content table {
+.xm-table {
   border-collapse: collapse;
   width: 100%;
   margin: 8px 0;
@@ -295,8 +289,8 @@ ul[data-type="taskList"] li[data-checked="true"]>div {
   /* Notion tables are often fixed layout */
 }
 
-.editor-content th,
-.editor-content td {
+.xm-table th,
+.xm-table td {
   border: 1px solid var(--notion-border);
   padding: 7px 9px;
   vertical-align: top;
@@ -304,19 +298,55 @@ ul[data-type="taskList"] li[data-checked="true"]>div {
   /* Extracted from th style */
 }
 
-.editor-content th {
+.xm-table th {
   background-color: var(--notion-bg-header);
   font-weight: 500;
   /* Extracted from th style */
   text-align: start;
 }
 
-.editor-content td {
+.xm-table td {
   background-color: #fff;
 }
 
+/* 表格按钮基础样式 */
+.table-plus-btn {
+  width: 24px;
+  height: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s;
+}
+
+.table-plus-btn:hover {
+  background: #f1f5f9;
+  color: #2563eb;
+  transform: scale(1.1);
+}
+
+/* 针对行按钮和列按钮的微调 */
+.row-btn::before {
+  content: "";
+  position: absolute;
+  top: -10px; left: 0; right: 0; bottom: 0; /* 扩大热区 */
+}
+
+.col-btn::before {
+  content: "";
+  position: absolute;
+  left: -10px; top: 0; right: 0; bottom: 0; /* 扩大热区 */
+}
+
 /* Placeholder 样式 */
-.editor-content p.is-empty:first-child::before {
+.xm-paragraph.xm-placeholder:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);
   float: left;

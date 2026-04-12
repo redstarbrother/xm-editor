@@ -6,6 +6,9 @@ const EmojiExtension = TtEmoji.extend({
       ...this.parent?.(),
       emojis: gitHubEmojis,
       enableEmoticons: true,
+      HTMLAttributes: {
+        class: 'xm-emoji',
+      },
     };
   },
 });

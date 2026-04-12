@@ -10,7 +10,16 @@ const BaseExtension = Extension.create({
   addExtensions() {
     return [
       Document,
-      Paragraph,
+      Paragraph.extend({
+        addOptions() {
+          return {
+            ...this.parent?.(),
+            HTMLAttributes: {
+              class: 'xm-paragraph',
+            },
+          }
+        },
+      }),
       Text,
       HardBreak,
       Dropcursor,
