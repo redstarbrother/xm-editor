@@ -1,6 +1,7 @@
 <div align="center">
 
 <img src="./public/logo.png" alt="XmEditor Logo" width="120" />
+
 # XmEditor
 
 **一个插件化、可组装的现代富文本编辑器**

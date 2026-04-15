@@ -1,6 +1,7 @@
 <div align="center">
 
 <img src="./public/logo.png" alt="XmEditor Logo" width="120" />
+
 # XmEditor
 
 **A pluggable, composable modern rich text editor**
