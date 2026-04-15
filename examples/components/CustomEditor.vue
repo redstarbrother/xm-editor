@@ -289,108 +289,156 @@ onBeforeUnmount(() => {
   position: relative;
 }
 
-/* Sidebar Styling */
+/* =============================
+   Sidebar — Light Theme
+   ============================= */
 .config-sidebar {
   position: fixed;
   left: 0;
-  top: 15vh;
-  height: 70vh;
-  width: 340px; /* Slightly wider for extensions grid */
-  background: white;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  top: 12vh;
+  height: 76vh;
+  width: 300px;
+  background: #ffffff;
+  box-shadow:
+    4px 0 24px rgba(0, 0, 0, 0.07),
+    inset -1px 0 0 #f1f5f9;
   z-index: 100;
-  transform: translateX(-340px);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-300px);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 16px 16px 0;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
 
 .config-sidebar.is-expanded {
   transform: translateX(0);
 }
 
-/* Toggle Button */
+/* =============================
+   Toggle Button
+   ============================= */
 .sidebar-toggle {
   position: absolute;
-  right: -48px;
-  top: 10px;
-  width: 48px;
-  height: 48px;
-  background: white;
-  /* border: 1px solid #e5e7eb; */
-  border-left: 0;
-  border-radius: 0 8px 8px 0;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  right: -44px;
+  top: 12px;
+  width: 44px;
+  height: 44px;
+  background: #ffffff;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 4px 2px 12px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #4b5563;
-  transition: color 0.2s;
+  color: #94a3b8;
+  transition: color 0.2s, background 0.2s, transform 0.15s;
 }
 
 .sidebar-toggle:hover {
-  color: #2563eb;
+  color: #3b82f6;
+  background: #f8faff;
+  transform: scale(1.06);
 }
 
-/* Panel Content */
 .config-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 0;
   overflow: hidden;
 }
 
+/* Header */
 .panel-header {
-  padding: 20px;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  background: #fafbfc;
 }
 
 .panel-header h3 {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
+.panel-header h3::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  background: linear-gradient(180deg, #3b82f6, #6366f1);
+  border-radius: 2px;
+}
+
+/* Scroll Area */
 .scroll-area {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: 16px 16px 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #e2e8f0 transparent;
 }
 
+.scroll-area::-webkit-scrollbar {
+  width: 4px;
+}
+.scroll-area::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+
+/* Section Title */
 .section-title {
-  font-size: 12px;
+  font-size: 10px;
   text-transform: uppercase;
-  color: #9ca3af;
-  font-weight: 600;
-  margin: 20px 0 10px;
-  letter-spacing: 0.05em;
+  color: #94a3b8;
+  font-weight: 700;
+  margin: 20px 0 8px;
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #f1f5f9;
 }
 
 .section-title:first-child {
   margin-top: 0;
 }
 
+/* Footer */
 .panel-footer {
-  padding: 16px 20px;
-  border-top: 1px solid #e5e7eb;
-  /* background: #f9fafb; */
+  padding: 14px 16px;
+  border-top: 1px solid #f1f5f9;
+  background: #fafbfc;
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
-/* Form Elements */
+/* =============================
+   Form Elements
+   ============================= */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
+  margin-bottom: 5px;
+  font-size: 12px;
   font-weight: 500;
-  color: #374151;
+  color: #64748b;
+  letter-spacing: 0.01em;
 }
 
 .form-group label.checkbox-label {
@@ -398,86 +446,146 @@ onBeforeUnmount(() => {
   align-items: center;
   cursor: pointer;
   margin-bottom: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 13px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.form-group label.checkbox-label:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
 }
 
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group select {
   width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: border-color 0.2s;
+  padding: 8px 11px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #1e293b;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
   box-sizing: border-box;
+  font-family: inherit;
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group input[type="number"]::placeholder {
+  color: #cbd5e1;
 }
 
 .form-group input[type="text"]:focus,
 .form-group input[type="number"]:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+  border-color: #93c5fd;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.form-group input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
-  border-radius: 4px;
-  border: 1px solid #d1d5db;
+.form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 30px;
   cursor: pointer;
 }
 
-/* Extensions Grid */
+/* Custom Checkbox */
+.form-group input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  margin-right: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  accent-color: #3b82f6;
+  flex-shrink: 0;
+}
+
+/* =============================
+   Extensions Grid
+   ============================= */
 .extensions-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 6px;
 }
 
 .extension-item label {
-  font-size: 13px;
-  color: #4b5563;
+  font-size: 12px;
+  color: #64748b;
 }
 
-/* Buttons */
+/* Override checkbox-label for extensions */
+.extension-item label.checkbox-label {
+  font-size: 12px;
+  padding: 6px 8px;
+}
+
+/* =============================
+   Buttons
+   ============================= */
 .btn {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 500;
+  gap: 6px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
   border: none;
+  font-family: inherit;
+  letter-spacing: 0.01em;
 }
 
 .btn-primary {
-  background-color: #2563eb;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
   color: white;
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.25);
 }
 
 .btn-primary:hover {
-  background-color: #1d4ed8;
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .btn-secondary {
-  background-color: white;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
 }
 
 .btn-secondary:hover {
-  background-color: #f3f4f6;
-  border-color: #9ca3af;
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #334155;
+  transform: translateY(-1px);
 }
 
-/* Editor Wrapper */
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* =============================
+   Editor Wrapper
+   ============================= */
 .editor-wrapper {
   flex: 1;
   padding: 40px;
@@ -489,3 +597,4 @@ onBeforeUnmount(() => {
   overflow-y: auto;
 }
 </style>
+

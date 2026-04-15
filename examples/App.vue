@@ -3,10 +3,7 @@
     <header class="app-header">
       <div class="logo-container">
         <div class="logo-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
-          </svg>
+          <img src="/logo.png" alt="西木编辑器 Logo" />
         </div>
         
         <h1 class="app-title">西木编辑器</h1>
@@ -93,22 +90,14 @@ const switchTab = (id) => {
 }
 
 .logo-icon {
-  width: 56px;
-  height: 56px;
-  background: #f43f5e;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 20px rgba(244, 63, 94, 0.3);
+  width: 60px;
+  height: 60px;
 }
 
-.logo-icon svg {
-  width: 28px;
-  height: 28px;
-  stroke-width: 2.5;
+.logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .app-title {
