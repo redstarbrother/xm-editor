@@ -45,6 +45,8 @@ const Basic = {
       Extensions.TextAlign,
       Extensions.ShortcutKey,
       Extensions.Placeholder,
+      Extensions.SubScript,
+      Extensions.SuperScript,
       Extensions.FixedMenu,
       Extensions.BubbleMenu,
       Extensions.SlashMenu,

@@ -34,6 +34,8 @@ const Comment = {
       Extensions.Image,
       Extensions.Emoji,
       Extensions.Placeholder,
+      Extensions.SubScript,
+      Extensions.SuperScript,
       Extensions.ShortcutKey,
       Extensions.FixedMenu,
     ],

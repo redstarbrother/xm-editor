@@ -41,6 +41,8 @@ const NotionLike = {
       Extensions.TextAlign,
       Extensions.ShortcutKey,
       Extensions.Placeholder,
+      Extensions.SubScript,
+      Extensions.SuperScript,
       Extensions.BubbleMenu,
       Extensions.SlashMenu,
     ],

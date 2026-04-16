@@ -22,6 +22,8 @@ import Placeholder from './Placeholder'
 import FixedMenu from './FixedMenu'
 import BubbleMenu from './BubbleMenu'
 import SlashMenu from './SlashMenu'
+import SubScript from './SubScript'
+import SuperScript from './SuperScript'
 
 export default {
   Base,
@@ -48,4 +50,6 @@ export default {
   FixedMenu,
   BubbleMenu,
   SlashMenu,
+  SubScript,
+  SuperScript,
 }

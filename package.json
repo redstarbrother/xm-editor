@@ -43,6 +43,8 @@
     "@tiptap/extension-list": "^3.3.1",
     "@tiptap/extension-paragraph": "^3.3.1",
     "@tiptap/extension-strike": "^3.3.1",
+    "@tiptap/extension-subscript": "^3.22.3",
+    "@tiptap/extension-superscript": "^3.22.3",
     "@tiptap/extension-table": "^3.3.1",
     "@tiptap/extension-table-cell": "^3.3.1",
     "@tiptap/extension-table-header": "^3.3.1",
