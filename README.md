@@ -4,76 +4,76 @@
 
 # XmEditor
 
-**A pluggable, composable modern rich text editor**
+**一个插件化、可组装的现代富文本编辑器**
 
-Built on [Vue 3](https://vuejs.org/) + [Tiptap](https://tiptap.dev/), providing developers with a block-level editing experience similar to Notion / Feishu (Lark).
+基于 [Vue 3](https://vuejs.org/) + [Tiptap](https://tiptap.dev/) 构建，为开发者提供类 Notion / 飞书的块级编辑体验。
 
 [![npm version](https://img.shields.io/npm/v/@putanut/xm-editor?color=f43f5e&label=version)](https://www.npmjs.com/package/@putanut/xm-editor)
 [![npm downloads](https://img.shields.io/npm/dm/@putanut/xm-editor?color=f97316)](https://www.npmjs.com/package/@putanut/xm-editor)
 [![license](https://img.shields.io/github/license/redstarbrother/xm-editor?color=3b82f6)](./LICENSE)
 [![vue](https://img.shields.io/badge/vue-3.x-4FC08D?logo=vue.js)](https://vuejs.org/)
 
-**English** · [简体中文](./README_zh.md)
+[English](./README.md) · **简体中文**
 
 </div>
 
 ---
 
-## ✨ Why XmEditor?
+## ✨ 为什么选择 XmEditor？
 
-Tiptap provides powerful atomic capabilities, but building a fully functional editor from scratch still requires a lot of work—menu systems, shortcut bindings, interaction logic, style adaptation...
+Tiptap 提供了强大的原子能力，但从零构建一个功能完备的编辑器仍然需要大量工作——菜单系统、快捷键绑定、交互逻辑、样式适配……
 
-**XmEditor solves this problem.** It is not just a simple Tiptap wrapper, but a complete **editor building suite**:
+**XmEditor 解决了这个问题。** 它不是简单的 Tiptap 封装，而是一套完整的 **编辑器构建套件**：
 
-| Pain Points | XmEditor's Solution |
-| --- | --- |
-| High workload to build from scratch | Provides 3 out-of-the-box **Presets** |
-| Cumbersome menu/toolbar development | Built-in Slash menu, Bubble menu, and Fixed toolbar |
-| High coupling between extensions | **Extension-First** architecture, assemble features on demand |
-| Hard to adapt to different scenarios | From notes to comment boxes, one set of APIs meets multiple forms |
-| Difficult style customization | Logic and UI completely decoupled, CSS variables + class name injection |
+| 痛点                | XmEditor 的方案                         |
+| ------------------- | --------------------------------------- |
+| 从零搭建工作量大    | 提供 3 套开箱即用的 **Preset 预设**     |
+| 菜单/工具栏开发繁琐 | 内置 Slash 菜单、气泡菜单、固定工具栏   |
+| 扩展之间耦合严重    | **Extension-First** 架构，功能按需组装  |
+| 难以适配不同场景    | 从笔记到评论框，一套 API 满足多种形态   |
+| 样式定制困难        | 逻辑与 UI 完全解耦，CSS 变量 + 类名注入 |
 
-## 🧩 Core Features
+## 🧩 核心特性
 
-- 🏗️ **Block-level Editing** — Notion-like block-level content management and structured document operations
-- ⚡ **Slash Commands** — Type `/` to bring up the command menu to quickly insert headings, lists, code blocks, etc.
-- 🎈 **Smart Bubble Menu** — Formatting toolbar automatically pops up when text is selected
-- 📦 **Multi-scenario Presets** — `NotionLike` · `Basic` · `Comment`, out-of-the-box
-- 🧱 **20+ Built-in Extensions** — Bold, italic, links, tables, code blocks, images, emojis, etc.
-- 🎨 **Theme System** — 3 editor themes + 19 code highlight color schemes
-- ⌨️ **Markdown Shortcuts** — Supports Markdown syntax shortcuts like `# `, `> `, `- `
-- 🖼️ **Image Upload Hooks** — Custom image upload logic to connect with any storage service
-- 🔌 **Fully Extensible** — Retains full control over underlying Tiptap extensions
+- 🏗️ **块级编辑** — 类似 Notion 的块级内容管理，结构化文档操作
+- ⚡ **Slash 命令** — 输入 `/` 唤起命令菜单，快速插入标题、列表、代码块等
+- 🎈 **智能气泡菜单** — 选中文字自动浮现格式化工具栏
+- 📦 **多场景预设** — `NotionLike` · `Basic` · `Comment`，开箱即用
+- 🧱 **20+ 内置扩展** — 加粗、斜体、链接、表格、代码块、图片、表情等
+- 🎨 **主题系统** — 3 套编辑器主题 + 19 种代码高亮配色
+- ⌨️ **Markdown 快捷键** — 支持 `# ` `> ` `- ` 等 Markdown 语法快捷输入
+- 🖼️ **图片上传钩子** — 自定义图片上传逻辑，对接任意存储服务
+- 🔌 **完全可扩展** — 保留对底层 Tiptap 扩展的完全控制能力
 
-## 📦 Installation
+## 📦 安装
 
 ```bash
 # npm
 npm install @putanut/xm-editor
 
-# pnpm (Recommended)
+# pnpm (推荐)
 pnpm add @putanut/xm-editor
 
 # yarn
 yarn add @putanut/xm-editor
 ```
 
-### Prerequisites
+### 前置依赖
 
-XmEditor requires Vue 3 as the host framework:
+XmEditor 需要 Vue 3 作为宿主框架：
 
 ```bash
-# If Vue 3 is not yet installed in your project
+# 如果项目中尚未安装 Vue 3
 pnpm add vue
 ```
 
-## 🚀 Quick Start
+## 🚀 快速开始
 
-### Minimal Example
+### 最小示例
 
-Create a Notion-style editor in three steps:
+三步创建一个类 Notion 风格的编辑器：
 
-```jsx
+```javascript
 <template>
   <div class="editor-container"></div>
 </template>
@@ -82,18 +82,18 @@ Create a Notion-style editor in three steps:
 import { onMounted, onBeforeUnmount } from 'vue'
 import { XmEditor, Presets } from '@putanut/xm-editor'
 
-// 1. Import styles
+// 1. 引入样式
 import '@putanut/xm-editor/xm-editor.css'
 
 let editor = null
 
 onMounted(() => {
-  // 2. Create editor
+  // 2. 创建编辑器
   editor = new XmEditor({
     el: document.querySelector('.editor-container'),
     config: Presets.NotionLike.configure({
       editorOption: {
-        placeholder: "Type '/' for commands...",
+        placeholder: "输入 '/' 唤起命令菜单...",
         autofocus: true,
       },
     }),
@@ -101,35 +101,35 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  // 3. Destroy editor
+  // 3. 销毁编辑器
   editor?.destroy()
 })
 </script>
 ```
 
-### Get / Set Content
+### 获取 / 设置内容
 
 ```js
-// Get content
+// 获取内容
 const html = editor.getHTML()
 const json = editor.getJSON()
 const text = editor.getText()
 
-// Set content
+// 设置内容
 editor.setContent('<p>Hello World</p>')
 editor.setContent({ type: 'doc', content: [...] })
 
-// Clear
+// 清空
 editor.clear()
 ```
 
-## 🎛️ Presets
+## 🎛️ 预设方案
 
-XmEditor comes with 3 built-in presets covering different usage scenarios:
+XmEditor 内置 3 种预设，覆盖不同使用场景：
 
-### NotionLike — Full-featured Document Editing
+### NotionLike — 全功能文档编辑
 
-Suitable for notes, knowledge bases, and document management systems. Includes all extensions + Bubble Menu + Slash Commands.
+适用于笔记、知识库、文档管理系统。包含所有扩展 + 气泡菜单 + Slash 命令。
 
 ```js
 import { Presets } from "@putanut/xm-editor";
@@ -140,9 +140,9 @@ Presets.NotionLike.configure({
 });
 ```
 
-### Basic — Universal Rich Text Editing
+### Basic — 通用富文本编辑
 
-Suitable for blog editors and CMS backends that require a fixed toolbar. Adds a fixed toolbar on top of NotionLike.
+适用于需要固定工具栏的博客编辑器、CMS 后台。在 NotionLike 基础上增加固定工具栏。
 
 ```js
 Presets.Basic.configure({
@@ -150,39 +150,39 @@ Presets.Basic.configure({
 });
 ```
 
-### Comment — Lightweight Comment Box
+### Comment — 轻量评论框
 
-Suitable for comment systems and chat input boxes. Retains only basic formatting + emojis + images.
+适用于评论系统、聊天输入框。仅保留基础格式 + 表情 + 图片。
 
 ```js
 Presets.Comment.configure({
   editorOption: {
-    placeholder: "Say something...",
+    placeholder: "说点什么...",
   },
 });
 ```
 
 ---
 
-## 🧱 Extension System
+## 🧱 扩展系统
 
-XmEditor adopts an **Extension-First** architecture—all features are independent extensions that can be freely combined.
+XmEditor 采用 **Extension-First** 架构——所有功能都是独立扩展，可以自由组合。
 
-### Built-in Extensions Overview
+### 内置扩展一览
 
-| Category | Extensions | Description |
-| --- | --- | --- |
-| **Basic** | `Base` | Document skeleton (Doc, Paragraph, Text, History...) |
-| **Inline Formatting** | `Bold` `Italic` `Strike` `Underline` `Code` `Highlight` `Link` | Text styles |
-| **Block Nodes** | `Heading` `Blockquote` `HorizontalRule` `CodeBlock` `Image` `Table` `List` | Content blocks |
-| **Interaction Enhancement**| `Emoji` `TextAlign` `ShortcutKeys` `Placeholder` | Editing experience |
-| **Menu System** | `SlashMenu` `BubbleMenu` `FixedMenu` | UI Menus |
+| 分类         | 扩展                                                                       | 说明                                         |
+| ------------ | -------------------------------------------------------------------------- | -------------------------------------------- |
+| **基础**     | `Base`                                                                     | 文档骨架（Doc, Paragraph, Text, History...） |
+| **行内格式** | `Bold` `Italic` `Strike` `Underline` `Code` `Highlight` `Link`             | 文字样式                                     |
+| **块级节点** | `Heading` `Blockquote` `HorizontalRule` `CodeBlock` `Image` `Table` `List` | 内容块                                       |
+| **交互增强** | `Emoji` `TextAlign` `ShortcutKeys` `Placeholder`                           | 编辑体验                                     |
+| **菜单系统** | `SlashMenu` `BubbleMenu` `FixedMenu`                                       | UI 菜单                                      |
 
-### Custom Extension Combinations
+### 自定义扩展组合
 
-Assemble extensions manually without using presets:
+不使用预设，手动组合扩展：
 
-```js
+```javascript
 import { XmEditor, Extensions } from "@putanut/xm-editor";
 
 new XmEditor({
@@ -200,21 +200,21 @@ new XmEditor({
       Extensions.SlashMenu,
     ],
     editorOption: {
-      placeholder: "Start writing...",
+      placeholder: "开始写作...",
     },
   },
 });
 ```
 
-### Configure Individual Extensions
+### 配置单个扩展
 
-Each extension can be customized via `.configure()`:
+每个扩展都支持通过 `.configure()` 进行定制：
 
-```js
+```javascript
 import { Extensions } from "@putanut/xm-editor";
 
 const customExtensions = [
-  // Custom image upload
+  // 自定义图片上传
   Extensions.Image.configure({
     uploadHandler: async (file) => {
       const formData = new FormData();
@@ -228,37 +228,37 @@ const customExtensions = [
     },
   }),
 
-  // Custom code block
+  // 自定义代码块
   Extensions.CodeBlock.configure({
     languageClassPrefix: "language-",
   }),
 ];
 ```
 
-## 🎨 Styles & Themes
+## 🎨 样式与主题
 
-The project adheres to the principle of **"decoupling styles and logic"**.
+项目坚持 **"样式与逻辑解耦"** 的原则。
 
-### Built-in Themes
+### 内置主题
 
-| Theme File | Style |
-| --- | --- |
-| `xm-editor.css` | Basic Default Theme |
-| `xm-editor-notion.css` | Notion Style |
-| `xm-editor-feishu.css` | Feishu (Lark) Style |
+| 主题文件               | 风格         |
+| ---------------------- | ------------ |
+| `xm-editor.css`        | 基础默认主题 |
+| `xm-editor-notion.css` | Notion 风格  |
+| `xm-editor-feishu.css` | 飞书风格     |
 
-```js
-// Import one of them
+```javascript
+// 选择一种导入
 import "@putanut/xm-editor/xm-editor.css";
-// or
+// 或
 import "@putanut/xm-editor/xm-editor-notion.css";
 ```
 
-### Custom Themes
+### 自定义主题
 
-Inject class names via `customClass` to override styles externally:
+通过 `customClass` 注入类名，从外部覆盖样式：
 
-```js
+```javascript
 Presets.NotionLike.configure({
   style: {
     customClass: "my-editor-theme",
@@ -267,7 +267,7 @@ Presets.NotionLike.configure({
 ```
 
 ```css
-/* Your custom styles */
+/* 你的自定义样式 */
 .my-editor-theme .ProseMirror {
   font-family: "Inter", sans-serif;
   max-width: 720px;
@@ -285,126 +285,126 @@ Presets.NotionLike.configure({
 
 ---
 
-### Code Highlight Themes
+### 代码高亮主题
 
-Includes 19 built-in code highlighting color schemes (based on Highlight.js), including:
+内置 19 种代码高亮配色方案（基于 Highlight.js），包括：
 
-`atom-one-dark` · `github` · `github-dark` · `monokai` · `nord` · `night-owl` · `vs` · `xcode`, etc.
+`atom-one-dark` · `github` · `github-dark` · `monokai` · `nord` · `night-owl` · `vs` · `xcode` 等
 
-## ⚙️ Full Configuration Reference
+## ⚙️ 完整配置参考
 
-```js
+```javascript
 new XmEditor({
   el: document.querySelector(".editor"),
   config: Presets.NotionLike.configure({
-    // Editor options
+    // 编辑器选项
     editorOption: {
-      editable: true, // Whether it's editable
-      content: "", // Initial content (HTML string or JSON)
-      contentType: "json", // Content type: 'json' | 'html'
-      placeholder: "Start writing...", // Placeholder text
-      autofocus: true, // Auto focus
-      debounce: 300, // Debounce interval for event triggers
+      editable: true, // 是否可编辑
+      content: "", // 初始内容（HTML 字符串或 JSON）
+      contentType: "json", // 内容类型：'json' | 'html'
+      placeholder: "开始写作...", // 占位文字
+      autofocus: true, // 自动聚焦
+      debounce: 300, // 事件触发防抖间隔
     },
 
-    // Extension overrides
+    // 扩展覆盖
     extensions: [Extensions.Image.configure({ uploadHandler: myUploader })],
 
-    // Style configuration
+    // 样式配置
     style: {
-      customClass: "my-theme", // Inject custom CSS class name
+      customClass: "my-theme", // 注入自定义 CSS 类名
     },
 
-    // Lifecycle events
+    // 生命周期事件
     events: {
-      onInit: ({ editor }) => console.log("Editor is ready"),
-      onUpdate: ({ editor }) => console.log("Content updated", editor.getJSON()),
-      onFocus: ({ editor }) => console.log("Focused"),
-      onBlur: ({ editor }) => console.log("Blurred"),
-      onDestroy: () => console.log("Editor destroyed"),
+      onInit: ({ editor }) => console.log("编辑器就绪"),
+      onUpdate: ({ editor }) => console.log("内容更新", editor.getJSON()),
+      onFocus: ({ editor }) => console.log("获得焦点"),
+      onBlur: ({ editor }) => console.log("失去焦点"),
+      onDestroy: () => console.log("编辑器已销毁"),
     },
   }),
 });
 ```
 
-## 📐 API Reference
+## 📐 API 参考
 
-### XmEditor Instance Methods
+### XmEditor 实例方法
 
-| Method | Return Value | Description |
-| --- | --- | --- |
-| `getHTML()` | `string` | Get HTML formatted content |
-| `getJSON()` | `object` | Get JSON formatted content |
-| `getText()` | `string` | Get plain text content |
-| `setContent(content)` | — | Set editor content |
-| `clear()` | — | Clear editor |
-| `focus()` | — | Focus editor |
-| `blur()` | — | Blur editor |
-| `destroy()` | — | Destroy editor instance |
-| `getCursor()` | `Selection` | Get current cursor position |
-| `instance` | `TiptapEditor` | Get underlying Tiptap editor instance |
+| 方法                  | 返回值         | 说明                       |
+| --------------------- | -------------- | -------------------------- |
+| `getHTML()`           | `string`       | 获取 HTML 格式内容         |
+| `getJSON()`           | `object`       | 获取 JSON 格式内容         |
+| `getText()`           | `string`       | 获取纯文本内容             |
+| `setContent(content)` | —              | 设置编辑器内容             |
+| `clear()`             | —              | 清空编辑器                 |
+| `focus()`             | —              | 聚焦编辑器                 |
+| `blur()`              | —              | 取消聚焦                   |
+| `destroy()`           | —              | 销毁编辑器实例             |
+| `getCursor()`         | `Selection`    | 获取当前光标位置           |
+| `instance`            | `TiptapEditor` | 获取底层 Tiptap 编辑器实例 |
 
-## 🛠️ Local Development
+## 🛠️ 本地开发
 
 ```bash
-# Clone the project
+# 克隆项目
 git clone https://github.com/redstarbrother/xm-editor.git
 cd xm-editor
 
-# Install dependencies
+# 安装依赖
 pnpm install
 
-# Start development server
+# 启动开发服务器
 pnpm dev
 
-# Build library
+# 构建库
 pnpm build
 ```
 
-After the development server starts, you can preview 4 editor forms through the built-in Demo page:
+开发服务器启动后，可以通过内置 Demo 页面预览 4 种编辑器形态：
 
-- **Regular Editor** — Basic Preset + Fixed Toolbar
-- **Notion-like Style** — NotionLike Preset + Slash Commands
-- **Comment Box Mode** — Streamlined Comment Preset
-- **Custom Configuration** — Modify config in real-time, assemble extensions on demand
+- **常规编辑器** — Basic 预设 + 固定工具栏
+- **类 Notion 风格** — NotionLike 预设 + Slash 命令
+- **评论框模式** — Comment 预设精简版
+- **自定义配置** — 实时修改配置、按需组合扩展
 
-## 📁 Project Structure
+## 📁 项目结构
 
 ```
 xm-editor/
 ├── src/
-│   ├── index.js              # Library entry
-│   ├── core/                 # Editor core (XmEditor, ExtensionManager)
-│   ├── extensions/           # 20+ built-in extensions
-│   ├── presets/              # Presets (NotionLike, Basic, Comment)
+│   ├── index.js              # 库入口
+│   ├── core/                 # 编辑器核心（XmEditor, ExtensionManager）
+│   ├── extensions/           # 20+ 内置扩展
+│   ├── presets/              # 预设方案（NotionLike, Basic, Comment）
 │   ├── hooks/                # Vue Composition Hooks
-│   ├── ui/                   # UI components
-│   ├── utils/                # Utility functions
-│   └── styles/               # Theme styles
-├── examples/                 # Development Demo
-├── dist/                     # Build output
-└── public/                   # Static resources (Code highlight themes)
+│   ├── ui/                   # UI 组件
+│   ├── utils/                # 工具函数
+│   └── styles/               # 主题样式
+├── examples/                 # 开发 Demo
+├── dist/                     # 构建产物
+└── public/                   # 静态资源（代码高亮主题）
 ```
 
-## 🗺️ Roadmap
+## 🗺️ 路线图
 
-- [ ] 📝 Collaborative editing support (based on Yjs)
-- [ ] 🖱️ Drag and drop sorting optimization
-- [ ] 🌐 Internationalization support (i18n)
-- [ ] 📋 More content block types (Embeds, Database views, etc.)
-- [ ] 🧪 Unit testing & E2E testing
-- [ ] 📚 Improve documentation site
-- [ ] 🎨 More themes
+- [ ] 📝 协同编辑支持（基于 Yjs）
+- [ ] 🖱️ 拖拽排序优化
+- [ ] 🌐 国际化支持（i18n）
+- [ ] 📋 更多内容块类型（嵌入、数据库视图等）
+- [ ] 🧪 单元测试 & E2E 测试
+- [ ] 📚 完善文档站点
+- [ ] 🎨 更多主题
 
-## 🤝 Contributing
+## 🤝 参与贡献
 
-Issues and Pull Requests are welcome!
+欢迎提交 Issue 和 Pull Request！
 
-1. Fork the project
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'feat: add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Fork 项目
+2. 创建特性分支 (`git checkout -b feature/amazing-feature`)
+3. 提交更改 (`git commit -m 'feat: add amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 发起 Pull Request
 
 ## 📄 License
 
@@ -414,7 +414,7 @@ Issues and Pull Requests are welcome!
 
 <div align="center">
 
-**If this project helps you, please give it a ⭐ Star to support!**
+**如果这个项目对你有帮助，请给一个 ⭐ Star 支持！**
 
 [GitHub](https://github.com/redstarbrother/xm-editor) · [Gitee](https://gitee.com/jia_hongxing/xm-editor) · [NPM](https://www.npmjs.com/package/@putanut/xm-editor)
 
