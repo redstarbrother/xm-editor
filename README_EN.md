@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./public/logo.png" alt="XmEditor Logo" width="120" />
+<img src="https://github.com/redstarbrother/xm-editor/blob/develop/public/logo.png?raw=true" alt="XmEditor Logo" width="120" />
 
 # XmEditor
 
@@ -25,13 +25,13 @@ Tiptap provides powerful atomic capabilities, but building a fully functional ed
 
 **XmEditor solves this problem.** It is not just a simple Tiptap wrapper, but a complete **editor building suite**:
 
-| Pain Points | XmEditor's Solution |
-| --- | --- |
-| High workload to build from scratch | Provides 3 out-of-the-box **Presets** |
-| Cumbersome menu/toolbar development | Built-in Slash menu, Bubble menu, and Fixed toolbar |
-| High coupling between extensions | **Extension-First** architecture, assemble features on demand |
-| Hard to adapt to different scenarios | From notes to comment boxes, one set of APIs meets multiple forms |
-| Difficult style customization | Logic and UI completely decoupled, CSS variables + class name injection |
+| Pain Points                          | XmEditor's Solution                                                     |
+| ------------------------------------ | ----------------------------------------------------------------------- |
+| High workload to build from scratch  | Provides 3 out-of-the-box **Presets**                                   |
+| Cumbersome menu/toolbar development  | Built-in Slash menu, Bubble menu, and Fixed toolbar                     |
+| High coupling between extensions     | **Extension-First** architecture, assemble features on demand           |
+| Hard to adapt to different scenarios | From notes to comment boxes, one set of APIs meets multiple forms       |
+| Difficult style customization        | Logic and UI completely decoupled, CSS variables + class name injection |
 
 ## 🧩 Core Features
 
@@ -73,7 +73,7 @@ pnpm add vue
 
 Create a Notion-style editor in three steps:
 
-```jsx
+```javascript
 <template>
   <div class="editor-container"></div>
 </template>
@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
 
 ### Get / Set Content
 
-```js
+```javascript
 // Get content
 const html = editor.getHTML()
 const json = editor.getJSON()
@@ -131,7 +131,7 @@ XmEditor comes with 3 built-in presets covering different usage scenarios:
 
 Suitable for notes, knowledge bases, and document management systems. Includes all extensions + Bubble Menu + Slash Commands.
 
-```js
+```javascript
 import { Presets } from "@putanut/xm-editor";
 import "@putanut/xm-editor/xm-editor-notion.css";
 
@@ -144,7 +144,7 @@ Presets.NotionLike.configure({
 
 Suitable for blog editors and CMS backends that require a fixed toolbar. Adds a fixed toolbar on top of NotionLike.
 
-```js
+```javascript
 Presets.Basic.configure({
   /* ... */
 });
@@ -154,7 +154,7 @@ Presets.Basic.configure({
 
 Suitable for comment systems and chat input boxes. Retains only basic formatting + emojis + images.
 
-```js
+```javascript
 Presets.Comment.configure({
   editorOption: {
     placeholder: "Say something...",
@@ -170,19 +170,19 @@ XmEditor adopts an **Extension-First** architecture—all features are independe
 
 ### Built-in Extensions Overview
 
-| Category | Extensions | Description |
-| --- | --- | --- |
-| **Basic** | `Base` | Document skeleton (Doc, Paragraph, Text, History...) |
-| **Inline Formatting** | `Bold` `Italic` `Strike` `Underline` `Code` `Highlight` `Link` | Text styles |
-| **Block Nodes** | `Heading` `Blockquote` `HorizontalRule` `CodeBlock` `Image` `Table` `List` | Content blocks |
-| **Interaction Enhancement**| `Emoji` `TextAlign` `ShortcutKeys` `Placeholder` | Editing experience |
-| **Menu System** | `SlashMenu` `BubbleMenu` `FixedMenu` | UI Menus |
+| Category                    | Extensions                                                                 | Description                                          |
+| --------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------- |
+| **Basic**                   | `Base`                                                                     | Document skeleton (Doc, Paragraph, Text, History...) |
+| **Inline Formatting**       | `Bold` `Italic` `Strike` `Underline` `Code` `Highlight` `Link`             | Text styles                                          |
+| **Block Nodes**             | `Heading` `Blockquote` `HorizontalRule` `CodeBlock` `Image` `Table` `List` | Content blocks                                       |
+| **Interaction Enhancement** | `Emoji` `TextAlign` `ShortcutKeys` `Placeholder`                           | Editing experience                                   |
+| **Menu System**             | `SlashMenu` `BubbleMenu` `FixedMenu`                                       | UI Menus                                             |
 
 ### Custom Extension Combinations
 
 Assemble extensions manually without using presets:
 
-```js
+```javascript
 import { XmEditor, Extensions } from "@putanut/xm-editor";
 
 new XmEditor({
@@ -210,7 +210,7 @@ new XmEditor({
 
 Each extension can be customized via `.configure()`:
 
-```js
+```javascript
 import { Extensions } from "@putanut/xm-editor";
 
 const customExtensions = [
@@ -241,13 +241,13 @@ The project adheres to the principle of **"decoupling styles and logic"**.
 
 ### Built-in Themes
 
-| Theme File | Style |
-| --- | --- |
-| `xm-editor.css` | Basic Default Theme |
-| `xm-editor-notion.css` | Notion Style |
+| Theme File             | Style               |
+| ---------------------- | ------------------- |
+| `xm-editor.css`        | Basic Default Theme |
+| `xm-editor-notion.css` | Notion Style        |
 | `xm-editor-feishu.css` | Feishu (Lark) Style |
 
-```js
+```javascript
 // Import one of them
 import "@putanut/xm-editor/xm-editor.css";
 // or
@@ -258,7 +258,7 @@ import "@putanut/xm-editor/xm-editor-notion.css";
 
 Inject class names via `customClass` to override styles externally:
 
-```js
+```javascript
 Presets.NotionLike.configure({
   style: {
     customClass: "my-editor-theme",
@@ -293,7 +293,7 @@ Includes 19 built-in code highlighting color schemes (based on Highlight.js), in
 
 ## ⚙️ Full Configuration Reference
 
-```js
+```javascript
 new XmEditor({
   el: document.querySelector(".editor"),
   config: Presets.NotionLike.configure({
@@ -318,7 +318,8 @@ new XmEditor({
     // Lifecycle events
     events: {
       onInit: ({ editor }) => console.log("Editor is ready"),
-      onUpdate: ({ editor }) => console.log("Content updated", editor.getJSON()),
+      onUpdate: ({ editor }) =>
+        console.log("Content updated", editor.getJSON()),
       onFocus: ({ editor }) => console.log("Focused"),
       onBlur: ({ editor }) => console.log("Blurred"),
       onDestroy: () => console.log("Editor destroyed"),
@@ -331,18 +332,18 @@ new XmEditor({
 
 ### XmEditor Instance Methods
 
-| Method | Return Value | Description |
-| --- | --- | --- |
-| `getHTML()` | `string` | Get HTML formatted content |
-| `getJSON()` | `object` | Get JSON formatted content |
-| `getText()` | `string` | Get plain text content |
-| `setContent(content)` | — | Set editor content |
-| `clear()` | — | Clear editor |
-| `focus()` | — | Focus editor |
-| `blur()` | — | Blur editor |
-| `destroy()` | — | Destroy editor instance |
-| `getCursor()` | `Selection` | Get current cursor position |
-| `instance` | `TiptapEditor` | Get underlying Tiptap editor instance |
+| Method                | Return Value   | Description                           |
+| --------------------- | -------------- | ------------------------------------- |
+| `getHTML()`           | `string`       | Get HTML formatted content            |
+| `getJSON()`           | `object`       | Get JSON formatted content            |
+| `getText()`           | `string`       | Get plain text content                |
+| `setContent(content)` | —              | Set editor content                    |
+| `clear()`             | —              | Clear editor                          |
+| `focus()`             | —              | Focus editor                          |
+| `blur()`              | —              | Blur editor                           |
+| `destroy()`           | —              | Destroy editor instance               |
+| `getCursor()`         | `Selection`    | Get current cursor position           |
+| `instance`            | `TiptapEditor` | Get underlying Tiptap editor instance |
 
 ## 🛠️ Local Development
 
@@ -370,7 +371,7 @@ After the development server starts, you can preview 4 editor forms through the 
 
 ## 📁 Project Structure
 
-```
+```t
 xm-editor/
 ├── src/
 │   ├── index.js              # Library entry

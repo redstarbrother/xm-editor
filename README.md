@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./public/logo.png" alt="XmEditor Logo" width="120" />
+<img src="https://github.com/redstarbrother/xm-editor/blob/develop/public/logo.png?raw=true" alt="XmEditor Logo" width="120" />
 
 # XmEditor
 
