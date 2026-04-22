@@ -3,7 +3,7 @@
     <header class="app-header">
       <div class="logo-container">
         <div class="logo-icon">
-          <img src="/logo.png" alt="西木编辑器 Logo" />
+          <img :src="logoUrl" alt="西木编辑器 Logo" />
         </div>
         
         <h1 class="app-title">西木编辑器</h1>
@@ -40,6 +40,8 @@ import NotionEditor from './components/NotionEditor.vue'
 import CommentEditor from './components/CommentEditor.vue'
 import CustomEditor from './components/CustomEditor.vue'
 import '@/styles/xm-editor.css'
+
+const logoUrl = `${import.meta.env.BASE_URL}logo.png`
 
 const tabs = [
   { id: 'basic', label: '常规编辑器' },
