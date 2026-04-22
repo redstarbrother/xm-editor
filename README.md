@@ -13,7 +13,9 @@
 [![license](https://img.shields.io/github/license/redstarbrother/xm-editor?color=3b82f6)](./LICENSE)
 [![vue](https://img.shields.io/badge/vue-3.x-4FC08D?logo=vue.js)](https://vuejs.org/)
 
-[English](./README.md) · **简体中文**
+[📺 在线 Demo](https://redstarbrother.github.io/xm-editor/) 
+
+  [English](./README.md) · **简体中文**
 
 </div>
 
