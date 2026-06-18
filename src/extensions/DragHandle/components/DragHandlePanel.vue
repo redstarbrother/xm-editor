@@ -223,6 +223,7 @@ function handleNodeChange({ node, editor, pos }) {
 
 .xm-drag-handle-wrapper {
   /* floating-ui 自动定位到块左侧 */
+  margin-left: -6px; /* 向左移动手柄组件，可以根据需要微调此数值 */
 }
 
 .xm-drag-handle {
