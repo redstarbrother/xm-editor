@@ -43,6 +43,8 @@ const NotionLike = {
       Extensions.Placeholder,
       Extensions.SubScript,
       Extensions.SuperScript,
+      Extensions.Toc,
+      Extensions.DragHandle,
       Extensions.BubbleMenu,
       Extensions.SlashMenu,
     ],
@@ -58,11 +60,11 @@ const NotionLike = {
       /**
        * 生命周期钩子
        */
-      onInit: () => {},
-      onDestroy: () => {},
-      onFocus: () => {},
-      onBlur: () => {},
-      onUpdate: () => {},
+      onInit: () => { },
+      onDestroy: () => { },
+      onFocus: () => { },
+      onBlur: () => { },
+      onUpdate: () => { },
     },
   },
   configure(userConfig = {}) {

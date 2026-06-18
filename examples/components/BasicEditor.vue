@@ -20,7 +20,6 @@ const commonExtensions = [
       })
     }
   }),
-  Extensions.Toc,
 ]
 
 onMounted(() => {

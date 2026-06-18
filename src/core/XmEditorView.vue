@@ -5,6 +5,12 @@
       <component :is="MenuBubble" :editor="props.editor" :extensions="bubbleMenuExtensions" />
     </BubbleMenu>
     <component :is="MenuFixed" v-if="fixedReady" :editor="props.editor" :extensions="fixedMenuExtensions" />
+    <!-- DragHandle 拖拽手柄 -->
+    <component
+      :is="DragHandleComponent"
+      v-if="dragHandleReady"
+      :editor="props.editor"
+    />
     <div v-if="!props.editor">Editor prop is missing!</div>
     <!-- 编辑区 + 目录面板的 flex 容器 -->
     <div class="xm-editor-body" :class="{ 'xm-editor-body-toc-left': tocPosition === 'left' }">
@@ -64,6 +70,9 @@ const TocPanelComponent = shallowRef(null);
 const tocOptions = ref({});
 const tocPosition = ref('right');
 
+// DragHandle 相关
+const DragHandleComponent = shallowRef(null);
+
 const isEditorReady = computed(() => !!props.editor);
 
 // 监听bubble菜单就绪状态
@@ -79,6 +88,11 @@ const fixedReady = computed(() => {
 // 监听toc面板就绪状态
 const tocReady = computed(() => {
   return isEditorReady.value && TocPanelComponent.value;
+})
+
+// 监听dragHandle就绪状态
+const dragHandleReady = computed(() => {
+  return isEditorReady.value && DragHandleComponent.value;
 })
 
 // 初始化菜单extension
@@ -97,6 +111,12 @@ onMounted(() => {
       TocPanelComponent.value = tocConfig.component;
       tocOptions.value = tocConfig.options || {};
       tocPosition.value = tocConfig.options?.position || 'right';
+    }
+
+    // 动态加载 DragHandle 组件
+    const dragHandleConfig = props.extensionManager.getDragHandleConfig();
+    if (dragHandleConfig && dragHandleConfig.component) {
+      DragHandleComponent.value = dragHandleConfig.component;
     }
   }
 })

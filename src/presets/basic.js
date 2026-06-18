@@ -47,6 +47,8 @@ const Basic = {
       Extensions.Placeholder,
       Extensions.SubScript,
       Extensions.SuperScript,
+      Extensions.Toc,
+      Extensions.DragHandle,
       Extensions.FixedMenu,
       Extensions.BubbleMenu,
       Extensions.SlashMenu,

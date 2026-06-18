@@ -10,6 +10,8 @@ export class ExtensionManager {
     this.components = [];
     // TOC 目录配置
     this.tocConfig = null;
+    // DragHandle 拖拽手柄配置
+    this.dragHandleConfig = null;
 
     this.init();
   }
@@ -42,6 +44,13 @@ export class ExtensionManager {
         this.tocConfig = {
           component: item.component,
           options: item.tocOptions,
+        };
+      }
+
+      // 收集 DragHandle 配置
+      if (item.name === 'drag-handle' && item.component) {
+        this.dragHandleConfig = {
+          component: item.component,
         };
       }
     });
@@ -172,5 +181,13 @@ export class ExtensionManager {
    */
   getTocConfig() {
     return this.tocConfig;
+  }
+
+  /**
+   * 获取 DragHandle 拖拽手柄配置
+   * @returns {{ component: Vue Component } | null}
+   */
+  getDragHandleConfig() {
+    return this.dragHandleConfig;
   }
 }

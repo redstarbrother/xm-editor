@@ -1,4 +1,5 @@
 import Base from './Base'
+import DragHandle from './DragHandle'
 import Blockquote from './Blockquote'
 import Bold from './Bold'
 import CodeBlock from './CodeBlock'
@@ -28,6 +29,7 @@ import Toc from './Toc'
 
 export default {
   Base,
+  DragHandle,
   Blockquote,
   Bold,
   CodeBlock,
