@@ -8,6 +8,8 @@ export class ExtensionManager {
     this.manifests = [];
     // 存放组件（比如fixed菜单）
     this.components = [];
+    // TOC 目录配置
+    this.tocConfig = null;
 
     this.init();
   }
@@ -33,6 +35,14 @@ export class ExtensionManager {
           name: item.name,
           component: item.component,
         });
+      }
+
+      // 收集 TOC 配置
+      if (item.name === 'toc' && item.tocOptions) {
+        this.tocConfig = {
+          component: item.component,
+          options: item.tocOptions,
+        };
       }
     });
 
@@ -154,5 +164,13 @@ export class ExtensionManager {
   getComponent(name) {
     const comp = this.components.find((comp) => comp.name === name);
     return comp ? comp.component : null;
+  }
+
+  /**
+   * 获取 TOC 目录配置
+   * @returns {{ component: Vue Component, options: Object } | null}
+   */
+  getTocConfig() {
+    return this.tocConfig;
   }
 }

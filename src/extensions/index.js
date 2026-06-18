@@ -24,6 +24,7 @@ import BubbleMenu from './BubbleMenu'
 import SlashMenu from './SlashMenu'
 import SubScript from './SubScript'
 import SuperScript from './SuperScript'
+import Toc from './Toc'
 
 export default {
   Base,
@@ -52,4 +53,6 @@ export default {
   SlashMenu,
   SubScript,
   SuperScript,
+  Toc,
 }
+

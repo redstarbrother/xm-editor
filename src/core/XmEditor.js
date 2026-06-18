@@ -18,6 +18,9 @@ export default class XmEditor {
     // 获取初始内容
     this.initialContent = editorOption.content || "";
 
+    // 注入 onTocUpdate 事件到 TOC 扩展（如果存在）
+    this.injectTocEvent();
+
     // 1. 初始化扩展管理器
     this.extensionManager = new ExtensionManager(
       options.extensions || this.config.extensions || [],
@@ -35,6 +38,25 @@ export default class XmEditor {
     this.proxy = createEditorProxy(this.tiptapEditor);
 
     return this.proxy;
+  }
+
+  /**
+   * 将用户配置的 onTocUpdate 事件注入到 TOC 扩展中
+   */
+  injectTocEvent() {
+    const events = this.config.events || {};
+    if (!events.onTocUpdate) return;
+
+    const extensions = this.config.extensions || [];
+    const tocIndex = extensions.findIndex((ext) => ext.name === 'toc');
+    
+    if (tocIndex !== -1) {
+      const tocExt = extensions[tocIndex];
+      // 将用户的 onTocUpdate 回调注入到 TOC 扩展配置中
+      extensions[tocIndex] = tocExt.configure({
+        onTocUpdate: events.onTocUpdate,
+      });
+    }
   }
 
   initTiptapEditor() {
@@ -87,3 +109,4 @@ export default class XmEditor {
     // Unmount Vue app if needed (mountVueEditor returns vm, usually handled by Vue)
   }
 }
+

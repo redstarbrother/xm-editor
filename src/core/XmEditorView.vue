@@ -6,7 +6,25 @@
     </BubbleMenu>
     <component :is="MenuFixed" v-if="fixedReady" :editor="props.editor" :extensions="fixedMenuExtensions" />
     <div v-if="!props.editor">Editor prop is missing!</div>
-    <editor-content class="editor-content" :editor="props.editor" />
+    <!-- 编辑区 + 目录面板的 flex 容器 -->
+    <div class="xm-editor-body" :class="{ 'xm-editor-body-toc-left': tocPosition === 'left' }">
+      <!-- TOC 面板（左侧模式） -->
+      <component
+        :is="TocPanelComponent"
+        v-if="tocReady && tocPosition === 'left'"
+        :editor="props.editor"
+        :options="tocOptions"
+      />
+      <!-- 编辑器内容区 -->
+      <editor-content class="editor-content" :editor="props.editor" />
+      <!-- TOC 面板（右侧模式，默认） -->
+      <component
+        :is="TocPanelComponent"
+        v-if="tocReady && tocPosition === 'right'"
+        :editor="props.editor"
+        :options="tocOptions"
+      />
+    </div>
   </div>
 </template>
 
@@ -15,6 +33,7 @@ import {
   computed,
   onMounted,
   shallowRef,
+  ref,
 } from "vue";
 import { EditorContent } from "@tiptap/vue-3";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
@@ -40,6 +59,11 @@ const fixedMenuExtensions = shallowRef([]);
 const MenuFixed = shallowRef(null);
 const MenuBubble = shallowRef(null);
 
+// TOC 相关
+const TocPanelComponent = shallowRef(null);
+const tocOptions = ref({});
+const tocPosition = ref('right');
+
 const isEditorReady = computed(() => !!props.editor);
 
 // 监听bubble菜单就绪状态
@@ -52,6 +76,11 @@ const fixedReady = computed(() => {
   return isEditorReady.value && MenuFixed.value;
 })
 
+// 监听toc面板就绪状态
+const tocReady = computed(() => {
+  return isEditorReady.value && TocPanelComponent.value;
+})
+
 // 初始化菜单extension
 onMounted(() => {
   if (props.extensionManager) {
@@ -61,6 +90,14 @@ onMounted(() => {
     // 动态加载菜单组件
     MenuFixed.value = props.extensionManager.getComponent('fixed-menu');
     MenuBubble.value = props.extensionManager.getComponent('bubble-menu');
+
+    // 动态加载 TOC 面板
+    const tocConfig = props.extensionManager.getTocConfig();
+    if (tocConfig && tocConfig.component) {
+      TocPanelComponent.value = tocConfig.component;
+      tocOptions.value = tocConfig.options || {};
+      tocPosition.value = tocConfig.options?.position || 'right';
+    }
   }
 })
 
@@ -87,6 +124,22 @@ loadCodeTheme(themeToLoad)
   height: 100%;
   border: 1px solid #e1e4e8;
   border-radius: 8px;
+}
+
+.xm-editor-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.xm-editor-body-toc-left {
+  flex-direction: row-reverse;
+}
+
+.xm-editor-body-toc-left .xm-toc-panel {
+  border-left: none;
+  border-right: none;
 }
 
 .editor-content {
