@@ -60,7 +60,7 @@
     "@tiptap/extension-underline": "^3.27.0",
     "@tiptap/extensions": "^3.27.0",
     "@tiptap/suggestion": "^3.27.0",
-    "@tiptap/y-tiptap": "^3.27.0",
+    "@tiptap/y-tiptap": "^3.0.5",
     "fast-glob": "^3.3.2",
     "lowlight": "^3.2.0",
     "lucide-vue-next": "^0.526.0",
