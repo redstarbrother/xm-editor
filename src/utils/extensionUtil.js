@@ -1,6 +1,5 @@
 export const defineExtension = (config) => {
   return {
-    ...config,
     configure(options) {
       if (this.extension && typeof this.extension.configure === 'function') {
         return {
@@ -10,6 +9,7 @@ export const defineExtension = (config) => {
       }
       return this;
     },
+    ...config,
   };
 };
 

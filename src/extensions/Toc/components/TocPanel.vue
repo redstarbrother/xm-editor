@@ -4,7 +4,7 @@
     <div class="xm-toc-header" @click="toggleCollapse">
       <template v-if="!isCollapsed">
         <span class="xm-toc-title">{{ panelTitle }}</span>
-        <span class="xm-toc-toggle">
+        <span class="xm-toc-toggle" :class="{ 'xm-toc-toggle-left': isLeftPosition }">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="m9 18 6-6-6-6" />
@@ -75,6 +75,7 @@ const props = defineProps({
 const panelTitle = ref(props.editor?.storage?.toc?.title || props.options.title || '目录')
 const isCollapsed = ref(props.options.collapsed || false)
 const levels = computed(() => props.options.levels || [1, 2, 3])
+const isLeftPosition = computed(() => props.options?.position === 'left')
 
 // 目录数据
 const tocItems = ref([])
@@ -224,7 +225,6 @@ watch(() => props.editor, (newEditor) => {
 .xm-toc-panel {
   width: 200px;
   min-width: 160px;
-  background-color: #fafbfc;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -278,6 +278,10 @@ watch(() => props.editor, (newEditor) => {
   color: #8b949e;
   transition: transform 0.2s ease;
   flex-shrink: 0;
+}
+
+.xm-toc-toggle-left {
+  transform: rotate(180deg);
 }
 
 .xm-toc-collapsed-icon {

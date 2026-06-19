@@ -154,12 +154,11 @@ loadCodeTheme(themeToLoad)
 }
 
 .xm-editor-body-toc-left {
-  flex-direction: row-reverse;
 }
 
 .xm-editor-body-toc-left .xm-toc-panel {
   border-left: none;
-  border-right: none;
+  border-right: 1px solid #e1e4e8;
 }
 
 .editor-content {
