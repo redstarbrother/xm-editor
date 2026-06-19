@@ -1,6 +1,6 @@
 {
   "name": "@putanut/xm-editor",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "type": "module",
   "main": "dist/xm-editor.umd.js",
   "module": "dist/xm-editor.es.js",
