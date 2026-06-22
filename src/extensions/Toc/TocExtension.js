@@ -43,6 +43,8 @@ const TocExtension = Extension.create({
       title: '目录',
       // 是否滚动时高亮当前标题
       highlightOnScroll: true,
+      // 滚动容器：支持 string (选择器) 或 HTMLElement
+      scrollContainer: null,
       // TOC 数据更新回调（data 模式下由外部使用）
       // 签名：(tocItems, activeId) => void
       onTocUpdate: null,
@@ -61,6 +63,8 @@ const TocExtension = Extension.create({
       highlighter: null,
       // 目录标题
       title: '目录',
+      // 用户配置的滚动容器
+      scrollContainer: null,
     }
   },
 
@@ -69,6 +73,8 @@ const TocExtension = Extension.create({
     this.storage.options = this.options
     // 初始化标题
     this.storage.title = this.options.title || '目录'
+    // 存储滚动容器配置，供 scrollToHeading 等外部调用使用
+    this.storage.scrollContainer = this.options.scrollContainer
 
     // 初始提取一次
     const headings = extractHeadings(this.editor.state.doc, this.options.levels)
@@ -84,6 +90,7 @@ const TocExtension = Extension.create({
 
       const highlighter = createScrollHighlighter(this.editor, {
         getItems: () => storage.tocItems,
+        scrollContainer: options.scrollContainer,
         onActiveChange: (newId, _oldId) => {
           storage.activeId = newId
           // 触发回调，同时传递 tocItems 和 activeId

@@ -6,28 +6,7 @@
  * 通过回调通知外部（TocExtension storage / onTocUpdate / 自定义渲染）。
  */
 
-/**
- * 查找编辑器内容区的可滚动容器
- * 从编辑器 DOM 向上遍历，依据 CSS overflow 属性判断
- * @param {HTMLElement} editorDom - editor.view.dom
- * @returns {HTMLElement|null}
- */
-function findScrollContainer(editorDom) {
-  let parent = editorDom.parentElement
-
-  while (parent) {
-    const style = window.getComputedStyle(parent)
-    const overflow = style.overflow + style.overflowY
-
-    if (/(auto|scroll)/.test(overflow)) {
-      return parent
-    }
-
-    parent = parent.parentElement
-  }
-
-  return null
-}
+import { findScrollContainer, resolveScrollContainer } from './tocUtils'
 
 /**
  * 根据当前滚动位置，计算应当被激活的标题 ID
@@ -35,23 +14,31 @@ function findScrollContainer(editorDom) {
  * @param {Array} tocItems - 目录项列表 [{id, level, text, pos}, ...]
  * @returns {string|null} 激活的标题 ID
  */
-function detectActiveHeading(editor, tocItems) {
+function detectActiveHeading(editor, tocItems, resolvedScrollContainer) {
   if (!editor || !editor.view || tocItems.length === 0) return null
 
   const editorDom = editor.view.dom
-  const scrollContainer = findScrollContainer(editorDom)
+  const scrollContainer = resolvedScrollContainer || findScrollContainer(editorDom)
 
   if (!scrollContainer) return null
 
-  const containerRect = scrollContainer.getBoundingClientRect()
+  const isWindow = scrollContainer === window
+  const containerRect = isWindow ? { top: 0, height: window.innerHeight } : scrollContainer.getBoundingClientRect()
+  
+  const scrollHeight = isWindow ? document.documentElement.scrollHeight : scrollContainer.scrollHeight
+  const clientHeight = isWindow ? window.innerHeight : scrollContainer.clientHeight
+  const scrollTop = isWindow ? window.scrollY || document.documentElement.scrollTop : scrollContainer.scrollTop
+
   let currentActiveId = null
 
   // 检查是否滚动到底部
+  const hasScroll = scrollHeight > clientHeight
   const isAtBottom =
+    hasScroll &&
     Math.abs(
-      scrollContainer.scrollHeight -
-        scrollContainer.scrollTop -
-        scrollContainer.clientHeight
+      scrollHeight -
+        scrollTop -
+        clientHeight
     ) < 5
 
   if (isAtBottom) {
@@ -112,7 +99,7 @@ function detectActiveHeading(editor, tocItems) {
  * @returns {{ setup: () => void, cleanup: () => void, forceUpdate: () => void }}
  */
 export function createScrollHighlighter(editor, options = {}) {
-  const { getItems, onActiveChange } = options
+  const { getItems, onActiveChange, scrollContainer: userScrollContainer } = options
 
   let scrollHandler = null
   let scrollContainer = null
@@ -124,7 +111,7 @@ export function createScrollHighlighter(editor, options = {}) {
    */
   function update() {
     const items = getItems()
-    const newActiveId = detectActiveHeading(editor, items)
+    const newActiveId = detectActiveHeading(editor, items, scrollContainer)
 
     if (newActiveId !== currentActiveId) {
       const oldId = currentActiveId
@@ -144,7 +131,7 @@ export function createScrollHighlighter(editor, options = {}) {
       if (!editor || !editor.view) return
 
       const editorDom = editor.view.dom
-      scrollContainer = findScrollContainer(editorDom)
+      scrollContainer = resolveScrollContainer(editorDom, userScrollContainer)
 
       if (!scrollContainer) return
 

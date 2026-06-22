@@ -36,9 +36,29 @@ export function createEditorProxy(editor) {
     // ----- 目录相关 -----
     /**
      * 获取目录控制器对象
-     * @returns {{getTocInfo: Function, scrollToHeading: Function, setTitle: Function, changeTitle: Function}}
      */
     getToc() {
+      const tocStorage = editor.storage?.toc || editor.extensionStorage?.toc;
+      
+      // 确保 listeners 数组存在以供订阅
+      if (tocStorage && !tocStorage.listeners) {
+        tocStorage.listeners = [];
+        
+        // 包装/拦截 options.onTocUpdate 回调，以通知所有订阅者
+        const originalOnTocUpdate = tocStorage.options?.onTocUpdate;
+        tocStorage.options = tocStorage.options || {};
+        tocStorage.options.onTocUpdate = (items, activeId) => {
+          originalOnTocUpdate?.(items, activeId);
+          tocStorage.listeners.forEach(cb => {
+            try {
+              cb(items, activeId);
+            } catch (e) {
+              console.error('TOC subscription error:', e);
+            }
+          });
+        };
+      }
+
       return {
         /**
          * 获取当前文档的目录数据
@@ -46,13 +66,54 @@ export function createEditorProxy(editor) {
          * @returns {Array<{id: string, level: number, text: string, pos: number}>}
          */
         getTocInfo(levels = [1, 2, 3]) {
-          // 优先从 TOC extension 的 storage 中获取（实时同步的数据）
-          const tocStorage = editor.storage?.toc || editor.extensionStorage?.toc;
           if (tocStorage && tocStorage.tocItems && tocStorage.tocItems.length > 0) {
             return tocStorage.tocItems;
           }
           // 降级：直接从文档中提取
           return extractHeadings(editor.state.doc, levels);
+        },
+
+        /**
+         * 获取当前激活的标题 ID
+         * @returns {string|null}
+         */
+        getActiveId() {
+          return tocStorage?.activeId || null;
+        },
+
+        /**
+         * 设置激活的标题 ID
+         * @param {string} id 
+         */
+        setActiveId(id) {
+          if (tocStorage?.highlighter) {
+            tocStorage.highlighter.setActiveId(id);
+          } else if (tocStorage) {
+            tocStorage.activeId = id;
+          }
+        },
+
+        /**
+         * 订阅目录数据或激活 ID 发生变化
+         * @param {Function} callback 
+         */
+        onUpdate(callback) {
+          if (tocStorage && tocStorage.listeners) {
+            tocStorage.listeners.push(callback);
+          }
+        },
+
+        /**
+         * 取消订阅
+         * @param {Function} callback 
+         */
+        offUpdate(callback) {
+          if (tocStorage && tocStorage.listeners) {
+            const index = tocStorage.listeners.indexOf(callback);
+            if (index !== -1) {
+              tocStorage.listeners.splice(index, 1);
+            }
+          }
         },
 
         /**
@@ -64,7 +125,11 @@ export function createEditorProxy(editor) {
          * @returns {boolean} 是否跳转成功
          */
         scrollToHeading(headingId, options = {}) {
-          return scrollToHeadingUtil(editor, headingId, options);
+          const mergedOptions = {
+            scrollContainer: tocStorage?.scrollContainer,
+            ...options,
+          };
+          return scrollToHeadingUtil(editor, headingId, mergedOptions);
         },
 
         /**
@@ -72,7 +137,6 @@ export function createEditorProxy(editor) {
          * @param {string} newTitle 新的目录标题
          */
         setTitle(newTitle) {
-          const tocStorage = editor.storage?.toc || editor.extensionStorage?.toc;
           if (tocStorage) {
             tocStorage.title = newTitle;
             // 派发一个轻量级 transaction 触发视图更新
@@ -88,23 +152,6 @@ export function createEditorProxy(editor) {
           this.setTitle(newTitle);
         }
       };
-    },
-
-    /**
-     * 跳转到指定标题位置 (保留在顶层，以兼容旧版调用方式)
-     * @param {string} headingId 标题的 ID
-     * @param {Object} options 配置项
-     * @param {boolean} options.smooth 是否平滑滚动，默认 true
-     * @param {boolean} options.focus 是否聚焦到标题位置，默认 false
-     * @returns {boolean} 是否跳转成功
-     */
-    scrollToHeading(headingId, options = {}) {
-      return scrollToHeadingUtil(editor, headingId, options);
-    },
-
-    // ----- 原始实例（必要时）-----
-    get instance() {
-      return editor;
     }
   };
 }

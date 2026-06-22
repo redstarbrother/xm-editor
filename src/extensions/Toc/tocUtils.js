@@ -69,38 +69,118 @@ export function extractHeadings(doc, levels = [1, 2, 3]) {
 }
 
 /**
+ * 查找最近的可滚动父容器
+ * 从编辑器 DOM 向上遍历，依据 CSS overflow 属性判断
+ * @param {HTMLElement} element 起始元素
+ * @returns {HTMLElement|Window|null}
+ */
+export function findScrollContainer(element) {
+  let parent = element.parentElement
+
+  while (parent) {
+    // 到达 body/html 时回退到 window，避免非预期的全局滚动捕获
+    if (parent === document.body || parent === document.documentElement) {
+      return window
+    }
+
+    const style = window.getComputedStyle(parent)
+    const overflowY = style.overflowY
+    const overflow = style.overflow
+
+    if (/(auto|scroll)/.test(overflowY) || /(auto|scroll)/.test(overflow)) {
+      return parent
+    }
+
+    parent = parent.parentElement
+  }
+
+  return null
+}
+
+/**
+ * 解析滚动容器：优先使用用户配置，其次执行向上遍历自动查找
+ * @param {HTMLElement} editorDom - editor.view.dom
+ * @param {string|HTMLElement|Window|null} userScrollContainer - 用户配置的滚动容器
+ * @returns {HTMLElement|Window|null}
+ */
+export function resolveScrollContainer(editorDom, userScrollContainer) {
+  if (typeof userScrollContainer === 'string') {
+    const el = document.querySelector(userScrollContainer)
+    if (el) return el
+  } else if (userScrollContainer instanceof HTMLElement || userScrollContainer === window) {
+    return userScrollContainer
+  }
+
+  // 降级回退到原有的向上查找逻辑
+  return findScrollContainer(editorDom)
+}
+
+/**
  * 跳转到指定标题位置
  * @param {Object} editor Tiptap 编辑器实例
  * @param {string} headingId 标题的 ID
  * @param {Object} options 配置项
  * @param {boolean} options.smooth 是否平滑滚动，默认 true
  * @param {boolean} options.focus 是否聚焦到标题位置，默认 false
+ * @param {string|HTMLElement|Window|null} options.scrollContainer 滚动容器（可选）
  */
 export function scrollToHeading(editor, headingId, options = {}) {
-  const { smooth = true, focus = false } = options
+  const { smooth = true, focus = false, scrollContainer: userScrollContainer } = options
 
   if (!editor || !headingId) return false
 
-  // 优先使用 data-toc-id 查找（因为 ID 可能被去重处理）
   const editorDom = editor.view.dom
-  let element = editorDom.querySelector(`[data-toc-id="${headingId}"]`)
-  
-  // 如果 data-toc-id 找不到，尝试 id 属性
+  let element = null
+
+  // 主策略：通过 ProseMirror pos 精确定位 DOM 节点
+  // 从 toc storage 中获取 tocItems，其 pos 与 headingId 一一对应
+  const tocStorage = editor.storage?.toc
+  const tocItems = tocStorage?.tocItems || []
+  const targetItem = tocItems.find(item => item.id === headingId)
+
+  if (targetItem) {
+    try {
+      const node = editor.view.nodeDOM(targetItem.pos)
+      if (node && node.nodeType === 1) {
+        element = node
+      }
+    } catch (e) {
+      // pos 可能越界，忽略
+    }
+  }
+
+  // 回退策略 1：data-toc-id 属性
   if (!element) {
-    element = editorDom.querySelector(`#${CSS.escape(headingId)}`)
+    element = editorDom.querySelector(`[data-toc-id="${headingId}"]`)
+  }
+
+  // 回退策略 2：id 属性
+  if (!element) {
+    try {
+      element = editorDom.querySelector(`#${CSS.escape(headingId)}`)
+    } catch (e) {
+      // CSS.escape 异常，忽略
+    }
   }
 
   if (!element) return false
 
-  // 获取编辑器内容区的可滚动容器
-  const scrollContainer = findScrollContainer(editorDom)
+  // 滚动容器解析：优先使用用户配置
+  const container = resolveScrollContainer(editorDom, userScrollContainer)
 
-  if (scrollContainer) {
-    const containerRect = scrollContainer.getBoundingClientRect()
+  if (container) {
+    const isWindow = container === window
+    const containerRect = isWindow
+      ? { top: 0, height: window.innerHeight }
+      : container.getBoundingClientRect()
+    const scrollTop = isWindow
+      ? (window.scrollY || document.documentElement.scrollTop)
+      : container.scrollTop
     const elementRect = element.getBoundingClientRect()
-    const offsetTop = elementRect.top - containerRect.top + scrollContainer.scrollTop
+    const offsetTop = elementRect.top - containerRect.top + scrollTop
 
-    scrollContainer.scrollTo({
+    const scrollTarget = isWindow ? window : container
+    scrollTarget.scrollTo({
       top: offsetTop - 20, // 留一点顶部间距
       behavior: smooth ? 'smooth' : 'instant',
     })
@@ -113,20 +193,24 @@ export function scrollToHeading(editor, headingId, options = {}) {
 
   // 可选：聚焦编辑器并移动光标到标题位置
   if (focus) {
-    // 在文档中查找对应的位置
-    let targetPos = null
-    editor.state.doc.descendants((node, pos) => {
-      if (targetPos !== null) return false // 已找到，停止遍历
-      if (node.type.name === 'heading') {
-        const text = node.textContent || ''
-        const id = generateId(text)
-        if (id === headingId || headingId.startsWith(id)) {
-          targetPos = pos + 1 // 光标放在标题文本开头
-          return false
+    // 优先使用已找到的 targetItem.pos
+    let targetPos = targetItem ? targetItem.pos + 1 : null
+
+    // 如果 targetItem 没找到，遍历文档查找
+    if (targetPos === null) {
+      editor.state.doc.descendants((node, pos) => {
+        if (targetPos !== null) return false
+        if (node.type.name === 'heading') {
+          const text = node.textContent || ''
+          const id = generateId(text)
+          if (id === headingId || headingId.startsWith(id)) {
+            targetPos = pos + 1
+            return false
+          }
         }
-      }
-    })
-    
+      })
+    }
+
     if (targetPos !== null) {
       editor.commands.focus()
       editor.commands.setTextSelection(targetPos)
@@ -134,33 +218,6 @@ export function scrollToHeading(editor, headingId, options = {}) {
   }
 
   return true
-}
-
-/**
- * 查找最近的可滚动父容器
- * @param {HTMLElement} element 起始元素
- * @returns {HTMLElement|null}
- */
-function findScrollContainer(element) {
-  let parent = element.parentElement
-  
-  while (parent) {
-    const style = window.getComputedStyle(parent)
-    const overflow = style.overflow + style.overflowY
-    
-    if (/(auto|scroll)/.test(overflow)) {
-      return parent
-    }
-    
-    // 检查 editor-content 容器
-    if (parent.classList.contains('editor-content')) {
-      return parent
-    }
-    
-    parent = parent.parentElement
-  }
-  
-  return null
 }
 
 /**

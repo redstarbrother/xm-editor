@@ -1,5 +1,5 @@
 <template>
-  <div class="xm-editor-root" :class="props.config.style?.customClass">
+  <div class="xm-editor-root" :class="[props.config.style?.customClass, { 'is-auto-height': props.config.editorOption?.autoHeight }]">
     <BubbleMenu v-if="bubbleReady" :editor="props.editor" :should-show="shouldShowBubbleMenu"
       :options="{ duration: 100, moveTransition: 'transform 0.2s ease-out' }">
       <component :is="MenuBubble" :editor="props.editor" :extensions="bubbleMenuExtensions" />
@@ -166,5 +166,20 @@ loadCodeTheme(themeToLoad)
   flex: 1;
   overflow: auto;
   line-height: 1.4;
+}
+
+/* 自适应高度模式 */
+.xm-editor-root.is-auto-height {
+  height: auto;
+  overflow: visible;
+
+  .xm-editor-body {
+    height: auto;
+    overflow: visible;
+  }
+
+  .editor-content {
+    overflow: visible;
+  }
 }
 </style>
