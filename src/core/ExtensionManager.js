@@ -12,6 +12,8 @@ export class ExtensionManager {
     this.tocConfig = null;
     // DragHandle 拖拽手柄配置
     this.dragHandleConfig = null;
+    // Table 表格扩展配置（右键菜单、浮动工具栏）
+    this.tableConfig = null;
 
     this.init();
   }
@@ -51,6 +53,14 @@ export class ExtensionManager {
       if (item.name === 'drag-handle' && item.component) {
         this.dragHandleConfig = {
           component: item.component,
+        };
+      }
+
+      // 收集 Table 表格扩展配置
+      if (item.name === 'table') {
+        this.tableConfig = {
+          contextMenuComponent: item.contextMenuComponent || null,
+          tableToolbarComponent: item.tableToolbarComponent || null,
         };
       }
     });
@@ -189,5 +199,13 @@ export class ExtensionManager {
    */
   getDragHandleConfig() {
     return this.dragHandleConfig;
+  }
+
+  /**
+   * 获取 Table 表格扩展配置
+   * @returns {{ contextMenuComponent: Vue Component, tableToolbarComponent: Vue Component } | null}
+   */
+  getTableConfig() {
+    return this.tableConfig;
   }
 }

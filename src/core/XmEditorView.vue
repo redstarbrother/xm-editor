@@ -5,12 +5,26 @@
       <component :is="MenuBubble" :editor="props.editor" :extensions="bubbleMenuExtensions" />
     </BubbleMenu>
     <component :is="MenuFixed" v-if="fixedReady" :editor="props.editor" :extensions="fixedMenuExtensions" />
-    <!-- DragHandle 拖拽手柄 -->
     <component
       :is="DragHandleComponent"
       v-if="dragHandleReady"
       :editor="props.editor"
     />
+    <!-- Table 右键菜单 -->
+    <component
+      :is="TableContextMenuComponent"
+      v-if="tableContextMenuReady"
+      :editor="props.editor"
+    />
+    <!-- Table 浮动工具栏 -->
+    <!-- <BubbleMenu
+      v-if="tableToolbarReady"
+      :editor="props.editor"
+      :should-show="shouldShowTableToolbar"
+      :options="{ duration: 100, placement: 'top', offset: [0, 8] }"
+    >
+      <component :is="TableToolbarComponent" :editor="props.editor" />
+    </BubbleMenu> -->
     <div v-if="!props.editor">Editor prop is missing!</div>
     <!-- 编辑区 + 目录面板的 flex 容器 -->
     <div class="xm-editor-body" :class="{ 'xm-editor-body-toc-left': tocPosition === 'left' }">
@@ -73,6 +87,10 @@ const tocPosition = ref('right');
 // DragHandle 相关
 const DragHandleComponent = shallowRef(null);
 
+// Table 表格扩展相关
+const TableContextMenuComponent = shallowRef(null);
+const TableToolbarComponent = shallowRef(null);
+
 const isEditorReady = computed(() => !!props.editor);
 
 // 监听bubble菜单就绪状态
@@ -93,6 +111,16 @@ const tocReady = computed(() => {
 // 监听dragHandle就绪状态
 const dragHandleReady = computed(() => {
   return isEditorReady.value && DragHandleComponent.value;
+})
+
+// 监听表格右键菜单就绪状态
+const tableContextMenuReady = computed(() => {
+  return isEditorReady.value && TableContextMenuComponent.value;
+})
+
+// 监听表格浮动工具栏就绪状态
+const tableToolbarReady = computed(() => {
+  return isEditorReady.value && TableToolbarComponent.value;
 })
 
 // 初始化菜单extension
@@ -118,6 +146,17 @@ onMounted(() => {
     if (dragHandleConfig && dragHandleConfig.component) {
       DragHandleComponent.value = dragHandleConfig.component;
     }
+
+    // 动态加载 Table 表格扩展组件
+    const tableConfig = props.extensionManager.getTableConfig();
+    if (tableConfig) {
+      if (tableConfig.contextMenuComponent) {
+        TableContextMenuComponent.value = tableConfig.contextMenuComponent;
+      }
+      if (tableConfig.tableToolbarComponent) {
+        TableToolbarComponent.value = tableConfig.tableToolbarComponent;
+      }
+    }
   }
 })
 
@@ -125,7 +164,17 @@ const shouldShowBubbleMenu = ({ editor, state }) => {
   if (!state || !editor) return false;
   const { empty } = state.selection || {};
   if (empty) return false;
+  // 在表格中时仍然显示文本 BubbleMenu（加粗/斜体等）
   return !editor.isActive('codeBlock') && !editor.isActive('image');
+};
+
+// 表格浮动工具栏显示条件：光标在表格中且未选中文本时显示
+const shouldShowTableToolbar = ({ editor, state }) => {
+  if (!state || !editor) return false;
+  if (!editor.isActive('table')) return false;
+  // 当有文本选中时，显示普通 BubbleMenu而不是表格工具栏
+  const { empty } = state.selection || {};
+  return empty;
 };
 
 // 优先使用配置中的主题，否则默认使用 github.min

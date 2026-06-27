@@ -420,3 +420,46 @@ pre code {
   height: 0;
   pointer-events: none;
 }
+
+/* ========== 表格增强样式 ========== */
+
+.tableWrapper {
+  overflow-x: auto;
+  margin: 8px 0;
+}
+
+.tableWrapper .xm-table {
+  margin: 0;
+}
+
+.column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: -2px;
+  width: 4px;
+  background-color: #3370ff;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.xm-table .selectedCell::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(51, 112, 255, 0.08);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.xm-table th,
+.xm-table td {
+  position: relative;
+}
+
+.resize-cursor {
+  cursor: col-resize;
+}
