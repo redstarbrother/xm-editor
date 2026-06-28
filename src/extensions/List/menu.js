@@ -40,6 +40,8 @@ export const slashMenu = [
     {
         id: "bulletList",
         label: "无序列表",
+        category: "列表",
+        description: "创建简单的无序列表",
         icon: List,
         action: ({ editor, range }) => {
             editor.chain().focus().deleteRange(range).toggleBulletList().run();
@@ -48,6 +50,8 @@ export const slashMenu = [
     {
         id: "orderedList",
         label: "有序列表",
+        category: "列表",
+        description: "创建有顺序的列表",
         icon: ListOrdered,
         action: ({ editor, range }) => {
             editor.chain().focus().deleteRange(range).toggleOrderedList().run();
@@ -56,6 +60,8 @@ export const slashMenu = [
     {
         id: "taskList",
         label: "任务列表",
+        category: "列表",
+        description: "带复选框的任务清单",
         icon: CheckSquare,
         action: ({ editor, range }) => {
             editor.chain().focus().deleteRange(range).toggleTaskList().run();

@@ -11,6 +11,8 @@ export const fixedMenu = {
 export const slashMenu = {
   id: "codeBlock",
   label: "代码块",
+  category: "高级",
+  description: "插入带语法高亮的代码段",
   icon: FileCode,
   action: ({ editor, range }) => {
     editor.chain().focus().deleteRange(range).setCodeBlock().run();

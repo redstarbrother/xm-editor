@@ -11,6 +11,8 @@ export const fixedMenu = {
 export const slashMenu = {
   id: "horizontalRule",
   label: "水平分割线",
+  category: "基础",
+  description: "插入一条水平分割线",
   icon: Minus,
   action: ({ editor, range }) => {
     editor.chain().focus().deleteRange(range).setHorizontalRule().run();

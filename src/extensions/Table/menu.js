@@ -14,6 +14,8 @@ export const fixedMenu = {
 export const slashMenu = {
   id: "table",
   label: "表格",
+  category: "高级",
+  description: "插入一个 3x3 的表格",
   icon: Table2,
   action: ({ editor, range }) => {
      editor
