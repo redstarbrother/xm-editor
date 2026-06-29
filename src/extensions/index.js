@@ -26,6 +26,8 @@ import SlashMenu from './SlashMenu'
 import SubScript from './SubScript'
 import SuperScript from './SuperScript'
 import Toc from './Toc'
+import TextStyle from './TextStyle'
+import LineHeight from './LineHeight'
 
 export default {
   Base,
@@ -56,5 +58,7 @@ export default {
   SubScript,
   SuperScript,
   Toc,
+  TextStyle,
+  LineHeight,
 }
 

@@ -80,6 +80,9 @@ export default class XmEditor {
         events.onBlur?.({ editor, event });
       },
       onCreate: ({ editor }) => {
+        if (editorOption.lineHeight && editor.view && editor.view.dom) {
+          editor.view.dom.style.lineHeight = editorOption.lineHeight;
+        }
         events.onInit?.({ editor });
       },
       onDestroy: () => {

@@ -16,6 +16,7 @@ const Basic = {
       autofocus: false,
       // 内部事件触发间隔，单位 ms
       debounce: 300,
+      lineHeight: "",
     },
 
     /**
@@ -43,6 +44,8 @@ const Basic = {
       Extensions.Emoji,
       Extensions.Highlight,
       Extensions.TextAlign,
+      Extensions.TextStyle,
+      Extensions.LineHeight,
       Extensions.ShortcutKey,
       Extensions.Placeholder,
       Extensions.SubScript,

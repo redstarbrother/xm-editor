@@ -33,6 +33,40 @@ export function createEditorProxy(editor) {
       return editor.state.selection;
     },
 
+    // ----- 行高相关 -----
+    /**
+     * 实时设置选中文本的局部行高
+     * @param {string|number} lineHeight 行高值，例如 '1.5', '2.0', '4.0'
+     */
+    setLineHeight(lineHeight) {
+      editor.chain().focus().toggleTextStyle({ lineHeight }).run();
+    },
+
+    /**
+     * 取消选中文本的局部行高
+     */
+    unsetLineHeight() {
+      editor.chain().focus().unsetLineHeight().run();
+    },
+
+    /**
+     * 实时设置编辑器的全局默认行高
+     * @param {string|number} lineHeight 行高值
+     */
+    setGlobalLineHeight(lineHeight) {
+      if (editor.view && editor.view.dom) {
+        editor.view.dom.style.lineHeight = lineHeight;
+      }
+    },
+
+    /**
+     * 获取当前编辑器的全局默认行高
+     * @returns {string}
+     */
+    getGlobalLineHeight() {
+      return editor.view?.dom?.style?.lineHeight || '';
+    },
+
     // ----- 目录相关 -----
     /**
      * 获取目录控制器对象

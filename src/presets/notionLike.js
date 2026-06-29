@@ -16,6 +16,7 @@ const NotionLike = {
       placeholder: 'Write something …',
       // 内部事件触发间隔，单位 ms
       debounce: 300,
+      lineHeight: "",
     },
 
     /**
@@ -39,6 +40,8 @@ const NotionLike = {
       Extensions.Emoji,
       Extensions.Highlight,
       Extensions.TextAlign,
+      Extensions.TextStyle,
+      Extensions.LineHeight,
       Extensions.ShortcutKey,
       Extensions.Placeholder,
       Extensions.SubScript,
