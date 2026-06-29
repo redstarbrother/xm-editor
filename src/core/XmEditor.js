@@ -83,6 +83,9 @@ export default class XmEditor {
         if (editorOption.lineHeight && editor.view && editor.view.dom) {
           editor.view.dom.style.lineHeight = editorOption.lineHeight;
         }
+        if (editorOption.fontFamily && editor.view && editor.view.dom) {
+          editor.view.dom.style.fontFamily = editorOption.fontFamily;
+        }
         events.onInit?.({ editor });
       },
       onDestroy: () => {

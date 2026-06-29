@@ -31,6 +31,7 @@ onMounted(() => {
         placeholder: "请输入内容...",
         autofocus: true,
         codeTheme: 'xcode',
+        fontFamily: 'PingFang SC',
       },
       style: {
         customClass: 'xm-editor-basic',

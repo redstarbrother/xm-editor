@@ -17,6 +17,7 @@ const Basic = {
       // 内部事件触发间隔，单位 ms
       debounce: 300,
       lineHeight: "",
+      fontFamily: "",
     },
 
     /**
@@ -46,6 +47,7 @@ const Basic = {
       Extensions.TextAlign,
       Extensions.TextStyle,
       Extensions.LineHeight,
+      Extensions.FontFamily,
       Extensions.ShortcutKey,
       Extensions.Placeholder,
       Extensions.SubScript,

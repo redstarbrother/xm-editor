@@ -67,6 +67,40 @@ export function createEditorProxy(editor) {
       return editor.view?.dom?.style?.lineHeight || '';
     },
 
+    // ----- 字体相关 -----
+    /**
+     * 实时设置选中文本的局部字体
+     * @param {string} fontFamily 字体名称，例如 'Arial', 'PingFang SC'
+     */
+    setFontFamily(fontFamily) {
+      editor.chain().focus().setFontFamily(fontFamily).run();
+    },
+
+    /**
+     * 取消选中文本的局部字体
+     */
+    unsetFontFamily() {
+      editor.chain().focus().unsetFontFamily().run();
+    },
+
+    /**
+     * 实时设置编辑器的全局默认字体
+     * @param {string} fontFamily 字体名称
+     */
+    setGlobalFontFamily(fontFamily) {
+      if (editor.view && editor.view.dom) {
+        editor.view.dom.style.fontFamily = fontFamily;
+      }
+    },
+
+    /**
+     * 获取当前编辑器的全局默认字体
+     * @returns {string}
+     */
+    getGlobalFontFamily() {
+      return editor.view?.dom?.style?.fontFamily || '';
+    },
+
     // ----- 目录相关 -----
     /**
      * 获取目录控制器对象

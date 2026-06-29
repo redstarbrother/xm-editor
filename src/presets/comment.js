@@ -16,6 +16,7 @@ const Comment = {
       // 内部事件触发间隔，单位 ms
       debounce: 300,
       lineHeight: "",
+      fontFamily: "",
       /**
        * 工具栏与扩展
        */
@@ -39,6 +40,7 @@ const Comment = {
       Extensions.SuperScript,
       Extensions.TextStyle,
       Extensions.LineHeight,
+      Extensions.FontFamily,
       Extensions.ShortcutKey,
       Extensions.FixedMenu,
     ],

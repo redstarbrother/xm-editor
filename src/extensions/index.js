@@ -28,6 +28,7 @@ import SuperScript from './SuperScript'
 import Toc from './Toc'
 import TextStyle from './TextStyle'
 import LineHeight from './LineHeight'
+import FontFamily from './FontFamily'
 
 export default {
   Base,
@@ -60,5 +61,6 @@ export default {
   Toc,
   TextStyle,
   LineHeight,
+  FontFamily,
 }
 
