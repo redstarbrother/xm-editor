@@ -42,6 +42,14 @@ const mergeStylesPlugin = () => {
           console.log('Generated dist/xm-editor-feishu.css');
         }
         
+        // 4. Generate xm-editor-ai.css (AI styles + Components)
+        const aiCssPath = path.resolve(srcDir, 'xm-editor-ai.css');
+        if (fs.existsSync(aiCssPath)) {
+          const aiCss = fs.readFileSync(aiCssPath, 'utf-8');
+          fs.writeFileSync(path.resolve(distDir, 'xm-editor-ai.css'), aiCss + '\n' + componentsCss);
+          console.log('Generated dist/xm-editor-ai.css');
+        }
+
         // Optional: Remove components.css if you don't want to expose it
         // fs.unlinkSync(componentsCssPath);
       } else {

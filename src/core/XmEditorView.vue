@@ -25,6 +25,22 @@
     >
       <component :is="TableToolbarComponent" :editor="props.editor" />
     </BubbleMenu> -->
+    <!-- AI 气泡菜单面板 -->
+    <BubbleMenu
+      v-if="aiBubbleReady"
+      :editor="props.editor"
+      :should-show="() => aiBubbleVisible"
+      :options="{ duration: 100, placement: 'bottom-start' }"
+    >
+      <AiBubblePanel
+        :visible="aiBubbleVisible"
+        :ai-engine="aiEngine"
+        :editor="props.editor"
+        @close="closeAiBubble"
+        @accept="closeAiBubble"
+        @discard="closeAiBubble"
+      />
+    </BubbleMenu>
     <div v-if="!props.editor">Editor prop is missing!</div>
     <!-- 编辑区 + 目录面板的 flex 容器 -->
     <div class="xm-editor-body" :class="{ 'xm-editor-body-toc-left': tocPosition === 'left' }">
@@ -37,6 +53,16 @@
       />
       <!-- 编辑器内容区 -->
       <editor-content class="editor-content" :editor="props.editor" />
+      <!-- AI Inline 输入框 -->
+      <AiInlineInput
+        v-if="aiInlineReady"
+        :visible="aiInlineVisible"
+        :ai-engine="aiEngine"
+        :editor="props.editor"
+        @close="closeAiInline"
+        @accept="closeAiInline"
+        @discard="closeAiInline"
+      />
       <!-- TOC 面板（右侧模式，默认） -->
       <component
         :is="TocPanelComponent"
@@ -54,10 +80,13 @@ import {
   onMounted,
   shallowRef,
   ref,
+  watch,
 } from "vue";
 import { EditorContent } from "@tiptap/vue-3";
 import { BubbleMenu } from "@tiptap/vue-3/menus";
 import { loadCodeTheme } from "@/utils/themeLoader";
+import AiInlineInput from "@/ai/components/AiInlineInput.vue";
+import AiBubblePanel from "@/ai/components/AiBubblePanel.vue";
 
 const props = defineProps({
   editor: {
@@ -92,6 +121,31 @@ const TableContextMenuComponent = shallowRef(null);
 const TableToolbarComponent = shallowRef(null);
 
 const isEditorReady = computed(() => !!props.editor);
+
+// AI Inline 相关
+const aiEngine = ref(null)
+const aiInlineVisible = ref(false)
+const aiInlineReady = computed(() => isEditorReady.value && !!aiEngine.value)
+
+function closeAiInline() {
+  aiInlineVisible.value = false
+  // 同步 storage
+  if (props.editor?.storage?.['ai-inline']) {
+    props.editor.storage['ai-inline'].visible = false
+  }
+}
+
+// AI Bubble 相关
+const aiBubbleVisible = ref(false)
+const aiBubbleReady = computed(() => isEditorReady.value && !!aiEngine.value)
+
+function closeAiBubble() {
+  aiBubbleVisible.value = false
+  // 同步 storage
+  if (props.editor?.storage?.['ai-bubble']) {
+    props.editor.storage['ai-bubble'].panelVisible = false
+  }
+}
 
 // 监听bubble菜单就绪状态
 const bubbleReady = computed(() => {
@@ -157,6 +211,23 @@ onMounted(() => {
         TableToolbarComponent.value = tableConfig.tableToolbarComponent;
       }
     }
+
+    // 初始化 AI 引擎引用
+    if (props.editor?.storage?.['ai-inline']?.aiEngine) {
+      aiEngine.value = props.editor.storage['ai-inline'].aiEngine
+    }
+  }
+
+  // 监听 AI Inline 和 AI Bubble 的 storage 变化
+  if (props.editor) {
+    // 初始同步
+    aiInlineVisible.value = !!props.editor.storage?.['ai-inline']?.visible
+    aiBubbleVisible.value = !!props.editor.storage?.['ai-bubble']?.panelVisible
+
+    props.editor.on('transaction', () => {
+      aiInlineVisible.value = !!props.editor.storage?.['ai-inline']?.visible
+      aiBubbleVisible.value = !!props.editor.storage?.['ai-bubble']?.panelVisible
+    })
   }
 })
 

@@ -39,6 +39,7 @@ import BasicEditor from './components/BasicEditor.vue'
 import NotionEditor from './components/NotionEditor.vue'
 import CommentEditor from './components/CommentEditor.vue'
 import CustomEditor from './components/CustomEditor.vue'
+import AiEditor from './components/AiEditor.vue'
 import '@/styles/xm-editor.css'
 
 const logoUrl = `${import.meta.env.BASE_URL}logo.png`
@@ -48,6 +49,7 @@ const tabs = [
   { id: 'notion', label: '类 Notion 风格' },
   { id: 'comment', label: '评论框模式' },
   { id: 'custom', label: '自定义卡片' },
+  { id: 'ai', label: '🤖 AI 编辑器' },
 ]
 
 const currentTab = ref('basic')
@@ -58,6 +60,7 @@ const currentEditorComponent = computed(() => {
     case 'notion': return NotionEditor
     case 'comment': return CommentEditor
     case 'custom': return CustomEditor
+    case 'ai': return AiEditor
     default: return BasicEditor
   }
 })

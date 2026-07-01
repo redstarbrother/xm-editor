@@ -29,6 +29,9 @@ import Toc from './Toc'
 import TextStyle from './TextStyle'
 import LineHeight from './LineHeight'
 import FontFamily from './FontFamily'
+import AiInline from './AiInline'
+import AiCompletion from './AiCompletion'
+import AiBubble from './AiBubble'
 
 export default {
   Base,
@@ -62,5 +65,8 @@ export default {
   TextStyle,
   LineHeight,
   FontFamily,
+  AiInline,
+  AiCompletion,
+  AiBubble,
 }
 

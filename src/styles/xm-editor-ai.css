@@ -1,0 +1,125 @@
+/**
+ * xm-editor AI 飞书风格样式
+ * 包含 CSS 变量定义和所有 AI 组件样式
+ */
+
+/* ========== AI CSS 变量 ========== */
+:root {
+  /* AI 主色 — 活力蓝紫渐变 */
+  --xm-ai-primary: #3370ff;
+  --xm-ai-primary-light: #5b8def;
+  --xm-ai-primary-bg: #f0f5ff;
+  --xm-ai-gradient: linear-gradient(135deg, #3370ff 0%, #7b61ff 100%);
+
+  /* AI 强调色 */
+  --xm-ai-accent: #7b61ff;
+  --xm-ai-accent-light: #ede8ff;
+
+  /* AI 功能色 */
+  --xm-ai-success: #34c759;
+  --xm-ai-danger: #ff3b30;
+  --xm-ai-warning: #ff9500;
+
+  /* AI 文本色 */
+  --xm-ai-text-primary: #1f2329;
+  --xm-ai-text-secondary: #646a73;
+  --xm-ai-text-ghost: #b0b7c3;
+
+  /* AI 表面色 */
+  --xm-ai-surface: #ffffff;
+  --xm-ai-surface-hover: #f5f7fa;
+  --xm-ai-surface-active: #eef1f6;
+  --xm-ai-border: #dee0e3;
+
+  /* AI 特效 */
+  --xm-ai-glow: 0 0 20px rgba(51, 112, 255, 0.15);
+  --xm-ai-shadow: 0 4px 16px rgba(31, 35, 41, 0.1);
+}
+
+/* ========== Ghost Text 样式 ========== */
+.xm-ai-ghost-text {
+  color: var(--xm-ai-text-ghost, #b0b7c3);
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
+  font-style: normal;
+  /* 不使用斜体，与正文保持一致，仅通过颜色区分 */
+}
+
+.xm-ai-ghost-hint {
+  position: absolute;
+  right: 8px;
+  bottom: 4px;
+  font-size: 11px;
+  color: #c0c6d0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* Ghost Text 可见时显示提示 */
+.xm-ai-ghost-active .xm-ai-ghost-hint {
+  opacity: 1;
+}
+
+/* ========== AI 流式生成视觉效果 ========== */
+
+/* AI 正在生成中的文本 — 飞书风格淡蓝背景 */
+.xm-ai-generating {
+  background: var(--xm-ai-primary-bg);
+  border-radius: 4px;
+  padding: 0 2px;
+  transition: background-color 0.3s ease;
+}
+
+/* AI 光标 — 蓝色闪烁 */
+.xm-ai-cursor::after {
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 1.15em;
+  background: var(--xm-ai-primary);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: xm-ai-blink 0.8s ease-in-out infinite;
+}
+
+@keyframes xm-ai-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+/* AI 加载动画 — 三点波浪 */
+.xm-ai-loading-dots span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--xm-ai-primary);
+  margin: 0 2px;
+  animation: xm-ai-dot-wave 1.2s ease-in-out infinite;
+}
+
+.xm-ai-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.xm-ai-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes xm-ai-dot-wave {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-8px); opacity: 1; }
+}
+
+/* ========== SlashMenu AI 分组样式 ========== */
+
+/* AI 分组标题带渐变分隔线 */
+.xm-slash-group-AI {
+  position: relative;
+}
+
+.xm-slash-group-AI::before {
+  content: '';
+  display: block;
+  height: 1px;
+  margin: 4px 12px 8px;
+  background: var(--xm-ai-gradient);
+  opacity: 0.4;
+}

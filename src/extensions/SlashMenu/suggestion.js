@@ -8,15 +8,18 @@ export const suggestionConfig = {
 
     if (!slashExtension) {
       console.log("slashExtension not found");
-      return [];
+      return [{ label: "DEBUG: slashExtension not found", id: "debug" }];
     }
 
     const itemList = slashExtension.options.items;
 
-    // 确保 items 是数组
     if (!Array.isArray(itemList)) {
       console.log("items is not an array:", itemList);
-      return [];
+      return [{ label: "DEBUG: not array", id: "debug" }];
+    }
+
+    if (itemList.length === 0) {
+      return [{ label: "DEBUG: empty list", id: "debug", category: "调试" }];
     }
 
     return itemList.filter((item) => {

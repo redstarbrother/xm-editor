@@ -3,6 +3,7 @@ import { ExtensionManager } from "./ExtensionManager";
 import { createEditorProxy } from "./proxyEditor";
 import { createApp } from "vue";
 import XmEditorView from "@/core/XmEditorView.vue";
+import { AiEngine } from "@/ai";
 
 export default class XmEditor {
   constructor(options = {}) {
@@ -27,15 +28,27 @@ export default class XmEditor {
       editorOption.placeholder || ""
     );
 
-    // 2. 初始化 Tiptap 编辑器
+    // 2. 将 AI 配置注入到 AiCompletion 扩展（用于初始化 CompletionEngine）
+    // 必须在 initTiptapEditor 之前执行，否则插件不会被挂载
+    this.injectAiConfig();
+
+    // 3. 初始化 Tiptap 编辑器
     this.tiptapEditor = this.initTiptapEditor();
 
-    // 3. 挂载 Vue UI (Menus, Bubble, etc.)
+    // 3.5 初始化 AI 引擎
+    this.aiEngine = null;
+    if (this.config.ai?.apiKey) {
+      this.aiEngine = new AiEngine(this.tiptapEditor, this.config.ai);
+      // 将 aiEngine 注入到 AI 扩展的 storage 中
+      this.injectAiEngine();
+    }
+
+    // 4. 挂载 Vue UI (Menus, Bubble, etc.)
     // We pass the editor instance and the extension manager so UI can query menus
     this.vueApp = this.mountUI();
 
-    // 4. 创建编辑器代理
-    this.proxy = createEditorProxy(this.tiptapEditor);
+    // 5. 创建编辑器代理
+    this.proxy = createEditorProxy(this.tiptapEditor, this.aiEngine);
 
     return this.proxy;
   }
@@ -110,7 +123,45 @@ export default class XmEditor {
     return vm;
   }
 
+  /**
+   * 将 AiEngine 注入到 AI 扩展的 storage
+   */
+  injectAiEngine() {
+    if (!this.aiEngine) return;
+
+    // 注入到 ai-inline 扩展
+    const aiInlineStorage = this.tiptapEditor.storage?.['ai-inline'];
+    if (aiInlineStorage) {
+      aiInlineStorage.aiEngine = this.aiEngine;
+    }
+
+    // 注入到 ai-bubble 扩展
+    const aiBubbleStorage = this.tiptapEditor.storage?.['ai-bubble'];
+    if (aiBubbleStorage) {
+      aiBubbleStorage.aiEngine = this.aiEngine;
+    }
+  }
+
+  /**
+   * 将 AI 配置注入到 AiCompletion 扩展（用于初始化 CompletionEngine）
+   */
+  injectAiConfig() {
+    const aiConfig = this.config.ai;
+    if (!aiConfig?.apiKey) return;
+
+    // 查找 AiCompletion 扩展并注入配置
+    const extensions = this.extensionManager.extensions;
+    const aiCompletionExtIndex = extensions.findIndex(ext => ext?.name === 'ai-completion');
+    if (aiCompletionExtIndex !== -1) {
+      // Tiptap extension 需要通过 configure 生成新实例来注入配置
+      extensions[aiCompletionExtIndex] = extensions[aiCompletionExtIndex].configure({
+        aiConfig: aiConfig
+      });
+    }
+  }
+
   destroy() {
+    this.aiEngine?.destroy();
     this.tiptapEditor.destroy();
     // Unmount Vue app if needed (mountVueEditor returns vm, usually handled by Vue)
   }

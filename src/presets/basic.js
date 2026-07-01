@@ -57,6 +57,9 @@ const Basic = {
       Extensions.FixedMenu,
       Extensions.BubbleMenu,
       Extensions.SlashMenu,
+      Extensions.AiInline,
+      Extensions.AiCompletion,
+      Extensions.AiBubble,
     ],
 
     style: {

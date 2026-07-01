@@ -110,9 +110,11 @@ export class ExtensionManager {
           }
         }
       });
-      console.log("slashItems", slashItems);
-      console.log("this.extensions", this.extensions);
       
+      if (slashItems.length === 0) {
+        const keys = this.manifests.map(m => m.key).join(', ');
+        slashItems.push({ label: `DEBUG manifests: ${keys || 'empty'}`, id: "debug", category: "调试" });
+      }
       
       // 使用 configure 配置扩展，并替换列表中的引用
       const configuredExtension = slashExtension.configure({

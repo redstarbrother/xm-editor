@@ -1,6 +1,6 @@
 import { extractHeadings, scrollToHeading as scrollToHeadingUtil } from '@/extensions/Toc/tocUtils'
 
-export function createEditorProxy(editor) {
+export function createEditorProxy(editor, aiEngine) {
   return {
     // ----- 常用方法 -----
     getHTML() {
@@ -220,7 +220,37 @@ export function createEditorProxy(editor) {
           this.setTitle(newTitle);
         }
       };
-    }
+    },
+
+    // ----- AI 相关 -----
+    ai: aiEngine ? {
+      // 执行 AI 操作
+      complete: (prompt) => aiEngine.executeAction('freePrompt', { instruction: prompt }),
+      rewrite: () => aiEngine.executeAction('rewrite'),
+      translate: (lang) => aiEngine.executeAction('translate', { targetLang: lang }),
+      summarize: () => aiEngine.executeAction('summarize'),
+      continueWriting: () => aiEngine.executeAction('continueWriting'),
+      expand: () => aiEngine.executeAction('expand'),
+      shorten: () => aiEngine.executeAction('shorten'),
+      fixGrammar: () => aiEngine.executeAction('fixGrammar'),
+      changeTone: (tone) => aiEngine.executeAction('changeTone', { tone }),
+
+      // 自动补全控制
+      completion: {
+        enable: () => aiEngine.completionEngine?.enable(),
+        disable: () => aiEngine.completionEngine?.disable(),
+        get isEnabled() { return aiEngine.completionEngine?.isEnabled ?? false },
+      },
+
+      // 状态
+      get isLoading() { return aiEngine.state.isLoading },
+      get streamContent() { return aiEngine.state.streamContent },
+      get error() { return aiEngine.state.error },
+      abort: () => aiEngine.abort(),
+
+      // 事件
+      on: (event, callback) => aiEngine.on(event, callback),
+      off: (event, callback) => aiEngine.off(event, callback),
+    } : null,
   };
 }
-
