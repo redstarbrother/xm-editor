@@ -1,9 +1,10 @@
 import * as Suggestion from "@/extensions/Suggestion/Suggestion";
 
 export class ExtensionManager {
-  constructor(extensions = [], placeholder = "") {
+  constructor(extensions = [], placeholder = "", runtime = null) {
     this.rawExtensions = extensions;
     this.placeholder = placeholder;
+    this.runtime = runtime;
     this.extensions = [];
     this.manifests = [];
     // 存放组件（比如fixed菜单）
@@ -139,7 +140,7 @@ export class ExtensionManager {
     });
     
     suggestionConfigItems?.forEach((item) => {
-      suggestionExtension.push(Suggestion.createSuggestion(item));
+      suggestionExtension.push(Suggestion.createSuggestion(item, this.runtime));
     });
     
     this.extensions.push(...suggestionExtension);

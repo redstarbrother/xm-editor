@@ -83,6 +83,9 @@ const TableExtension = TiptapTable.extend({
         view(editorView) {
           rowBtn = createButton('row-btn', '+')
           colBtn = createButton('col-btn', '+')
+          const runtime = editor?.options?.xmRuntime
+          const unregisterRow = runtime?.trackNode(rowBtn, { label: 'table-row-button' })
+          const unregisterCol = runtime?.trackNode(colBtn, { label: 'table-column-button' })
 
           // 点击增加行
           rowBtn.onclick = () => {
@@ -96,8 +99,14 @@ const TableExtension = TiptapTable.extend({
 
           return {
             destroy() {
+              if (rowBtn) rowBtn.onclick = null
+              if (colBtn) colBtn.onclick = null
+              unregisterRow?.()
+              unregisterCol?.()
               rowBtn?.remove()
               colBtn?.remove()
+              rowBtn = null
+              colBtn = null
             },
           }
         },

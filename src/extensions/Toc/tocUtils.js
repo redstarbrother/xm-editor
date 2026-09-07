@@ -228,11 +228,22 @@ export function scrollToHeading(editor, headingId, options = {}) {
  */
 export function debounce(fn, delay = 300) {
   let timer = null
-  return function (...args) {
+  const debounced = function (...args) {
     if (timer) clearTimeout(timer)
     timer = setTimeout(() => {
       fn.apply(this, args)
       timer = null
     }, delay)
   }
+  debounced.cancel = () => {
+    if (timer) clearTimeout(timer)
+    timer = null
+  }
+  debounced.flush = () => {
+    if (!timer) return
+    clearTimeout(timer)
+    timer = null
+    fn()
+  }
+  return debounced
 }

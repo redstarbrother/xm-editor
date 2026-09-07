@@ -105,11 +105,14 @@ export function createScrollHighlighter(editor, options = {}) {
   let scrollContainer = null
   let currentActiveId = null
   let setupTimer = null
+  let rafId = null
+  let destroyed = false
 
   /**
    * 核心检测 + 通知
    */
   function update() {
+    if (destroyed || editor?.isDestroyed) return
     const items = getItems()
     const newActiveId = detectActiveHeading(editor, items, scrollContainer)
 
@@ -126,16 +129,17 @@ export function createScrollHighlighter(editor, options = {}) {
    */
   function setup() {
     cleanup() // 先清理之前的监听
+    destroyed = false
 
     setupTimer = setTimeout(() => {
-      if (!editor || !editor.view) return
+      setupTimer = null
+      if (destroyed || !editor || !editor.view || editor.isDestroyed) return
 
       const editorDom = editor.view.dom
       scrollContainer = resolveScrollContainer(editorDom, userScrollContainer)
 
       if (!scrollContainer) return
 
-      let rafId = null
       scrollHandler = () => {
         if (rafId) return
         rafId = requestAnimationFrame(() => {
@@ -157,6 +161,7 @@ export function createScrollHighlighter(editor, options = {}) {
    * 清理滚动监听
    */
   function cleanup() {
+    destroyed = true
     if (setupTimer) {
       clearTimeout(setupTimer)
       setupTimer = null
@@ -166,12 +171,17 @@ export function createScrollHighlighter(editor, options = {}) {
     }
     scrollHandler = null
     scrollContainer = null
+    if (rafId) {
+      cancelAnimationFrame(rafId)
+      rafId = null
+    }
   }
 
   /**
    * 手动触发一次检测（例如点击目录项后同步状态）
    */
   function forceUpdate() {
+    if (destroyed) return
     update()
   }
 

@@ -3,15 +3,18 @@ import { ExtensionManager } from "./ExtensionManager";
 import { createEditorProxy } from "./proxyEditor";
 import { createApp } from "vue";
 import XmEditorView from "@/core/XmEditorView.vue";
+import EditorRuntime from "./EditorRuntime";
 
 export default class XmEditor {
   constructor(options = {}) {
+    this.runtime = new EditorRuntime({ host: options.el });
     this.element = options.el;
     // 根据name判断是否需要调用configure方法
-    if(options.config.name) {
-      this.config = options.config.configure() || {};
+    const rawConfig = options.config || {};
+    if(rawConfig.name && typeof rawConfig.configure === 'function') {
+      this.config = rawConfig.configure() || {};
     } else {
-      this.config = options.config || {};
+      this.config = rawConfig;
     }
 
     const editorOption = this.config.editorOption || {};
@@ -24,18 +27,25 @@ export default class XmEditor {
     // 1. 初始化扩展管理器
     this.extensionManager = new ExtensionManager(
       options.extensions || this.config.extensions || [],
-      editorOption.placeholder || ""
+      editorOption.placeholder || "",
+      this.runtime
     );
 
-    // 2. 初始化 Tiptap 编辑器
-    this.tiptapEditor = this.initTiptapEditor();
+    try {
+      // 2. 初始化 Tiptap 编辑器
+      this.tiptapEditor = this.initTiptapEditor();
+      this.runtime.setTiptapEditor(this.tiptapEditor);
 
-    // 3. 挂载 Vue UI (Menus, Bubble, etc.)
-    // We pass the editor instance and the extension manager so UI can query menus
-    this.vueApp = this.mountUI();
+      // 3. 挂载 Vue UI (Menus, Bubble, etc.)
+      this.mountUI();
+      this.runtime.markMounted();
 
-    // 4. 创建编辑器代理
-    this.proxy = createEditorProxy(this.tiptapEditor);
+      // 4. 创建编辑器代理
+      this.proxy = createEditorProxy(this.tiptapEditor, this.runtime);
+    } catch (error) {
+      this.runtime.destroy('initialization-error');
+      throw error;
+    }
 
     return this.proxy;
   }
@@ -67,6 +77,7 @@ export default class XmEditor {
 
     return new TiptapEditor({
       extensions: extensions,
+      xmRuntime: this.runtime,
       content: this.initialContent,
       editable: editorOption.editable !== false,
       autofocus: editorOption.autofocus,
@@ -101,18 +112,28 @@ export default class XmEditor {
       return null;
     }
 
+    const mountEl = document.createElement('div');
+    mountEl.dataset.xmEditorMount = this.runtime.id;
+    this.runtime.trackNode(mountEl, { label: 'editor-mount' });
+    this.element.appendChild(mountEl);
+
     const app = createApp(XmEditorView, {
       editor: this.tiptapEditor,
       extensionManager: this.extensionManager, // Pass manager to UI
       config: this.config,
     });
-    const vm = app.mount(this.element);
+    const vm = app.mount(mountEl);
+    this.vueApp = app;
+    this.mountEl = mountEl;
+    this.runtime.setVueApp(app);
     return vm;
   }
 
   destroy() {
-    this.tiptapEditor.destroy();
-    // Unmount Vue app if needed (mountVueEditor returns vm, usually handled by Vue)
+    return this.runtime.destroy('api');
+  }
+
+  getRuntimeState() {
+    return this.runtime.getState();
   }
 }
-

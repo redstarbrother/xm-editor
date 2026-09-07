@@ -1,6 +1,6 @@
 import { extractHeadings, scrollToHeading as scrollToHeadingUtil } from '@/extensions/Toc/tocUtils'
 
-export function createEditorProxy(editor) {
+export function createEditorProxy(editor, runtime) {
   return {
     // ----- 常用方法 -----
     getHTML() {
@@ -25,7 +25,16 @@ export function createEditorProxy(editor) {
       editor.commands.blur();
     },
     destroy() {
-      editor.destroy();
+      return runtime?.destroy('proxy') || editor.destroy();
+    },
+    getRuntimeState() {
+      return runtime?.getState() || (editor.isDestroyed ? 'destroyed' : 'mounted');
+    },
+    get isDestroyed() {
+      return runtime ? !runtime.isAlive() : !!editor.isDestroyed;
+    },
+    get instance() {
+      return editor;
     },
 
     // ----- 光标相关 -----
@@ -168,7 +177,11 @@ export function createEditorProxy(editor) {
         onUpdate(callback) {
           if (tocStorage && tocStorage.listeners) {
             tocStorage.listeners.push(callback);
+            const unsubscribe = () => this.offUpdate(callback);
+            runtime?.registerCleanup(unsubscribe, { label: 'toc-subscription' });
+            return unsubscribe;
           }
+          return () => {};
         },
 
         /**
@@ -223,4 +236,3 @@ export function createEditorProxy(editor) {
     }
   };
 }
-

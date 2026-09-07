@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted, computed, nextTick } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount, computed, nextTick } from 'vue'
 import { extractHeadings, scrollToHeading } from '../tocUtils'
 
 const props = defineProps({
@@ -168,6 +168,7 @@ function scrollActiveItemIntoView() {
 
 // 编辑器 transaction 监听
 let transactionHandler = null
+let storagePoller = null
 
 onMounted(() => {
   if (props.editor) {
@@ -189,7 +190,7 @@ onMounted(() => {
 
     // 也监听 storage 变化——当 Extension 层 scroll 检测更新 activeId 时
     // 因为 storage 更新不一定触发 transaction，额外用定时器兜底
-    const storagePoller = setInterval(() => {
+    storagePoller = setInterval(() => {
       const storage = props.editor?.storage?.toc
       if (!storage) return
 
@@ -200,16 +201,17 @@ onMounted(() => {
       }
     }, 150)
 
-    // 清理
-    onUnmounted(() => {
-      clearInterval(storagePoller)
-    })
   }
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
+  if (storagePoller) {
+    clearInterval(storagePoller)
+    storagePoller = null
+  }
   if (props.editor && transactionHandler) {
     props.editor.off('transaction', transactionHandler)
+    transactionHandler = null
   }
 })
 

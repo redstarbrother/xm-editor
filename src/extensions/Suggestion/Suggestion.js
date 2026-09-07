@@ -13,7 +13,7 @@ import { PluginKey } from "@tiptap/pm/state";
  * }
  */
 
-export function createSuggestion(suggestionConfig) {
+export function createSuggestion(suggestionConfig, runtime) {
   const { char, allow, items, command } = suggestionConfig;
 
   return Extension.create({
@@ -45,7 +45,7 @@ export function createSuggestion(suggestionConfig) {
                * }
                */
               onStart(props) {
-                popup = createSuggestionPopup(props);
+              popup = createSuggestionPopup(props, runtime);
               },
               onUpdate(props) {
                 popup?.update(props);

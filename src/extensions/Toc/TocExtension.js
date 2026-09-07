@@ -103,20 +103,13 @@ const TocExtension = Extension.create({
     }
   },
 
-  onDestroy() {
-    // 清理滚动监听
-    if (this.storage.highlighter) {
-      this.storage.highlighter.cleanup()
-      this.storage.highlighter = null
-    }
-  },
-
   addProseMirrorPlugins() {
     const extensionOptions = this.options
     const storage = this.storage
 
     // 创建防抖的更新函数
     const debouncedUpdate = debounce((doc) => {
+      if (this.editor?.isDestroyed) return
       const headings = extractHeadings(doc, extensionOptions.levels)
       storage.tocItems = headings
 
@@ -128,8 +121,9 @@ const TocExtension = Extension.create({
         storage.highlighter.forceUpdate()
       }
     }, extensionOptions.debounce)
+    storage._debouncedUpdate = debouncedUpdate
 
-    return [
+  return [
       new Plugin({
         key: TocPluginKey,
 
@@ -156,7 +150,17 @@ const TocExtension = Extension.create({
           // 提供给外部读取 TOC 数据的方式
         },
       }),
-    ]
+  ]
+  },
+
+  onDestroy() {
+    if (this.storage.highlighter) {
+      this.storage.highlighter.cleanup()
+      this.storage.highlighter = null
+    }
+    this.storage._debouncedUpdate?.cancel?.()
+    if (this.storage.listeners) this.storage.listeners.length = 0
+    this.storage._debouncedUpdate = null
   },
 })
 

@@ -8,7 +8,7 @@
         
         <h1 class="app-title">西木编辑器</h1>
         <div class="app-meta">
-          <span>最后同步时间：2026年01月21日</span>
+          <span>最后同步时间：2026年09月07日</span>
           <span class="divider">|</span>
           <div class="links">
             <a href="https://github.com/redstarbrother/xm-editor" target="_blank" class="link">GitHub</a>
