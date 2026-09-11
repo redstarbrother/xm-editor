@@ -71,8 +71,13 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/index.js',  // 入口文件
-      name: 'xm-editor',       // 库的名称
-      fileName: (format) => `xm-editor.${format}.js`,  // 输出文件名
+      name: 'xmEditor',       // 库的名称
+      formats: ['es', 'cjs', 'umd'],
+      fileName: (format) => {
+        if (format === 'cjs') return 'xm-editor.cjs'
+        if (format === 'umd') return 'xm-editor.umd.js'
+        return 'xm-editor.es.js'
+      },  // 输出文件名
     },
     rollupOptions: {
       // 确保外部依赖不被打包

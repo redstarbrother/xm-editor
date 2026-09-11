@@ -2,12 +2,13 @@
   "name": "@putanut/xm-editor",
   "version": "0.1.6",
   "type": "module",
-  "main": "dist/xm-editor.umd.js",
+  "main": "./dist/xm-editor.cjs",
   "module": "dist/xm-editor.es.js",
   "exports": {
     ".": {
-      "require": "./dist/xm-editor.umd.js",
-      "import": "./dist/xm-editor.es.js"
+      "import": "./dist/xm-editor.es.js",
+      "require": "./dist/xm-editor.cjs",
+      "default": "./dist/xm-editor.es.js"
     },
     "./xm-editor.css": "./dist/xm-editor.css",
     "./xm-editor-notion.css": "./dist/xm-editor-notion.css",
@@ -22,6 +23,7 @@
     "build": "vite build",
     "build:demo": "vite build --config vite.demo.config.js",
     "test": "node --test tests/unit/*.test.js",
+    "test:package": "pnpm build && node tests/package-entry.test.js",
     "preview": "vite preview",
     "preview:demo": "vite preview --config vite.demo.config.js"
   },
