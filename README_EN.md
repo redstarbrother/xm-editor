@@ -322,7 +322,7 @@ new XmEditor({
     // Lifecycle events
     events: {
       onInit: ({ editor }) => console.log("Editor ready"),
-      onUpdate: ({ editor }) => console.log("Content updated", editor.getJSON()),
+      onUpdate: ({ editor, content, contentType }) => console.log("Content updated", contentType, content),
       onFocus: ({ editor }) => console.log("Focused"),
       onBlur: ({ editor }) => console.log("Blurred"),
       onDestroy: () => console.log("Editor destroyed"),
@@ -339,6 +339,8 @@ new XmEditor({
 | --------------------- | -------------- | ------------------------------------- |
 | `getHTML()`           | `string`       | Get content in HTML format            |
 | `getJSON()`           | `object`       | Get content in JSON format            |
+| `getContent()`        | `string/object`| Get content according to `contentType`|
+| `getContentType()`    | `string`       | Get the current content type          |
 | `getText()`           | `string`       | Get plain text content                |
 | `setContent(content)` | —              | Set editor content                    |
 | `clear()`             | —              | Clear editor                          |

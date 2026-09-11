@@ -322,7 +322,7 @@ new XmEditor({
     // 生命周期事件
     events: {
       onInit: ({ editor }) => console.log("编辑器就绪"),
-      onUpdate: ({ editor }) => console.log("内容更新", editor.getJSON()),
+      onUpdate: ({ editor, content, contentType }) => console.log("内容更新", contentType, content),
       onFocus: ({ editor }) => console.log("获得焦点"),
       onBlur: ({ editor }) => console.log("失去焦点"),
       onDestroy: () => console.log("编辑器已销毁"),
@@ -339,6 +339,8 @@ new XmEditor({
 | --------------------- | -------------- | -------------------------- |
 | `getHTML()`           | `string`       | 获取 HTML 格式内容         |
 | `getJSON()`           | `object`       | 获取 JSON 格式内容         |
+| `getContent()`        | `string/object`| 按 `contentType` 返回内容  |
+| `getContentType()`    | `string`       | 返回当前内容类型           |
 | `getText()`           | `string`       | 获取纯文本内容             |
 | `setContent(content)` | —              | 设置编辑器内容             |
 | `clear()`             | —              | 清空编辑器                 |

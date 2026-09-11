@@ -4,29 +4,31 @@ import { createEditorProxy } from "./proxyEditor";
 import { createApp } from "vue";
 import XmEditorView from "@/core/XmEditorView.vue";
 import EditorRuntime from "./EditorRuntime";
+import { normalizeEditorConfig } from './config/normalizeConfig.js';
+import { createDebouncedCallback, normalizeContent, serializeContent } from './contentAdapter';
 
 export default class XmEditor {
   constructor(options = {}) {
-    this.runtime = new EditorRuntime({ host: options.el });
-    this.element = options.el;
-    // 根据name判断是否需要调用configure方法
-    const rawConfig = options.config || {};
-    if(rawConfig.name && typeof rawConfig.configure === 'function') {
-      this.config = rawConfig.configure() || {};
-    } else {
-      this.config = rawConfig;
-    }
+    const host = options && typeof options === 'object' ? options.el : null;
+    this.runtime = new EditorRuntime({ host });
+    this.element = host;
+    this.config = normalizeEditorConfig(options);
+    this.runtime.setConfig(this.config);
 
     const editorOption = this.config.editorOption || {};
     // 获取初始内容
-    this.initialContent = editorOption.content || "";
+    this.initialContent = normalizeContent(editorOption.content, editorOption.contentType);
+    this.emitUpdate = createDebouncedCallback((payload) => {
+      this.config.events?.onUpdate?.(payload);
+    }, editorOption.debounce);
+    this.runtime.registerCleanup(() => this.emitUpdate.cancel(), { label: 'onUpdate debounce' });
 
     // 注入 onTocUpdate 事件到 TOC 扩展（如果存在）
     this.injectTocEvent();
 
     // 1. 初始化扩展管理器
     this.extensionManager = new ExtensionManager(
-      options.extensions || this.config.extensions || [],
+      this.config.extensions,
       editorOption.placeholder || "",
       this.runtime
     );
@@ -63,9 +65,11 @@ export default class XmEditor {
     if (tocIndex !== -1) {
       const tocExt = extensions[tocIndex];
       // 将用户的 onTocUpdate 回调注入到 TOC 扩展配置中
-      extensions[tocIndex] = tocExt.configure({
-        onTocUpdate: events.onTocUpdate,
-      });
+      if (typeof tocExt.configure === 'function') {
+        extensions[tocIndex] = tocExt.configure({
+          onTocUpdate: events.onTocUpdate,
+        });
+      }
     }
   }
 
@@ -78,11 +82,16 @@ export default class XmEditor {
     return new TiptapEditor({
       extensions: extensions,
       xmRuntime: this.runtime,
+      xmContentType: editorOption.contentType,
       content: this.initialContent,
       editable: editorOption.editable !== false,
       autofocus: editorOption.autofocus,
       onUpdate: ({ editor }) => {
-        events.onUpdate?.({ editor });
+        this.emitUpdate({
+          editor,
+          content: serializeContent(editor, editorOption.contentType),
+          contentType: editorOption.contentType,
+        });
       },
       onFocus: ({ editor, event }) => {
         events.onFocus?.({ editor, event });

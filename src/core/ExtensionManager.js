@@ -1,4 +1,5 @@
 import * as Suggestion from "@/extensions/Suggestion/Suggestion";
+import { sortMenuItems } from './menuConfig';
 
 export class ExtensionManager {
   constructor(extensions = [], placeholder = "", runtime = null) {
@@ -151,21 +152,21 @@ export class ExtensionManager {
   }
 
   getFixedMenuItems() {
-    return this.manifests
+    return sortMenuItems(this.manifests
       .filter((m) => m.value.fixedMenu)
       .map((m) => ({
         ...m.value.fixedMenu,
         name: m.key,
-      }));
+      })));
   }
 
   getBubbleMenuItems() {
-    return this.manifests
+    return sortMenuItems(this.manifests
       .filter((m) => m.value.bubbleMenu)
       .map((m) => ({
         ...m.value.bubbleMenu,
         name: m.key,
-      }));
+      })));
   }
 
   getSlashMenuItems() {

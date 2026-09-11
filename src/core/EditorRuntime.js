@@ -12,6 +12,7 @@ export default class EditorRuntime {
     this.vueApp = null
     this.tiptapEditor = null
     this.mountEl = null
+    this.config = null
     this.cleanups = {
       'before-vue': [],
       'after-editor': [],
@@ -48,6 +49,10 @@ export default class EditorRuntime {
 
   setTiptapEditor(editor) {
     this.tiptapEditor = editor
+  }
+
+  setConfig(config) {
+    this.config = config
   }
 
   markMounted() {

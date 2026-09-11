@@ -1,4 +1,5 @@
-import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { filterVisibleMenuItems } from '@/core/menuConfig';
 
 /**
  * 监听编辑器状态变化，更新菜单项的激活状态 (适用于 BubbleMenu)
@@ -39,6 +40,18 @@ export function useMenuActiveState(editor, items) {
   }
 
   return activeStates;
+}
+
+export function useMenuVisibility(editor, items) {
+  const tick = ref(0);
+  const visible = computed(() => {
+    tick.value;
+    return filterVisibleMenuItems(items?.value ?? items ?? [], { editor, state: editor?.state, view: editor?.view });
+  });
+  const refresh = () => { tick.value += 1; };
+  onMounted(() => editor?.on?.('transaction', refresh));
+  onUnmounted(() => editor?.off?.('transaction', refresh));
+  return visible;
 }
 
 /**

@@ -21,6 +21,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:demo": "vite build --config vite.demo.config.js",
+    "test": "node --test tests/unit/*.test.js",
     "preview": "vite preview",
     "preview:demo": "vite preview --config vite.demo.config.js"
   },

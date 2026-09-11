@@ -1,6 +1,6 @@
 <template>
   <div class="menu-fixed" ref="containerRef">
-    <div class="menu-item" v-for="item in fixedItems" :key="item.id">
+    <div class="menu-item" v-for="item in visibleItems" :key="item.id">
       <div v-if="item.type === 'separator'" class="menu-separator"></div>
       <div v-else-if="item.iconCom" class="menu-item-wrapper">
         <icon-item :icon="item.iconCom" :active="activeStates[item.id] || activeMenuId === item.id"
@@ -18,7 +18,8 @@
 import { computed, ref, markRaw } from "vue";
 import { onClickOutside } from "@vueuse/core";
 import IconItem from "@/ui/components/IconItem.vue";
-import { useMenuActiveState } from "@/hooks/useEditorMenu";
+import { useMenuActiveState, useMenuVisibility } from "@/hooks/useEditorMenu";
+import { isMenuItemVisible } from "@/core/menuConfig";
 
 const props = defineProps({
   editor: Object,
@@ -43,9 +44,11 @@ const fixedItems = computed(() => {
 });
 
 const activeStates = useMenuActiveState(props.editor, fixedItems);
+const visibleItems = useMenuVisibility(props.editor, fixedItems);
 
 // 点击图标时触发
 const clickIcon = (item) => {
+  if (!isMenuItemVisible(item, { editor: props.editor, state: props.editor?.state, view: props.editor?.view })) return;
   if (activeMenuId.value === item.id) {
     // 点击已激活的图标，关闭菜单
     activeMenuId.value = null;

@@ -1,59 +1,89 @@
-function mergePresetConfig(defaultConfig, userConfig) {
-    const result = { ...defaultConfig };
+/**
+ * Copy configuration values without serialising functions, Vue components, or
+ * Tiptap extension instances. Only plain objects and arrays are copied.
+ */
+const opaqueConfigKeys = new Set(['component', 'extension', 'icon', 'iconCom', 'view', 'nodeView']);
 
-    // Merge editorOption
-    if (userConfig.editorOption) {
-        result.editorOption = { ...(defaultConfig.editorOption || {}), ...userConfig.editorOption };
+function cloneConfigValue(value, seen = new WeakMap(), key = '') {
+    if (opaqueConfigKeys.has(key)) return value;
+    if (Array.isArray(value)) {
+        if (seen.has(value)) return seen.get(value);
+        const copy = [];
+        seen.set(value, copy);
+        value.forEach((item) => copy.push(cloneConfigValue(item, seen, '')));
+        return copy;
     }
 
-    // Merge style
-    if (userConfig.style) {
-        result.style = { ...(defaultConfig.style || {}), ...userConfig.style };
-    }
-
-    // Merge events
-    if (userConfig.events) {
-        result.events = { ...(defaultConfig.events || {}), ...userConfig.events };
-    }
-
-    // ---- 重点：处理 extension override ----
-    if (userConfig.extensions && userConfig.extensions.length > 0) {
-        const userMap = new Map();
-
-        // 用户扩展映射
-        userConfig.extensions.forEach((ext) => {
-            if (ext && ext.name) {
-                userMap.set(ext.name, ext);
-            }
+    if (!value || typeof value !== 'object') return value;
+    const prototype = Object.getPrototypeOf(value);
+    if (value && (prototype === Object.prototype || prototype === null)) {
+        if (seen.has(value)) return seen.get(value);
+        const copy = {};
+        seen.set(value, copy);
+        Object.keys(value).forEach((key) => {
+            copy[key] = cloneConfigValue(value[key], seen, key);
         });
+        return copy;
+    }
 
-        const finalExt = [];
-        const defaultExtensionNames = new Set();
-        const defaultExtensions = defaultConfig.extensions || [];
+    return value;
+}
 
-        // 遍历默认扩展，保留顺序和数量
-        defaultExtensions.forEach((ext) => {
-            if (ext && ext.name) {
-                defaultExtensionNames.add(ext.name);
-                if (userMap.has(ext.name)) {
-                    finalExt.push(userMap.get(ext.name)); // 使用用户的配置覆盖
-                } else {
-                    finalExt.push(ext); // 保持默认
-                }
-            }
-        });
+function cloneExtensionDescriptor(extension) {
+    return cloneConfigValue(extension);
+}
 
-        // 用户多余的扩展追加进去
-        for (const [name, ext] of userMap.entries()) {
-            if (!defaultExtensionNames.has(name)) {
-                finalExt.push(ext);
-            }
+function mergeExtensions(defaultExtensions = [], userExtensions, hasUserExtensions) {
+    const defaults = defaultExtensions.map(cloneExtensionDescriptor);
+    if (!hasUserExtensions) return defaults;
+
+    const users = (userExtensions || []).map(cloneExtensionDescriptor);
+    const userMap = new Map();
+    users.forEach((extension) => {
+        if (extension?.name) userMap.set(extension.name, extension);
+    });
+
+    const defaultNames = new Set();
+    const result = [];
+    defaults.forEach((extension) => {
+        if (!extension?.name) return;
+        defaultNames.add(extension.name);
+        result.push(userMap.get(extension.name) || extension);
+    });
+
+    users.forEach((extension) => {
+        if (extension?.name && !defaultNames.has(extension.name)) {
+            result.push(extension);
         }
-
-        result.extensions = finalExt;
-    }
-
+    });
     return result;
 }
 
-export { mergePresetConfig }
+function mergePresetConfig(defaultConfig = {}, userConfig = {}) {
+    const defaults = cloneConfigValue(defaultConfig || {});
+    const user = userConfig || {};
+    const result = {
+        ...defaults,
+        editorOption: {
+            ...(defaults.editorOption || {}),
+            ...(cloneConfigValue(user.editorOption) || {}),
+        },
+        style: {
+            ...(defaults.style || {}),
+            ...(cloneConfigValue(user.style) || {}),
+        },
+        events: {
+            ...(defaults.events || {}),
+            ...(cloneConfigValue(user.events) || {}),
+        },
+    };
+
+    result.extensions = mergeExtensions(
+        defaults.extensions || [],
+        user.extensions,
+        Object.prototype.hasOwnProperty.call(user, 'extensions'),
+    );
+    return result;
+}
+
+export { cloneConfigValue, mergePresetConfig }

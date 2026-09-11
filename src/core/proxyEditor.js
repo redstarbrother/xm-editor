@@ -1,4 +1,5 @@
 import { extractHeadings, scrollToHeading as scrollToHeadingUtil } from '@/extensions/Toc/tocUtils'
+import { normalizeContent, serializeContent } from './contentAdapter'
 
 export function createEditorProxy(editor, runtime) {
   return {
@@ -12,8 +13,16 @@ export function createEditorProxy(editor, runtime) {
     getText() {
       return editor.getText();
     },
+    getContent() {
+      const contentType = runtime?.config?.editorOption?.contentType || editor.options?.xmContentType || 'json';
+      return serializeContent(editor, contentType);
+    },
+    getContentType() {
+      return runtime?.config?.editorOption?.contentType || editor.options?.xmContentType || 'json';
+    },
     setContent(content) {
-      editor.commands.setContent(content);
+      const contentType = runtime?.config?.editorOption?.contentType || editor.options?.xmContentType || 'json';
+      editor.commands.setContent(normalizeContent(content, contentType));
     },
     clear() {
       editor.commands.clearContent(true);

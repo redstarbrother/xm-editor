@@ -1,6 +1,6 @@
 <template>
   <div class="menu-bubble">
-    <div class="menu-item" v-for="item in bubbleItems" :key="item.id">
+    <div class="menu-item" v-for="item in visibleItems" :key="item.id">
       <div v-if="item.type === 'separator'" class="menu-separator"></div>
       <icon-item v-else-if="item.type !== 'hidden'" :icon="item.iconCom" :active="activeStates[item.id]"
         :stroke-width="bubbleMenuIconConfig.strokeWidth" :size="bubbleMenuIconConfig.size"
@@ -12,7 +12,8 @@
 <script setup>
 import { computed, markRaw } from "vue";
 import IconItem from "@/ui/components/IconItem.vue";
-import { useMenuActiveState } from "@/hooks/useEditorMenu";
+import { useMenuActiveState, useMenuVisibility } from "@/hooks/useEditorMenu";
+import { isMenuItemVisible } from "@/core/menuConfig";
 
 const props = defineProps({
   editor: Object,
@@ -41,30 +42,9 @@ const bubbleItems = computed(() => {
       if (newItem.action) {
         bubbleAction[newItem.id] = newItem.action;
       }
-      console.log(newItem);
-
       return newItem;
     });
 
-  // 分隔符特殊处理
-  itemArr.forEach((item, index) => {
-    if (item.type === 'separator') {
-      // 第一个和最后一个分隔符特殊处理, 隐藏
-      if (index === 0 || index === itemArr.length - 1) {
-        item.type = 'hidden';
-        return;
-      }
-      // 两边不是mark或node时, 隐藏分隔符
-      const prev = itemArr[index - 1];
-      const next = itemArr[index + 1];
-      if (
-        (prev.type !== 'mark' && prev.type !== 'node') ||
-        (next.type !== 'mark' && next.type !== 'node')
-      ) {
-        item.type = 'hidden';
-      }
-    }
-  })
   return itemArr;
 });
 
@@ -109,8 +89,11 @@ const bubbleItems = computed(() => {
 // });
 
 const activeStates = useMenuActiveState(props.editor, bubbleItems);
+const visibleItems = useMenuVisibility(props.editor, bubbleItems);
 
 const clickIcon = (id) => {
+  const item = visibleItems.value.find((entry) => entry.id === id);
+  if (!item || !isMenuItemVisible(item, { editor: props.editor, state: props.editor?.state, view: props.editor?.view })) return;
   bubbleAction[id]?.({ editor: props.editor });
 }
 </script>
